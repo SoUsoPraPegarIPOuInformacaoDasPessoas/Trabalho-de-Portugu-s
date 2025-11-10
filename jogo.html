@@ -3,271 +3,196 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Jogo da Cobrinha — Menino da Canoa</title>
+<title>Snake Game — Bacon News</title>
 <style>
-  :root{
-    --green:#28a745;
-    --red:#d62828;
-    --blue:#1e90ff;
-    --orange:#f77f00;
-    --bg:#f0f0f0;
-  }
-  *{box-sizing:border-box;}
-  body{
-    margin:0;
-    font-family:"Segoe UI", Roboto, Arial, sans-serif;
-    background:var(--bg);
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:flex-start;
-    padding-top:20px;
-  }
-  h1{text-align:center;color:var(--blue);}
-  #entrada{
-    margin-bottom:20px;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    gap:10px;
-  }
-  input{
-    padding:10px;
-    border-radius:8px;
-    border:2px solid #aaa;
-    width:180px;
-    text-align:center;
-  }
-  #jogar{
-    padding:10px 20px;
-    background:var(--green);
-    color:white;
-    border:none;
-    border-radius:10px;
-    font-weight:700;
-    cursor:pointer;
-  }
-  #jogar:hover{transform:translateY(-2px);}
-  canvas{
-    background:#111;
-    display:block;
-    margin-top:20px;
-    border:4px solid var(--blue);
-  }
-  #tabelaBtn{
-    margin-top:10px;
-    padding:8px 16px;
-    background:var(--blue);
-    color:white;
-    border:none;
-    border-radius:8px;
-    cursor:pointer;
-  }
-  #tabelaFrame{
-    position:absolute;
-    top:20px;
-    right:20px;
-    width:220px;
-    max-height:400px;
-    background:var(--orange);
-    border:3px solid var(--blue);
-    border-radius:10px;
-    padding:10px;
-    overflow-y:auto;
-    display:none;
-  }
-  #tabelaFrame h3{text-align:center;margin:0 0 10px;}
-  #tabelaFrame ul{list-style:none;padding:0;margin:0;}
-  #tabelaFrame li{margin:4px 0;}
-  #gameOver{
-    display:none;
-    position:absolute;
-    top:0; left:0;
-    width:100%; height:100%;
-    background:var(--red);
-    color:white;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:center;
-    font-size:1.5rem;
-  }
-  #restart{
-    margin-top:20px;
-    padding:10px 20px;
-    background:var(--green);
-    border:none;
-    border-radius:8px;
-    font-weight:700;
-    cursor:pointer;
-  }
+  body { margin:0; font-family: "Segoe UI", Roboto, Arial, sans-serif; background:#f0f0f0; display:flex; justify-content:center; align-items:center; height:100vh; }
+  #container { text-align:center; position:relative; }
+  #startScreen, #gameScreen, #gameOverScreen { display:none; }
+  #gameCanvas { background:#0a1f44; display:block; margin:0 auto; border:4px solid #89cff0; border-radius:12px; }
+  input { padding:10px; margin:6px; border-radius:8px; border:2px solid #0077ff; width:180px; font-size:1rem; }
+  button { padding:10px 18px; font-size:1rem; border:none; border-radius:10px; cursor:pointer; font-weight:700; margin:5px; transition:all 0.2s; }
+  #tabelaBtn { background:linear-gradient(90deg,#ffc107,#ff6f00); color:white; }
+  #tabelaBtn:hover { transform: scale(1.2); box-shadow:0 8px 20px rgba(0,0,0,0.3);}
+  #jogar, #restart { background:linear-gradient(90deg,#28a745,#71dd8a); color:white; }
+  #jogar:hover, #restart:hover { transform: scale(1.1); box-shadow:0 8px 20px rgba(0,0,0,0.3);}
+  #tabelaFrame { position:absolute; top:0; left:50%; transform:translateX(-50%) translateY(-400px); width:300px; background:#ffa500; border:4px solid #0077ff; padding:10px; border-radius:12px; transition: transform 0.5s; }
+  #tabelaFrame.show { transform:translateX(-50%) translateY(60px); }
+  #tabelaFrame h3 { margin-top:0; text-align:center; }
+  #tabelaFrame ul { list-style:none; padding:0; margin:0; }
 </style>
 </head>
 <body>
 
-<h1>Jogo da Cobrinha — Menino da Canoa</h1>
+<div id="container">
 
-<div id="entrada">
-  <input type="text" id="playerName" placeholder="Seu nome">
-  <input type="text" id="playerRoom" placeholder="Sua sala">
-  <button id="jogar">JOGAR</button>
+  <!-- Tela Inicial -->
+  <div id="startScreen">
+    <h2>🐍 Jogo da Cobrinha</h2>
+    <input type="text" id="playerName" placeholder="Seu nome (ex: Matheus123)">
+    <input type="text" id="playerRoom" placeholder="Sala (ex: 8A)">
+    <br>
+    <button id="jogar">JOGAR ▶️</button>
+  </div>
+
+  <!-- Tela do Jogo -->
+  <div id="gameScreen">
+    <canvas id="gameCanvas" width="500" height="500"></canvas>
+    <br>
+    <button id="tabelaBtn">📊 Tabela</button>
+  </div>
+
+  <!-- Tela de Morte -->
+  <div id="gameOverScreen">
+    <h2 style="color:red;">💀 VOCÊ MORREU! 💀</h2>
+    <p id="finalScore"></p>
+    <button id="restart">🔄 RECOMEÇAR</button>
+  </div>
+
+  <!-- Leaderboard -->
+  <div id="tabelaFrame">
+    <h3>🏆 Leaderboard</h3>
+    <ul id="scoreList"></ul>
+  </div>
+
 </div>
 
-<button id="tabelaBtn">Tabela</button>
-<div id="tabelaFrame">
-  <h3>Leaderboard</h3>
-  <ul id="leaderboard"></ul>
-</div>
-
-<canvas id="gameCanvas" width="400" height="400"></canvas>
-
-<div id="gameOver">
-  <div id="gameOverText">VOCÊ MORREU!</div>
-  <div id="finalScore"></div>
-  <button id="restart">Recomeçar</button>
-</div>
-
-<a href="processo.html" class="btn" style="margin-top:30px;">Voltar para Processo</a>
-
-<audio id="comerSom">
-  <source src="https://www.soundjay.com/button/beep-07.wav" type="audio/wav">
-</audio>
+<!-- Sons -->
+<audio id="appleSound"><source src="https://www.soundjay.com/button/sounds/button-10.mp3" type="audio/mpeg"></audio>
+<audio id="buttonClickSound"><source src="https://www.soundjay.com/button/sounds/button-09.mp3" type="audio/mpeg"></audio>
 
 <script>
-  const canvas=document.getElementById('gameCanvas');
-  const ctx=canvas.getContext('2d');
-  let snake=[], direction, apple, score, gameInterval, isGameRunning=false;
-  const grid=20;
+  // DOM Elements
+  const startScreen = document.getElementById('startScreen');
+  const gameScreen = document.getElementById('gameScreen');
+  const gameOverScreen = document.getElementById('gameOverScreen');
+  const jogarBtn = document.getElementById('jogar');
+  const restartBtn = document.getElementById('restart');
+  const tabelaBtn = document.getElementById('tabelaBtn');
+  const tabelaFrame = document.getElementById('tabelaFrame');
+  const scoreList = document.getElementById('scoreList');
+  const finalScore = document.getElementById('finalScore');
+  const appleSound = document.getElementById('appleSound');
+  const buttonClickSound = document.getElementById('buttonClickSound');
 
-  const playerNameInput=document.getElementById('playerName');
-  const playerRoomInput=document.getElementById('playerRoom');
-  const jogarBtn=document.getElementById('jogar');
-  const tabelaBtn=document.getElementById('tabelaBtn');
-  const tabelaFrame=document.getElementById('tabelaFrame');
-  const gameOverDiv=document.getElementById('gameOver');
-  const finalScoreDiv=document.getElementById('finalScore');
-  const restartBtn=document.getElementById('restart');
-  const comerSom=document.getElementById('comerSom');
+  let playerName = '';
+  let playerRoom = '';
+  let canvas, ctx;
+  let snake, direction, apple, score;
+  let gameInterval;
+  let leaderboard = JSON.parse(localStorage.getItem('snakeLeaderboard') || '[]');
 
-  // Carregar leaderboard do localStorage
-  let leaderboard = JSON.parse(localStorage.getItem('snakeLeaderboard')) || [];
+  // Start Game
+  jogarBtn.addEventListener('click', () => {
+    buttonClickSound.play();
+    playerName = document.getElementById('playerName').value || 'Jogador';
+    playerRoom = document.getElementById('playerRoom').value || 'Sala1';
+    startScreen.style.display = 'none';
+    gameScreen.style.display = 'block';
+    initGame();
+  });
 
-  function saveLeaderboard(){
-    localStorage.setItem('snakeLeaderboard', JSON.stringify(leaderboard));
+  // Restart Game
+  restartBtn.addEventListener('click', () => {
+    buttonClickSound.play();
+    gameOverScreen.style.display = 'none';
+    startScreen.style.display = 'block';
+    tabelaFrame.classList.remove('show');
+  });
+
+  // Toggle leaderboard com animação
+  tabelaBtn.addEventListener('click', () => {
+    buttonClickSound.play();
+    tabelaFrame.classList.toggle('show');
+    updateLeaderboard();
+  });
+
+  function initGame() {
+    canvas = document.getElementById('gameCanvas');
+    ctx = canvas.getContext('2d');
+    snake = [{x:10, y:10}];
+    direction = 'RIGHT';
+    score = 0;
+    placeApple();
+    document.addEventListener('keydown', handleKey);
+    clearInterval(gameInterval);
+    gameInterval = setInterval(gameLoop, 100);
   }
 
-  function resetGame(){
-    snake=[{x:8,y:8}];
-    direction='RIGHT';
-    apple=randomPosition();
-    score=0;
-    isGameRunning=false;
-    ctx.clearRect(0,0,canvas.width,canvas.height);
+  function handleKey(e) {
+    const key = e.key;
+    if(key === 'ArrowUp' && direction !== 'DOWN') direction = 'UP';
+    if(key === 'ArrowDown' && direction !== 'UP') direction = 'DOWN';
+    if(key === 'ArrowLeft' && direction !== 'RIGHT') direction = 'LEFT';
+    if(key === 'ArrowRight' && direction !== 'LEFT') direction = 'RIGHT';
   }
 
-  function randomPosition(){
-    return {x:Math.floor(Math.random()*20),y:Math.floor(Math.random()*20)};
-  }
-
-  function draw(){
-    ctx.fillStyle='#111';
-    ctx.fillRect(0,0,canvas.width,canvas.height);
-
-    ctx.fillStyle='red';
-    ctx.fillRect(apple.x*grid,apple.y*grid,grid,grid);
-
-    ctx.fillStyle='lime';
-    snake.forEach((s)=>ctx.fillRect(s.x*grid,s.y*grid,grid-1,grid-1));
-  }
-
-  function update(){
-    const head={...snake[0]};
-    if(direction==='LEFT') head.x--;
-    if(direction==='RIGHT') head.x++;
-    if(direction==='UP') head.y--;
-    if(direction==='DOWN') head.y++;
-
-    if(head.x<0 || head.x>=canvas.width/grid || head.y<0 || head.y>=canvas.height/grid || snake.some(s=>s.x===head.x && s.y===head.y)){
+  function gameLoop() {
+    const head = {...snake[0]};
+    if(direction === 'UP') head.y--;
+    if(direction === 'DOWN') head.y++;
+    if(direction === 'LEFT') head.x--;
+    if(direction === 'RIGHT') head.x++;
+    
+    // Check collision
+    if(head.x < 0 || head.x >= 25 || head.y < 0 || head.y >= 25 || snake.some(seg => seg.x === head.x && seg.y === head.y)) {
       gameOver();
       return;
     }
 
     snake.unshift(head);
 
-    if(head.x===apple.x && head.y===apple.y){
+    // Eat apple
+    if(head.x === apple.x && head.y === apple.y){
       score++;
-      comerSom.play();
-      apple=randomPosition();
-    }else{
+      appleSound.play();
+      placeApple();
+    } else {
       snake.pop();
     }
 
-    draw();
+    drawGame();
   }
 
-  function gameOver(){
-    isGameRunning=false;
+  function placeApple() {
+    apple = {x: Math.floor(Math.random()*25), y: Math.floor(Math.random()*25)};
+    if(snake.some(seg => seg.x === apple.x && seg.y === apple.y)) placeApple();
+  }
+
+  function drawGame() {
+    ctx.fillStyle = '#0a1f44';
+    ctx.fillRect(0,0,canvas.width,canvas.height);
+
+    ctx.fillStyle = '#ff0000';
+    ctx.fillRect(apple.x*20, apple.y*20, 20, 20);
+
+    ctx.fillStyle = '#00ff00';
+    snake.forEach(seg => ctx.fillRect(seg.x*20, seg.y*20, 20, 20));
+  }
+
+  function gameOver() {
     clearInterval(gameInterval);
-    finalScoreDiv.innerHTML=`${playerNameInput.value} - Pontos: ${score}`;
-    gameOverDiv.style.display='flex';
-    leaderboard.push({name:playerNameInput.value, room:playerRoomInput.value, score:score});
-    saveLeaderboard();
-    updateLeaderboard();
+    gameScreen.style.display = 'none';
+    gameOverScreen.style.display = 'block';
+    finalScore.innerText = `${playerName} (Sala: ${playerRoom}) - Pontos: ${score}`;
+
+    // Save to leaderboard
+    leaderboard.push({name: playerName, room: playerRoom, score});
+    leaderboard.sort((a,b) => b.score - a.score);
+    localStorage.setItem('snakeLeaderboard', JSON.stringify(leaderboard));
   }
 
-  function updateLeaderboard(){
-    const ul=document.getElementById('leaderboard');
-    ul.innerHTML='';
-    leaderboard.sort((a,b)=>b.score-a.score);
-    leaderboard.forEach(item=>{
-      const li=document.createElement('li');
-      li.textContent=`${item.name} | Sala: ${item.room} | Pontos: ${item.score}`;
-      ul.appendChild(li);
+  function updateLeaderboard() {
+    scoreList.innerHTML = '';
+    leaderboard.forEach(entry => {
+      const li = document.createElement('li');
+      li.innerText = `${entry.name} (Sala: ${entry.room}) - ${entry.score} pts`;
+      scoreList.appendChild(li);
     });
   }
 
-  function startGame(){
-    if(playerNameInput.value.trim()==='' || playerRoomInput.value.trim()===''){
-      alert('Digite nome e sala para jogar!');
-      return;
-    }
-    resetGame();
-    isGameRunning=true;
-    gameInterval=setInterval(update,150);
-    document.getElementById('entrada').style.display='none';
-  }
-
-  document.addEventListener('keydown',(e)=>{
-    if(!isGameRunning && e.code==='Space'){
-      startGame();
-    }
-    if(e.code==='ArrowUp' && direction!=='DOWN') direction='UP';
-    if(e.code==='ArrowDown' && direction!=='UP') direction='DOWN';
-    if(e.code==='ArrowLeft' && direction!=='RIGHT') direction='LEFT';
-    if(e.code==='ArrowRight' && direction!=='LEFT') direction='RIGHT';
-  });
-
-  jogarBtn.addEventListener('click',()=>{startGame();});
-  restartBtn.addEventListener('click',()=>{
-    gameOverDiv.style.display='none';
-    document.getElementById('entrada').style.display='flex';
-    playerNameInput.value='';
-    playerRoomInput.value='';
-  });
-
-  tabelaBtn.addEventListener('click',()=>{
-    if(tabelaFrame.style.display==='none'){
-      tabelaFrame.style.display='block';
-      tabelaFrame.style.transform='translateY(-20px)';
-      setTimeout(()=>{tabelaFrame.style.transform='translateY(0)';},50);
-    }else{
-      tabelaFrame.style.display='none';
-    }
-  });
-
-  // Mostrar leaderboard quando abrir a página
-  updateLeaderboard();
-
+  // Show start screen initially
+  startScreen.style.display = 'block';
 </script>
+
 </body>
 </html>
