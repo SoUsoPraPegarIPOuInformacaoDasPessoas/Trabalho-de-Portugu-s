@@ -115,5 +115,53 @@ footer{text-align:center;padding:14px;margin-top:26px;background:linear-gradient
     });
   });
 </script>
+  <!-- Script do player do YouTube -->
+<script src="https://www.youtube.com/iframe_api"></script>
+<script>
+let player;
+let isPlaying = false;
+
+// Cria o player oculto
+function onYouTubeIframeAPIReady() {
+  player = new YT.Player('player', {
+    height: '0',
+    width: '0',
+    videoId: 'PCBc4ODob5k', // ID do vídeo
+    playerVars: {
+      'autoplay': 0,
+      'controls': 0,
+      'rel': 0
+    },
+    events: {
+      'onReady': onPlayerReady,
+      'onStateChange': onPlayerStateChange
+    }
+  });
+}
+
+// Botão toca música
+function onPlayerReady(event) {
+  const button = document.getElementById('playButton');
+  button.addEventListener('click', () => {
+    if (!isPlaying) {
+      player.playVideo();
+      isPlaying = true;
+      button.innerText = '🔊 Música Tocando...';
+    }
+  });
+}
+
+// Loop quando terminar
+function onPlayerStateChange(event) {
+  if (event.data === YT.PlayerState.ENDED) {
+    player.seekTo(0);
+    player.playVideo();
+  }
+}
+</script>
+
+<!-- Div oculta do player -->
+<div id="player" style="display:none;"></div>
+
 </body>
 </html>
