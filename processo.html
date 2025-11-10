@@ -3,102 +3,67 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Processo de Programação — Bacon News 8ºA</title>
+<title>Processo de Criação — Jogo da Cobrinha</title>
 <style>
-:root{
-  --red:#d62828; --orange:#f77f00; --light:#fff8f6; --card:#fff; --blue:#1e90ff; --blue-light:#add8e6;
-}
-body{
-  margin:0; font-family:"Segoe UI", Roboto, Arial, sans-serif; background:#fff8f6; color:#111;
-}
-header{
-  background: linear-gradient(90deg,var(--red),var(--orange));
-  color:white; padding:22px; text-align:center; border-bottom:4px solid rgba(0,0,0,0.05);
-}
-header h1{margin:0;font-size:1.7rem;}
-main{max-width:1150px;margin:28px auto;padding:22px;}
-article{
-  background:#fff; padding:22px; border-radius:14px; border:3px solid #ff4d4d;
-  box-shadow:0 8px 30px rgba(255,77,77,0.08); margin-bottom:22px;
-}
-h2{color:var(--red); text-align:center;}
-h3{color:#444; margin-bottom:12px;}
-p{line-height:1.7; font-size:1.05rem; text-align:justify; color:#222;}
-.frame-codigo{
-  background:var(--blue-light); border:4px solid var(--blue); border-radius:12px;
-  padding:16px; font-family:monospace; white-space:pre-wrap; overflow-x:auto; margin:18px 0;
-}
-.botoes{display:flex; gap:12px; justify-content:center; flex-wrap:wrap; margin-top:18px;}
-.btn{
-  background:linear-gradient(90deg,var(--red),#ff6b6b);
-  color:white; padding:10px 18px; border-radius:10px;
-  text-decoration:none; font-weight:700; display:inline-block;
-}
-.btn:hover{transform:translateY(-3px);box-shadow:0 8px 20px rgba(214,40,40,0.12);}
-footer{text-align:center;padding:14px;margin-top:26px;background:linear-gradient(90deg,var(--red),var(--orange));color:white;border-top:4px solid rgba(0,0,0,0.06);}
-@media(max-width:700px){
-  header h1{font-size:1.2rem;}
-}
+  body {
+    margin:0;
+    font-family: Arial, sans-serif;
+    background-color: #001f3f; /* azul escuro */
+    color: #fff;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    padding:20px;
+  }
+  h1{
+    font-size:2.5rem;
+    margin-bottom:20px;
+    border:3px solid #7FDBFF; /* azul claro */
+    padding:10px 20px;
+    border-radius:12px;
+  }
+  .content{
+    max-width:900px;
+    background:#003366; /* azul mais escuro */
+    border:3px solid #7FDBFF; 
+    padding:20px;
+    border-radius:12px;
+    line-height:1.6;
+  }
+  .button{
+    padding:12px 25px;
+    margin:10px 5px;
+    border-radius:12px;
+    border:2px solid #7FDBFF;
+    background: linear-gradient(90deg,#0074D9,#7FDBFF);
+    color:#000;
+    font-weight:bold;
+    cursor:pointer;
+    transition:0.3s;
+  }
+  .button:hover{
+    transform: scale(1.1);
+  }
 </style>
 </head>
 <body>
-<header>
-<h1>🖥 Processo de Programação — Matheus Máximo & Marcos Guilherme 8ºA</h1>
-</header>
 
-<main>
-<article>
-<h2>Trabalho Escolar: Desenvolvimento do Site e Minigame</h2>
-<p>Este site foi criado como trabalho escolar pela dupla Matheus Máximo e Marcos Guilherme — 8ºA. O desenvolvimento envolveu pesquisa, design e programação.</p>
-<p>Antes de começar a codar, houve uma reunião com a professora responsável de Português, Sheila, onde definimos o tema, o formato da página e as responsabilidades:</p>
+<h1>Processo de Criação</h1>
+
+<div class="content">
+<p>Este site foi criado como trabalho escolar pela dupla <strong>Matheus Máximo e Marcos Guilherme — 8ºA</strong>. O desenvolvimento envolveu pesquisa, design e programação. Antes de começar a codar, tivemos uma reunião com nossa professora <strong>Sheila</strong> (Português) para definir tema, formato da página e responsabilidades:</p>
+
 <ul>
-<li><strong>Matheus:</strong> responsável pela programação, layout e interatividade (JavaScript, HTML e CSS).</li>
-<li><strong>Marcos:</strong> pesquisa sobre o Festival Pacu Jalur e coleta de informações sobre o menino Rayyan Arkan Dikha.</li>
-<li><strong>Professora Sheila:</strong> orientações sobre fontes, formatação e entrega do trabalho.</li>
+<li><strong>Matheus</strong> → programação, layout e interatividade (HTML, CSS, JS).</li>
+<li><strong>Marcos</strong> → pesquisa sobre o Festival Pacu Jalur e Rayyan.</li>
+<li><strong>Professora</strong> → orientações sobre fontes, formatação e entrega.</li>
 </ul>
-<p>Conversamos sobre como deixar a matéria informativa e atraente: títulos chamativos, imagens, vídeos e até um minigame para tornar a apresentação mais interativa. Também definimos a seção "Créditos" e links entre páginas (notícia → processo → jogo).</p>
-</article>
 
-<article>
-<h2>Exemplo de Código HTML Utilizado</h2>
-<p>Para demonstrar a programação, incluímos um frame de código com cores combinando com o layout:</p>
-<div class="frame-codigo">
-&lt;!DOCTYPE html&gt;<br>
-&lt;html lang="pt-BR"&gt;<br>
-&lt;head&gt;<br>
-&nbsp;&nbsp;&lt;meta charset="utf-8" /&gt;<br>
-&nbsp;&nbsp;&lt;title&gt;Jogo da Cobrinha&lt;/title&gt;<br>
-&nbsp;&nbsp;&lt;link rel="stylesheet" href="style.css"&gt;<br>
-&lt;/head&gt;<br>
-&lt;body&gt;<br>
-&nbsp;&nbsp;&lt;canvas id="game"&gt;&lt;/canvas&gt;<br>
-&nbsp;&nbsp;&lt;script src="snake.js"&gt;&lt;/script&gt;<br>
-&lt;/body&gt;<br>
-&lt;/html&gt;
-</div>
-<p>O frame acima simula como organizamos os arquivos HTML, CSS e JavaScript para criar o minigame da cobrinha interativo.</p>
-</article>
+<p>Conversamos sobre como deixar a matéria informativa e atraente: títulos chamativos, imagens, vídeos e até um minigame para deixar a apresentação mais interativa. Também definimos a seção "Créditos" e os links entre páginas (notícia → processo → jogo).</p>
 
-<article>
-<h2>Planejamento e Testes</h2>
-<p>Durante o desenvolvimento, foram realizados testes constantes para verificar:</p>
-<ul>
-<li>Funcionalidade dos botões de navegação.</li>
-<li>Embutimento correto de vídeos e imagens.</li>
-<li>Execução do minigame em modo Solo e 1 vs 1.</li>
-<li>Leaderboard salvando pontuações de diferentes jogadores.</li>
-<li>Sons de efeitos ao comer maçã e movimentar a cobrinha.</li>
-</ul>
-<p>Todos esses elementos garantem que o usuário tenha uma experiência interativa completa e divertida, reforçando o aprendizado e o engajamento com o trabalho.</p>
-</article>
-
-<div class="botoes">
-<a href="index.html" class="btn">Voltar para a Notícia 📰</a>
-<a href="snake.html" class="btn">Ir para o Jogo da Cobrinha 🐍</a>
+<button class="button" onclick="location.href='snake.html'">Ir para o Jogo da Cobrinha 🐍</button>
+<button class="button" onclick="location.href='index.html'">Voltar para a Página Inicial 🏠</button>
 </div>
 
-<footer>
-<p>© 2025 Bacon News — Todos os direitos reservados.</p>
-</footer>
 </body>
 </html>
