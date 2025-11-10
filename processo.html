@@ -1,47 +1,138 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Processo de Programação — Dupla 8ºA</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Processo de Programação — Menino da Canoa</title>
 <style>
-  body{margin:0;font-family: "Segoe UI", Roboto, Arial, sans-serif;background:#000;color:#dff7ff}
-  .wrap{max-width:900px;margin:40px auto;padding:28px;border:4px solid #00b4ff;border-radius:14px;background:#070707;box-shadow:0 0 30px rgba(0,180,255,0.08)}
-  h1{color:#00b4ff;margin:0 0 10px}
-  p{line-height:1.7;color:#cfefff}
-  .buttons{display:flex;gap:12px;justify-content:center;margin-top:22px}
-  .btn{padding:12px 20px;border-radius:10px;text-decoration:none;font-weight:700;cursor:pointer}
-  .btn-primary{background:#00b4ff;color:#000}
-  .btn-secondary{background:linear-gradient(90deg,#ff6b6b,#ff4d4d);color:white}
-  .back{display:block;text-align:center;margin-top:14px;color:#00b4ff;text-decoration:none}
-  @media(max-width:600px){.wrap{margin:18px;padding:18px}}
+  :root{
+    --blue:#1e90ff; 
+    --orange:#f77f00; 
+    --black:#111; 
+    --light:#fff;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    font-family:"Segoe UI", Roboto, Arial, sans-serif;
+    background:#111;
+    color:#eee;
+  }
+  header{
+    background:linear-gradient(90deg,#1e90ff,#00bfff);
+    color:white;
+    padding:20px;
+    text-align:center;
+    border-bottom:4px solid rgba(0,0,0,0.2);
+  }
+  header h1{margin:0;font-size:1.8rem;}
+  main{max-width:1000px;margin:28px auto;padding:22px;}
+  article{
+    background:#000;
+    border:4px solid #1e90ff;
+    border-radius:12px;
+    padding:22px;
+    line-height:1.7;
+  }
+  h2{color:#1e90ff;text-align:center;margin-bottom:12px;}
+  h3{color:#f77f00;margin-top:20px;}
+  .code-frame{
+    background:#111;
+    border:3px solid #1e90ff;
+    border-radius:10px;
+    padding:12px;
+    overflow-x:auto;
+    margin:16px 0;
+    font-family:monospace;
+    white-space:pre-wrap;
+    color:#0f0;
+  }
+  .botoes{
+    display:flex;
+    gap:12px;
+    justify-content:center;
+    margin-top:22px;
+  }
+  .btn{
+    background:linear-gradient(90deg,#1e90ff,#00bfff);
+    color:white;
+    padding:10px 18px;
+    border-radius:10px;
+    text-decoration:none;
+    font-weight:700;
+  }
+  .btn:hover{
+    transform:translateY(-3px);
+    box-shadow:0 8px 20px rgba(30,144,255,0.3);
+  }
+  footer{
+    text-align:center;
+    padding:14px;
+    margin-top:26px;
+    background:linear-gradient(90deg,#1e90ff,#00bfff);
+    color:white;
+    border-top:4px solid rgba(0,0,0,0.2);
+  }
 </style>
 </head>
 <body>
-  <div class="wrap">
-    <h1>💻 Processo de Programação</h1>
+<header>
+  <h1>Processo de Programação — Menino da Canoa</h1>
+</header>
 
+<main>
+  <article>
+    <h2>Como foi a programação do site</h2>
     <p>
-      Este site foi criado como trabalho escolar pela dupla <strong>Matheus Máximo</strong> e <strong>Marcos Guilherme</strong> — 8ºA.
-      O desenvolvimento envolveu pesquisa, design e programação.
-      <br><br>
-      Antes de começar a codar houve uma reunião com a professora responsável, <strong>a nossa professora</strong>, onde definimos o tema, o formato da página e as responsabilidades:
-      <ul style="text-align:left;color:#cfefff;max-width:760px;margin:12px auto 0;padding-left:18px">
-        <li><strong>Matheus</strong> → responsável pela programação, layout e interatividade (JavaScript, HTML e CSS).</li>
-        <li><strong>Marcos</strong> → ficou com a pesquisa sobre o Festival Pacu Jalur e coletou informações sobre o menino Rayyan Arkan Dikha.</li>
-        <li><strong>Professora</strong> → orientações sobre fontes, formatação e entrega do trabalho.</li>
-      </ul>
-      <br>
-      Conversamos sobre como deixar a matéria informativa e atraente: títulos chamativos, imagens, vídeos e até um minigame para deixar a apresentação mais interativa.
-      Também definimos a seção "Créditos" e os links entre páginas (notícia → processo → jogo).
+      Este site foi criado como trabalho escolar pela dupla <strong>Matheus Máximo e Marcos Guilherme — 8ºA</strong>. O desenvolvimento envolveu pesquisa, design e programação.
     </p>
 
-    <div class="buttons">
-      <a class="btn btn-primary" href="jogo.html">🎮 Ir para o jogo da cobrinha</a>
-      <a class="btn btn-secondary" href="index.html">⬅ Voltar à notícia</a>
+    <h3>Reunião inicial</h3>
+    <p>
+      Antes de começar a codar houve uma reunião com a professora responsável, <strong>Sheila (Português)</strong>, comigo, Matheus, e Marcos. 
+      Definimos o tema, o formato da página e as responsabilidades:
+    </p>
+    <ul>
+      <li><strong>Matheus:</strong> programação, layout e interatividade (JavaScript, HTML e CSS).</li>
+      <li><strong>Marcos:</strong> pesquisa sobre o Festival Pacu Jalur e coleta de informações sobre o menino Rayyan Arkan Dikha.</li>
+      <li><strong>Professora Sheila:</strong> orientações sobre fontes, formatação e entrega do trabalho.</li>
+    </ul>
+    <p>
+      Conversamos sobre como deixar a matéria informativa e atraente: títulos chamativos, imagens, vídeos e até um minigame para deixar a apresentação mais interativa. Também definimos a seção "Créditos" e os links entre páginas (notícia → processo → jogo).
+    </p>
+
+    <h3>O código da programação</h3>
+    <div class="code-frame">
+&lt;!DOCTYPE html&gt;<br>
+&lt;html lang="pt-BR"&gt;<br>
+&lt;head&gt;<br>
+&lt;meta charset="utf-8" /&gt;<br>
+&lt;meta name="viewport" content="width=device-width,initial-scale=1" /&gt;<br>
+&lt;title&gt;Menino da Canoa — Estrela da Indonésia&lt;/title&gt;<br>
+&lt;style&gt;<br>
+  :root{<br>
+    --red:#d62828; --orange:#f77f00; --light:#fff8f6; --card:#fff;<br>
+  }<br>
+  *{box-sizing:border-box}<br>
+  body{margin:0;font-family: "Segoe UI", Roboto, Arial, sans-serif;background: linear-gradient(180deg,#fff6f6,#fff);color:#111;}<br>
+  /* ... resto do código ... */<br>
+&lt;/style&gt;<br>
+&lt;/head&gt;<br>
+&lt;body&gt;<br>
+  &lt;!-- Conteúdo do site... --&gt;<br>
+&lt;/body&gt;<br>
+&lt;/html&gt;
     </div>
 
-    <a class="back" href="index.html">Voltar para a página inicial</a>
-  </div>
+    <div class="botoes">
+      <a href="index.html" class="btn">Voltar à Notícia</a>
+      <a href="jogo.html" class="btn">Ir para o Jogo da Cobrinha</a>
+    </div>
+  </article>
+</main>
+
+<footer>
+  <p>© 2025 Matheus Máximo e Marcos Guilherme — 8ºA — Todos os direitos reservados.</p>
+</footer>
 </body>
 </html>
