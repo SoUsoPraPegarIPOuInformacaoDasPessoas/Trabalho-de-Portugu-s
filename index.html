@@ -34,30 +34,40 @@ article{
 .subtitulo{text-align:center;color:#444;margin-bottom:18px}
 .corpo{line-height:1.7;font-size:1.05rem;text-align:justify;color:#222}
 .videos{margin-top:22px;padding:18px;border-radius:12px;background:#fff7f0;border:3px solid #f77f00;text-align:center}
+.videoContainer {
+  display: inline-block;
+  text-align: center;
+  margin: 10px;
+}
+.videoLabel {
+  font-weight: 700;
+  color: #d62828;
+  margin-bottom: 6px;
+}
 .videos iframe{border-radius:10px;margin:6px}
-.videoLabel{font-weight:700;margin-top:10px;margin-bottom:6px;color:#d62828;}
 .imagensJogo{display:flex; gap:15px; justify-content:center; margin-top:20px; flex-wrap:wrap;}
 .imagensJogo img{border:3px solid #00aaff; border-radius:8px; width:200px;}
 .creditos{margin-top:18px;text-align:left;font-style:italic;background:#fff5f5;padding:10px;border-radius:8px}
 .botoes{display:flex;gap:12px;justify-content:center;margin-top:18px;flex-wrap:wrap}
 .btn{background:linear-gradient(90deg,var(--red),#ff6b6b);color:white;padding:10px 18px;border-radius:10px;text-decoration:none;font-weight:700;transition:0.3s}
 .btn:hover{transform:translateY(-3px);box-shadow:0 8px 20px rgba(214,40,40,0.12)}
-#playButton{
-  background: linear-gradient(90deg,#d62828,#ff6b6b);
-  color:white;
+footer{text-align:center;padding:14px;margin-top:26px;background:linear-gradient(90deg,var(--red),var(--orange));color:white;border-top:4px solid rgba(0,0,0,0.06)}
+#playButton {
+  display:block;
+  margin: 18px auto 0;
   padding:10px 18px;
+  background: linear-gradient(90deg,var(--red),#ff6b6b);
+  color:white;
+  font-weight:700;
   border:none;
   border-radius:10px;
-  font-weight:700;
   cursor:pointer;
   transition:0.3s;
-  margin-top:12px;
 }
 #playButton:hover{
   transform:translateY(-3px);
   box-shadow:0 8px 20px rgba(214,40,40,0.12);
 }
-footer{text-align:center;padding:14px;margin-top:26px;background:linear-gradient(90deg,var(--red),var(--orange));color:white;border-top:4px solid rgba(0,0,0,0.06)}
 @media(max-width:700px){
   header h1{font-size:1.2rem}
   #searchBar{width:78%}
@@ -95,35 +105,58 @@ footer{text-align:center;padding:14px;margin-top:26px;background:linear-gradient
 </section>
 
 <p>A magia de Rayyan combinada à tradição do festival fez com que escolas locais mencionassem o episódio, canais internacionais repercutissem a história e muitos visitantes buscassem conhecer o festival pessoalmente. A repercussão chegou até plataformas de streaming e canais de games, motivando jogadores e youtubers a criarem desafios relacionados à dança e à canoa.</p>
+
+<p>O fenômeno do menino da canoa exemplifica como tradição, alegria e internet podem se misturar, inspirando jovens a celebrarem suas culturas com autenticidade. O impacto cultural e digital do vídeo reforçou a importância de iniciativas que unem entretenimento e educação, criando experiências únicas tanto no mundo real quanto no virtual.</p>
+
+<p>O conteúdo viral também foi incorporado em redes sociais, fóruns e transmissões ao vivo de jogos, mostrando que a influência de pequenas ações pode ser global. Além disso, a história incentivou debates sobre preservação cultural, engajamento juvenil e criatividade nos meios digitais.</p>
+
+<p>Em resumo, Rayyan Arkan Dikha se tornou um símbolo de como momentos autênticos podem ganhar o mundo, influenciar jogos, plataformas digitais e escolas, e conectar pessoas através da tradição e diversão.</p>
 </div>
 
 <div class="videos">
-  <div class="videoLabel">Versão americana</div>
-  <iframe width="300" height="170" src="https://www.youtube.com/embed/R-HpiLDRfmA" allowfullscreen></iframe>
-  
-  <div class="videoLabel">A História Por Trás do Meme</div>
-  <iframe width="300" height="170" src="https://www.youtube.com/embed/gzmkVwwVNfg" allowfullscreen></iframe>
-  
-  <div class="videoLabel">Versão brasileira</div>
-  <iframe width="300" height="170" src="https://www.youtube.com/embed/JFr3Pp6N4gA" allowfullscreen></iframe>
+  <div class="videoContainer">
+    <div class="videoLabel">Versão americana</div>
+    <iframe width="300" height="170" src="https://www.youtube.com/embed/R-HpiLDRfmA" allowfullscreen></iframe>
+  </div>
+
+  <div class="videoContainer">
+    <div class="videoLabel">A História Por Trás do Meme</div>
+    <iframe width="300" height="170" src="https://www.youtube.com/embed/gzmkVwwVNfg" allowfullscreen></iframe>
+  </div>
+
+  <div class="videoContainer">
+    <div class="videoLabel">Versão brasileira</div>
+    <iframe width="300" height="170" src="https://www.youtube.com/embed/JFr3Pp6N4gA" allowfullscreen></iframe>
+  </div>
 </div>
 
 <div class="botoes">
-  <a href="snake.html" class="btn">Ir para o Jogo da Cobrinha 🐍</a>
-  <a href="processo.html" class="btn">Ver Processo de Programação 💻</a>
-  <a href="pagina2.html" class="btn">Página 2 ➡️</a>
+<a href="snake.html" class="btn">Ir para o Jogo da Cobrinha 🐍</a>
+<a href="processo.html" class="btn">Ver Processo de Programação 💻</a>
+<a href="pagina2.html" class="btn">Página 2 ➡️</a>
 </div>
 
-<!-- Botão de música logo abaixo dos outros botões -->
-<div style="display:flex; justify-content:center;">
-  <button id="playButton">🎵 Tocar Música</button>
-</div>
+<!-- Botão Tocar Música -->
+<button id="playButton">Tocar Música 🔊</button>
 
 <div class="creditos">
 <p>Matheus Máximo e Marcos Guilherme - 8ºA Direitos Reservados.</p>
 </div>
 </main>
 
+<!-- Script imagens -->
+<script>
+window.addEventListener('load', () => {
+  const imgs = document.querySelectorAll('img');
+  imgs.forEach(img => {
+    const src = img.getAttribute('src');
+    img.setAttribute('src', src);
+    img.style.display = 'block';
+  });
+});
+</script>
+
+<!-- Player do YouTube -->
 <script src="https://www.youtube.com/iframe_api"></script>
 <script>
 let player;
@@ -134,11 +167,8 @@ function onYouTubeIframeAPIReady() {
     height: '0',
     width: '0',
     videoId: 'PCBc4ODob5k',
-    playerVars: { 'autoplay': 0, 'controls': 0, 'rel': 0 },
-    events: {
-      'onReady': onPlayerReady,
-      'onStateChange': onPlayerStateChange
-    }
+    playerVars: {'autoplay':0,'controls':0,'rel':0},
+    events: {'onReady': onPlayerReady,'onStateChange': onPlayerStateChange}
   });
 }
 
@@ -154,14 +184,14 @@ function onPlayerReady(event) {
 }
 
 function onPlayerStateChange(event) {
-  if (event.data === YT.PlayerState.ENDED) {
+  if(event.data === YT.PlayerState.ENDED) {
     player.seekTo(0);
     player.playVideo();
   }
 }
 </script>
 
-<!-- Div oculta do player -->
+<!-- Div do player oculto -->
 <div id="player" style="display:none;"></div>
 
 </body>
