@@ -58,7 +58,7 @@ footer{text-align:center;padding:14px;margin-top:26px;background:linear-gradient
 
 <main>
 <section class="banner">
-<img src="https://upload.wikimedia.org/wikipedia/commons/3/3f/News_paper_banner.jpg" alt="Trabalho Escolar">
+<img src="https://upload.wikimedia.org/wikipedia/commons/3/3f/News_paper_banner.jpg" alt="Trabalho Escolar" loading="eager">
 <p><strong>ATENÇÃO ALUNOS:</strong> Trabalho escolar sobre o festival de canoas Pacu Jalur e o menino que encantou o público.</p>
 </section>
 
@@ -73,9 +73,9 @@ footer{text-align:center;padding:14px;margin-top:26px;background:linear-gradient
 
 <!-- Imagens do Bambu Bambu Sahur -->
 <section class="imagensJogo">
-  <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSzC7S2XqGmWdkrORIT_hQjPJRnlzCD3vU8fA&s" alt="Imagem 1 Bambu Bambu Sahur">
-  <img src="https://static.wikia.nocookie.net/stealabr/images/0/0b/Bambu_Bambu_Sahur.png/revision/latest/scale-to-width-down/250?cb=20251018122041" alt="Imagem 2 Bambu Bambu Sahur">
-  <img src="https://techwiser.com/wp-content/uploads/2025/10/How-to-Get-Bambu-Bambu-Sahur-in-Steal-a-Brainrot.webp" alt="Imagem 3 Bambu Bambu Sahur">
+  <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSzC7S2XqGmWdkrORIT_hQjPJRnlzCD3vU8fA&s" alt="Imagem 1 Bambu Bambu Sahur" loading="eager">
+  <img src="https://static.wikia.nocookie.net/stealabr/images/0/0b/Bambu_Bambu_Sahur.png/revision/latest/scale-to-width-down/250?cb=20251018122041" alt="Imagem 2 Bambu Bambu Sahur" loading="eager">
+  <img src="https://techwiser.com/wp-content/uploads/2025/10/How-to-Get-Bambu-Bambu-Sahur-in-Steal-a-Brainrot.webp" alt="Imagem 3 Bambu Bambu Sahur" loading="eager">
 </section>
 
 <p>A magia de Rayyan combinada à tradição do festival fez com que escolas locais mencionassem o episódio, canais internacionais repercutissem a história e muitos visitantes buscassem conhecer o festival pessoalmente. A repercussão chegou até plataformas de streaming e canais de games, motivando jogadores e youtubers a criarem desafios relacionados à dança e à canoa.</p>
@@ -102,7 +102,18 @@ footer{text-align:center;padding:14px;margin-top:26px;background:linear-gradient
 <div class="creditos">
 <p>Matheus Máximo e Marcos Guilherme - 8ºA Direitos Reservados.</p>
 </div>
-
 </main>
+
+<script>
+  // Garante que todas as imagens carreguem imediatamente ao abrir a página
+  window.addEventListener('load', () => {
+    const imgs = document.querySelectorAll('img');
+    imgs.forEach(img => {
+      const src = img.getAttribute('src');
+      img.setAttribute('src', src); // força recarregamento
+      img.style.display = 'block';  // garante que a imagem apareça
+    });
+  });
+</script>
 </body>
 </html>
