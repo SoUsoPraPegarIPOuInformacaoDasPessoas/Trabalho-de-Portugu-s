@@ -1,15 +1,13 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Menino da Canoa — Estrela da Indonésia</title>
 <style>
   :root{
-    --red:#d62828;
-    --orange:#f77f00;
-    --light:#fff8f6;
-    --card:#fff;
+    --red:#d62828; --orange:#f77f00; --light:#fff8f6; --card:#fff;
+    --btn-bg:#00ccff; --btn-hover:#0099cc;
   }
   *{box-sizing:border-box}
   body{
@@ -20,176 +18,113 @@
   }
   header{
     background: linear-gradient(90deg,var(--red),var(--orange));
-    color:white;
-    padding:22px;
-    text-align:center;
+    color:white; padding:22px; text-align:center;
     border-bottom:4px solid rgba(0,0,0,0.05);
   }
   header h1{margin:0;font-size:1.7rem}
-  #searchBar{
-    margin-top:10px;
-    padding:9px 12px;
-    border-radius:10px;
-    border:none;
-    width:52%;
-    max-width:420px;
-  }
+  #searchBar{margin-top:10px;padding:9px 12px;border-radius:10px;border:none; width:52%; max-width:420px;}
   main{max-width:1150px;margin:28px auto;padding:22px}
-  .banner{
-    background:#fff3e0;
-    border:4px solid #ffb703;
-    padding:14px;
-    border-radius:12px;
-    text-align:center
-  }
+  .banner{background:#fff3e0;border:4px solid #ffb703;padding:14px;border-radius:12px;text-align:center}
   .banner img{width:100%;max-height:320px;object-fit:cover;border-radius:8px}
   article{
-    margin-top:20px;
-    background:var(--card);
-    padding:22px;
-    border-radius:14px;
-    border:3px solid #ff4d4d;
-    box-shadow:0 8px 30px rgba(255,77,77,0.08)
+    margin-top:20px;background:var(--card);padding:22px;border-radius:14px;
+    border:3px solid #ff4d4d; box-shadow:0 8px 30px rgba(255,77,77,0.08)
   }
-  .manchete{color:var(--red);font-size:1.9rem;text-align:center;margin:6px 0 4px}
+  .manchete{color:var(--red);font-size:2rem;text-align:center;margin:6px 0 4px}
   .subtitulo{text-align:center;color:#444;margin-bottom:18px}
-  .lide{
-    background:#ffecec;
-    padding:14px;
-    border-left:6px solid var(--red);
-    border-radius:8px;
-    margin-bottom:16px
-  }
-  .corpo{line-height:1.7;font-size:1.05rem;text-align:justify;color:#222;margin-bottom:18px}
-  .videos{
-    margin-top:22px;
-    padding:18px;
-    border-radius:12px;
-    background:#fff7f0;
-    border:3px solid #f77f00;
-    text-align:center
-  }
+  .lide{background:#ffecec;padding:14px;border-left:6px solid var(--red);border-radius:8px;margin-bottom:16px}
+  .corpo{line-height:1.7;font-size:1.05rem;text-align:justify;color:#222; margin-bottom:18px;}
+  .videos, .images, .programacao{margin-top:22px;padding:18px;border-radius:12px;background:#fff7f0;border:3px solid #f77f00;text-align:center}
   .videos iframe{border-radius:10px;margin:6px}
-  .imagens{
-    margin-top:20px;
-    display:flex;
-    flex-wrap:wrap;
-    justify-content:center;
-    gap:12px;
-  }
-  .imagens img{
-    width:200px;
-    border-radius:12px;
-    border:3px solid #87ceeb; /* azul bebê */
-  }
-  .creditos{
-    margin-top:18px;
-    text-align:right;
-    font-style:italic;
-    background:#fff5f5;
-    padding:10px;
-    border-radius:8px
-  }
-  .botoes{
-    display:flex;
-    gap:12px;
-    justify-content:center;
-    margin-top:18px
-  }
+  .images img{border-radius:10px; margin:8px; max-width:250px;}
+  .creditos{margin-top:18px;text-align:right;font-style:italic;background:#fff5f5;padding:10px;border-radius:8px}
+  .botoes{display:flex;gap:12px;justify-content:center;margin-top:18px}
   .btn{
-    background:linear-gradient(90deg,var(--red),#ff6b6b);
+    background: var(--btn-bg);
     color:white;
     padding:10px 18px;
     border-radius:10px;
     text-decoration:none;
     font-weight:700;
-    display:flex;
-    align-items:center;
-    gap:6px;
+    cursor:pointer;
+    font-size:1rem;
     transition:0.2s;
   }
   .btn:hover{
     transform:translateY(-3px);
-    box-shadow:0 8px 20px rgba(214,40,40,0.12);
+    background: var(--btn-hover);
   }
-  footer{
-    text-align:center;
-    padding:14px;
-    margin-top:26px;
-    background:linear-gradient(90deg,var(--red),var(--orange));
-    color:white;
-    border-top:4px solid rgba(0,0,0,0.06)
-  }
+  footer{text-align:center;padding:14px;margin-top:26px;background:linear-gradient(90deg,var(--red),var(--orange));color:white;border-top:4px solid rgba(0,0,0,0.06)}
   @media(max-width:700px){
     header h1{font-size:1.2rem}
     #searchBar{width:78%}
     .videos iframe{width:100% !important;height:200px !important}
-    .imagens img{width:45%}
+    .images img{max-width:100%;}
   }
 </style>
 </head>
 <body>
-<header>
-  <h1>📰 Matheus Máximo e Marcos Guilherme — Dupla 8ºA</h1>
-  <input id="searchBar" placeholder="Pesquisar no jornal..." />
-</header>
+  <header>
+    <h1>📰 Matheus Máximo e Marcos Guilherme — Dupla 8ºA</h1>
+    <input id="searchBar" placeholder="Pesquisar no jornal..." />
+  </header>
 
-<main>
-<section class="banner">
-  <img src="https://upload.wikimedia.org/wikipedia/commons/3/3f/News_paper_banner.jpg" alt="Trabalho Escolar">
-  <p><strong>ATENÇÃO ALUNOS:</strong> Trabalho escolar sobre o festival de canoas Pacu Jalur e o menino que encantou o público.</p>
-</section>
+  <main>
+    <section class="banner">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/3/3f/News_paper_banner.jpg" alt="Trabalho Escolar">
+      <p><strong>ATENÇÃO ALUNOS:</strong> Trabalho escolar sobre o festival de canoas Pacu Jalur e o menino que encantou o público.</p>
+    </section>
 
-<article>
-<h2 class="manchete">Menino da canoa viraliza e vira estrela da Indonésia 🌊</h2>
-<h3 class="subtitulo">A dança cheia de energia de Rayyan Arkan Dikha conquistou espectadores no festival Pacu Jalur e impactou a internet mundial.</h3>
+    <article>
+      <h2 class="manchete">Menino da canoa viraliza e vira estrela da Indonésia 🌊</h2>
+      <h3 class="subtitulo">A dança cheia de energia de Rayyan Arkan Dikha conquistou espectadores no festival Pacu Jalur.</h3>
 
-<div class="lide">
-  <strong>O que:</strong> Vídeo de um menino dançando em cima de uma canoa.<br>
-  <strong>Quem:</strong> Rayyan Arkan Dikha (Tukang Tari).<br>
-  <strong>Onde:</strong> Indonésia, festival Pacu Jalur.<br>
-  <strong>Quando:</strong> Festival Pacu Jalur — 20 a 24 de agosto de 2025.
-</div>
+      <div class="lide">
+        <strong>O que:</strong> Vídeo de um menino dançando em cima de uma canoa. <br>
+        <strong>Quem:</strong> Rayyan Arkan Dikha (Tukang Tari). <br>
+        <strong>Onde:</strong> Indonésia, festival Pacu Jalur. <br>
+        <strong>Quando:</strong> Festival Pacu Jalur — 20 a 24 de agosto de 2025.
+      </div>
 
-<p class="corpo">
-O tradicional Festival Pacu Jalur — que aconteceu entre 20 e 24 de agosto de 2025 — reúne centenas de remadores em corridas épicas de canoas ao longo dos rios da região. À frente de cada canoa costuma ficar o Tukang Tari, a criança que dança para motivar o time e o público. Neste ano, o destaque foi Rayyan Arkan Dikha, um menino que encantou espectadores por sua presença e ritmo.
+      <div class="corpo">
+        Este site foi criado como trabalho escolar pela dupla Matheus Máximo e Marcos Guilherme — 8ºA. 
+        O desenvolvimento envolveu pesquisa, design e programação. Antes de começar a codar houve uma reunião com a professora responsável, Sheila (Português), onde definimos o tema, o formato da página e as responsabilidades: <br>
+        <strong>Matheus:</strong> programação, layout e interatividade (JavaScript, HTML, CSS).<br>
+        <strong>Marcos:</strong> pesquisa sobre o Festival Pacu Jalur e coleta de informações sobre Rayyan Arkan Dikha.<br>
+        <strong>Professora:</strong> orientações sobre fontes, formatação e entrega do trabalho.<br><br>
+        Conversamos sobre como deixar a matéria informativa e atraente: títulos chamativos, imagens, vídeos e até um minigame para deixar a apresentação mais interativa. Também definimos a seção "Créditos" e os links entre páginas (notícia → processo → jogo).<br><br>
+        O tradicional Festival Pacu Jalur — que aconteceu entre 20 e 24 de agosto de 2025 — reúne centenas de remadores em corridas épicas de canoas. À frente de cada canoa fica o Tukang Tari, a criança que dança para motivar o time e o público. Neste ano, o destaque foi Rayyan Arkan Dikha, que encantou espectadores por sua presença e ritmo.<br><br>
+        Um vídeo em que Rayyan dança viralizou rapidamente: milhões de visualizações no TikTok, YouTube e Instagram. A repercussão gerou dezenas de outros vídeos imitando o garoto — pequenos tributos que mostraram como a alegria se espalha.<br><br>
+        Além da internet, Rayyan apareceu no jogo <strong>Steal a Brainrot</strong> (Português: <em>Roube um Brainrot</em>) e se tornou referência cultural, inspirando até o gameplay. Sua espontaneidade transformou o momento em símbolo: tradições locais ganham nova vida quando jovens as celebram com autenticidade. Escolas locais mencionaram o episódio em aulas de cultura; canais internacionais repercutiram; e visitantes decidiram conhecer o festival pessoalmente.<br><br>
+        Mais que um viral, o fenômeno do menino da canoa exemplifica como tradição, alegria e internet podem se misturar para dar voz à cultura e inspirar pessoas no mundo todo.
+      </div>
 
-Um vídeo em que Rayyan dança sobre a canoa, afirmando equilíbrio e entusiasmo, viralizou rapidamente: milhões de visualizações no TikTok, YouTube e Instagram. A repercussão gerou não só elogios, mas também dezenas de outros vídeos de criadores imitando o gesto do garoto — pequenos tributos que mostraram como a alegria se espalha. Além disso, o vídeo acabou aparecendo no popular jogo <strong>Steal a Brainrot</strong> (em português: <em>Roube um Brainrot</em>), sendo usado em corridas e vídeos dentro do jogo.
+      <div class="videos">
+        <h3>Vídeos do menino da canoa</h3>
+        <iframe width="300" height="170" src="https://www.youtube.com/embed/F3qWBh7jZZ0" title="Música Melly Mike" frameborder="0" allowfullscreen></iframe>
+        <iframe width="300" height="170" src="https://www.youtube.com/embed/gzmkVwwVNfg" title="Vídeo viral" frameborder="0" allowfullscreen></iframe>
+      </div>
 
-A espontaneidade de Rayyan combinada à magia do Pacu Jalur transformou esse momento em símbolo: tradições locais ganham nova vida quando jovens as celebram com autenticidade. Escolas locais passaram a mencionar o episódio em aulas de cultura; canais internacionais repercutiram a história; e muitos visitantes decidiram conhecer o festival pessoalmente.
+      <div class="images">
+        <h3>Imagens de referência no jogo</h3>
+        <img src="https://static.deltiasgaming.com/2025/07/Candy-Mutation-Guide-Image-via-Roblox-Corporation.jpg" alt="Candy Mutation">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSlbQCc5VHlOEzccfQlRYkpYEjEWBtsj3mCxg&s" alt="Brainrot game">
+        <img src="https://techwiser.com/wp-content/uploads/2025/10/How-to-Get-Bambu-Bambu-Sahur-in-Steal-a-Brainrot.webp" alt="Bambu Bambu Sahur">
+      </div>
 
-Mais que um viral, o fenômeno do menino da canoa exemplifica como tradição, alegria e internet podem se misturar para dar voz à cultura e inspirar pessoas mundo afora.
+      <div class="programacao">
+        <h3>Como foi a programação</h3>
+        <iframe srcdoc='<!DOCTYPE html><html><head><style>body{background:#cce7ff;color:#111;padding:12px;font-family:Arial;border:2px solid #00ccff;border-radius:10px;}</style></head><body><p>Reunião com a professora Sheila, Matheus e Marcos. Definimos responsabilidades e o formato da página, decidindo título, cores, layout, vídeos e minigame.</p></body></html>' width="100%" height="150"></iframe>
+      </div>
+    </article>
 
-Ouça a música que viralizou junto com o vídeo: <a href="https://www.youtube.com/watch?v=F3qWBh7jZZ0" target="_blank">Melly Mike — música do vídeo</a>.
-</p>
+    <div class="creditos">
+      <p>Créditos: Matheus Máximo, pdx,vts, Gurt editz</p>
+    </div>
+  </main>
 
-<div class="videos">
-  <h3>Assista aos vídeos que viralizaram 🎥</h3>
-  <iframe width="360" height="215" src="https://www.youtube.com/embed/ByRPMzmFoKU" title="Menino da Canoa 1" frameborder="0" allowfullscreen></iframe>
-  <iframe width="360" height="215" src="https://www.youtube.com/embed/JFr3Pp6N4gA" title="Menino da Canoa 2" frameborder="0" allowfullscreen></iframe>
-  <iframe width="360" height="215" src="https://www.youtube.com/embed/gzmkVwwVNfg" title="Menino da Canoa 3" frameborder="0" allowfullscreen></iframe>
-</div>
-
-<div class="imagens">
-  <img src="https://techwiser.com/wp-content/uploads/2025/10/How-to-Get-Bambu-Bambu-Sahur-in-Steal-a-Brainrot.webp" alt="Bambu Bambu Sahur 1">
-  <img src="https://static.wikia.nocookie.net/stealabr/images/0/0b/Bambu_Bambu_Sahur.png/revision/latest/scale-to-width-down/250?cb=20251018122041" alt="Bambu Bambu Sahur 2">
-  <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSlbQCc5VHlOEzccfQlRYkpYEjEWBtsj3mCxg&s" alt="Bambu Bambu Sahur 3">
-</div>
-
-<div class="botoes">
-  <a href="processo.html" class="btn">🛠️ Como foi a programação</a>
-  <a href="snake.html" class="btn">🎮 Jogar a Cobrinha</a>
-</div>
-
-<p class="creditos">
-  <strong>Créditos:</strong> Matheus Máximo, pdx,vts, Gurt editz
-</p>
-
-</article>
-</main>
-
-<footer>
-<p>© 2025 Matheus Máximo e Marcos Guilherme — 8ºA — Todos os direitos reservados.</p>
-</footer>
+  <footer>
+    <p>Trabalho escolar — 8ºA — 2025</p>
+  </footer>
 </body>
 </html>
