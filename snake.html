@@ -3,101 +3,305 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Jogo da Cobrinha</title>
+<title>Jogo da Cobrinha - Solo</title>
 <style>
-body{margin:0;font-family:Arial;background:#000;color:#0f0;display:flex;flex-direction:column;align-items:center;}
-h1{color:#0f0;font-size:3rem;border:4px solid #0ff;padding:10px 20px;margin-top:20px;animation:glow 1.5s infinite alternate;}
-@keyframes glow{from{box-shadow:0 0 5px #0f0;}to{box-shadow:0 0 20px #0ff;}}
-.hidden{display:none;}
-.button{padding:12px 25px;margin:8px;border-radius:12px;border:2px solid #0ff;background:linear-gradient(90deg,#0f0,#0ff);color:#000;font-weight:bold;cursor:pointer;transition:0.3s;}
-.button:hover{transform:scale(1.1);}
-.input-field{padding:10px;margin:6px;border-radius:8px;border:2px solid #0ff;background:#111;color:#0f0;font-size:1rem;}
-#gameContainer{display:flex;justify-content:center;align-items:flex-start;gap:20px;margin-top:20px;}
-canvas{background:#111;border:3px solid #0ff;}
-#leaderboard{width:200px;height:400px;background:#222;border:3px solid #0ff;padding:10px;overflow-y:auto;}
-#deathScreen{position:absolute;top:0;left:0;width:100%;height:100%;display:flex;justify-content:center;align-items:center;flex-direction:column;font-size:2rem;font-weight:bold;background:red;color:white;display:none;}
+body {
+  margin:0;
+  font-family: Arial, sans-serif;
+  background-color: #000;
+  color: #fff;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+}
+h1 {
+  font-size:3rem;
+  color:#00ff00;
+  margin:20px 0;
+  border:4px solid #fff;
+  padding:10px 20px;
+  border-radius:12px;
+  animation: pulse 1.5s infinite;
+}
+@keyframes pulse {
+  0%,100%{transform:scale(1);}
+  50%{transform:scale(1.05);}
+}
+#topButtons {
+  display:flex;
+  gap:15px;
+  margin-top:10px;
+}
+#topButtons button {
+  padding:8px 16px;
+  border-radius:8px;
+  border:2px solid #fff;
+  background:#111;
+  color:#0f0;
+  cursor:pointer;
+  font-weight:bold;
+}
+#topButtons button:hover{background:#222;}
+#setup, #gameContainer, #gameOver {
+  margin-top:20px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+}
+label {margin:5px;}
+button {
+  padding:10px 20px;
+  margin:5px;
+  border-radius:10px;
+  border:2px solid #fff;
+  background:#111;
+  color:#0f0;
+  cursor:pointer;
+  font-weight:bold;
+}
+button:hover {background:#222;}
+canvas {
+  border:3px solid #fff;
+  background:#000;
+  display:block;
+  margin-top:20px;
+}
+#leaderboard {
+  margin-top:20px;
+  border:3px solid #fff;
+  background:#111;
+  padding:10px;
+  border-radius:10px;
+  width:400px;
+}
+#leaderboard table {
+  width:100%;
+  border-collapse: collapse;
+}
+#leaderboard th, #leaderboard td {
+  border:1px solid #fff;
+  padding:5px;
+  text-align:center;
+}
+#leaderboard th {
+  background:#222;
+}
 </style>
 </head>
 <body>
 
-<h1>Jogo da Cobrinha 🐍</h1>
+<h1>Jogo da Cobrinha</h1>
 
-<!-- Tela Solo -->
-<div id="soloSetup">
-<input type="text" id="soloName" class="input-field" placeholder="Digite seu nome">
-<button class="button" id="startSolo">Jogar ▶️</button>
-<button class="button" id="backSolo">Voltar 🔙</button>
+<div id="topButtons">
+  <button onclick="window.location.href='index.html'">Página Inicial</button>
+  <button onclick="window.location.href='processo.html'">Processo</button>
+  <button onclick="window.location.href='pagina2.html'">Página 2</button>
 </div>
 
-<!-- Game Area -->
-<div id="gameContainer" class="hidden">
-<canvas id="gameCanvas" width="400" height="400"></canvas>
+<div id="setup">
+  <label>Nome:</label>
+  <input type="text" id="playerName" placeholder="Digite seu nome">
+  
+  <label>Série:</label>
+  <div id="seriesOptions"></div>
+  
+  <label>Sala:</label>
+  <input type="text" id="room" placeholder="Digite sua sala">
+  
+  <button id="startBtn">Jogar Solo 🐍</button>
+</div>
+
+<div id="gameContainer" style="display:none;">
+  <canvas id="gameCanvas" width="400" height="400"></canvas>
+  <div>
+    <button id="restartBtn">Recomeçar</button>
+    <button id="exitBtn">Sair do minigame</button>
+  </div>
+</div>
+
+<div id="gameOver" style="display:none;">
+  <h2>Você Morreu!</h2>
+  <button id="retryBtn">Recomeçar</button>
+  <button id="exitToSetupBtn">Sair do minigame</button>
+</div>
+
 <div id="leaderboard">
-<h3>Leaderboard</h3>
-<ul id="scoreList"></ul>
-</div>
-<button class="button" id="exitGame">Sair do minigame ❌</button>
+  <h3>Leaderboard Top 10</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>Nome</th>
+        <th>Pontuação</th>
+        <th>Série</th>
+      </tr>
+    </thead>
+    <tbody id="leaderboardBody"></tbody>
+  </table>
 </div>
 
-<!-- Death Screen -->
-<div id="deathScreen">
-VOCÊ MORREU!
-<button class="button" id="restartDeath">Recomeçar 🔄</button>
-<button class="button" id="exitDeath">Sair ❌</button>
-</div>
-
-<audio id="eatSound" src="https://freesound.org/data/previews/257/257600_4486188-lq.mp3"></audio>
-<audio id="moveSound" src="https://freesound.org/data/previews/221/221226_4109916-lq.mp3"></audio>
+<audio id="eatSound" src="https://www.soundjay.com/button/beep-07.wav"></audio>
 
 <script>
-const soloSetup = document.getElementById("soloSetup");
+// SERIES DINAMICAS
+const seriesList = ["1ºA","1ºB","2ºA","2ºB","3ºA","3ºB","4ºA","4ºB","5ºA","5ºB","6ºA","6ºB","7ºA","7ºB","8ºA","8ºB","9ºA","9ºB"];
+const seriesDiv = document.getElementById("seriesOptions");
+let selectedSeries = null;
+
+seriesList.forEach(s => {
+  const btn = document.createElement("button");
+  btn.textContent = s;
+  btn.onclick = () => {
+    selectedSeries = s;
+    Array.from(seriesDiv.children).forEach(b => b.style.background = "#111");
+    btn.style.background = "#0f0";
+  };
+  seriesDiv.appendChild(btn);
+});
+
+// ELEMENTOS
+const setupDiv = document.getElementById("setup");
+const startBtn = document.getElementById("startBtn");
 const gameContainer = document.getElementById("gameContainer");
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
-const deathScreen = document.getElementById("deathScreen");
+
+let snake, food, direction, gameInterval, playerName, room;
+
+const gameOverDiv = document.getElementById("gameOver");
+const retryBtn = document.getElementById("retryBtn");
+const exitToSetupBtn = document.getElementById("exitToSetupBtn");
+
+const restartBtn = document.getElementById("restartBtn");
+const exitBtn = document.getElementById("exitBtn");
+
+const leaderboardBody = document.getElementById("leaderboardBody");
+
 const eatSound = document.getElementById("eatSound");
-const moveSound = document.getElementById("moveSound");
-let leaderboard = JSON.parse(localStorage.getItem("snakeLeaderboard")) || [];
-const scoreList = document.getElementById("scoreList");
 
-function renderLeaderboard(){scoreList.innerHTML="";leaderboard.forEach(entry=>{const li=document.createElement("li");li.textContent=`${entry.name}: ${entry.score}`;scoreList.appendChild(li);});}
-renderLeaderboard();
+// START DO JOGO
+startBtn.onclick = () => {
+  playerName = document.getElementById("playerName").value.trim();
+  room = document.getElementById("room").value.trim();
+  
+  if(!playerName || !room || !selectedSeries){
+    alert("Preencha nome, série e sala!");
+    return;
+  }
+  
+  setupDiv.style.display = "none";
+  gameContainer.style.display = "flex";
+  
+  startGame();
+};
 
-let snake=[],food={},dir="RIGHT",gameInterval,score=0,blockSize=20;
-document.getElementById("startSolo").onclick=()=>{
-  const name=document.getElementById("soloName").value.trim();
-  if(!name){alert("Digite seu nome"); return;}
-  soloSetup.style.display="none";
-  gameContainer.style.display="flex";
-  startSoloGame(name);
+restartBtn.onclick = () => startGame();
+retryBtn.onclick = () => startGame();
+
+exitBtn.onclick = exitToSetup;
+exitToSetupBtn.onclick = exitToSetup;
+
+function exitToSetup(){
+  gameContainer.style.display = "none";
+  gameOverDiv.style.display = "none";
+  setupDiv.style.display = "flex";
 }
-document.getElementById("backSolo").onclick=()=>{soloSetup.style.display="flex";}
-document.getElementById("exitGame").onclick=()=>{gameContainer.style.display="none";soloSetup.style.display="flex";}
-document.getElementById("exitDeath").onclick=()=>{deathScreen.style.display="none";soloSetup.style.display="flex";}
-document.getElementById("restartDeath").onclick=()=>{deathScreen.style.display="none";startSoloGame(lastPlayerName);}
 
-let lastPlayerName="";
-function startSoloGame(name){
-  lastPlayerName=name;
-  snake=[{x:10,y:10}]; dir="RIGHT"; score=0; spawnFood();
-  document.addEventListener("keydown",soloControl);
+function startGame(){
+  gameOverDiv.style.display = "none";
+  snake = [{x:10,y:10}];
+  direction = "RIGHT";
+  food = {x: Math.floor(Math.random()*20), y: Math.floor(Math.random()*20)};
   clearInterval(gameInterval);
-  gameInterval=setInterval(()=>{
-    moveSnake();
-    if(checkCollision()){clearInterval(gameInterval);leaderboard.push({name,score});localStorage.setItem("snakeLeaderboard",JSON.stringify(leaderboard));renderLeaderboard();deathScreen.style.display="flex";return;}
-    drawGame();
-  },150);
+  gameInterval = setInterval(gameLoop, 150);
+  drawGame();
 }
 
-function soloControl(e){moveSound.play();switch(e.key){case "ArrowUp":if(dir!=="DOWN")dir="UP";break;case "ArrowDown":if(dir!=="UP")dir="DOWN";break;case "ArrowLeft":if(dir!=="RIGHT")dir="LEFT";break;case "ArrowRight":if(dir!=="LEFT")dir="RIGHT";break;}}
+function gameLoop(){
+  const head = {...snake[0]};
+  if(direction=="RIGHT") head.x++;
+  if(direction=="LEFT") head.x--;
+  if(direction=="UP") head.y--;
+  if(direction=="DOWN") head.y++;
+  
+  if(head.x<0 || head.x>=20 || head.y<0 || head.y>=20 || snake.some(s=>s.x==head.x && s.y==head.y)){
+    gameOver();
+    return;
+  }
+  
+  snake.unshift(head);
+  
+  if(head.x==food.x && head.y==food.y){
+    eatSound.play();
+    food = {x: Math.floor(Math.random()*20), y: Math.floor(Math.random()*20)};
+    saveScore();
+  }else{
+    snake.pop();
+  }
+  
+  drawGame();
+}
 
-function moveSnake(){let head={...snake[0]};switch(dir){case "UP":head.y--;break;case "DOWN":head.y++;break;case "LEFT":head.x--;break;case "RIGHT":head.x++;break;}if(head.x===food.x && head.y===food.y){score++;eatSound.play();snake.unshift(head);spawnFood();}else{snake.pop();snake.unshift(head);}}
+function drawGame(){
+  ctx.fillStyle="#000";
+  ctx.fillRect(0,0,canvas.width,canvas.height);
+  
+  ctx.fillStyle="red";
+  ctx.fillRect(food.x*20, food.y*20, 20,20);
+  
+  ctx.fillStyle="#0f0";
+  snake.forEach(s=>{
+    ctx.fillRect(s.x*20,s.y*20,20,20);
+  });
+}
 
-function checkCollision(){let head=snake[0];if(head.x<0||head.y<0||head.x>=canvas.width/blockSize||head.y>=canvas.height/blockSize)return true;for(let i=1;i<snake.length;i++){if(head.x===snake[i].x&&head.y===snake[i].y)return true;}return false;}
+document.addEventListener("keydown", e=>{
+  if(e.key=="ArrowUp" && direction!="DOWN") direction="UP";
+  if(e.key=="ArrowDown" && direction!="UP") direction="DOWN";
+  if(e.key=="ArrowLeft" && direction!="RIGHT") direction="LEFT";
+  if(e.key=="ArrowRight" && direction!="LEFT") direction="RIGHT";
+});
 
-function spawnFood(){food={x:Math.floor(Math.random()*(canvas.width/blockSize)),y:Math.floor(Math.random()*(canvas.height/blockSize));}}
+function gameOver(){
+  clearInterval(gameInterval);
+  gameContainer.style.display="none";
+  gameOverDiv.style.display="flex";
+}
 
-function drawGame(){ctx.fillStyle="#000";ctx.fillRect(0,0,canvas.width,canvas.height);ctx.fillStyle="#f00";ctx.fillRect(food.x*blockSize,food.y*blockSize,blockSize,blockSize);ctx.fillStyle="#0f0";snake.forEach(seg=>{ctx.fillRect(seg.x*blockSize,seg.y*blockSize,blockSize,blockSize);});}
+// SALVA SCORE COM NOME, PONTUAÇÃO E SÉRIE
+function saveScore(){
+  const key = "snakeLeaderboard";
+  let lb = JSON.parse(localStorage.getItem(key)||"[]");
+  
+  const fullName = playerName;
+  const existIndex = lb.findIndex(e=>e.name==fullName && e.series==selectedSeries && e.room==room);
+  
+  const score = snake.length-1;
+  if(existIndex>=0){
+    lb[existIndex].score = score;
+  }else{
+    lb.push({name:fullName, series:selectedSeries, room:room, score:score});
+  }
+  
+  lb.sort((a,b)=>b.score - a.score);
+  if(lb.length>10) lb = lb.slice(0,10);
+  
+  localStorage.setItem(key, JSON.stringify(lb));
+  updateLeaderboard();
+}
+
+// ATUALIZA A TABELA
+function updateLeaderboard(){
+  const key = "snakeLeaderboard";
+  let lb = JSON.parse(localStorage.getItem(key)||"[]");
+  leaderboardBody.innerHTML="";
+  lb.forEach(p=>{
+    const tr = document.createElement("tr");
+    tr.innerHTML = `<td>${p.name}</td><td>${p.score}</td><td>${p.series}</td>`;
+    leaderboardBody.appendChild(tr);
+  });
+}
+
+updateLeaderboard();
 </script>
 
 </body>
