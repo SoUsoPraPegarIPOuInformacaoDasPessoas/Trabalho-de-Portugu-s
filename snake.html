@@ -2,296 +2,262 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Jogo da Cobrinha 🐍</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Jogo da Cobrinha</title>
 <style>
-:root{
-  --green:#00ff00; --white:#fff; --black:#000; --blue:#1e90ff; --orange:#ffa500;
-}
-body{
-  margin:0;
-  font-family:"Segoe UI", Roboto, Arial, sans-serif;
-  background: var(--black);
-  color: var(--white);
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:flex-start;
-}
-h1{
-  color:var(--green);
-  font-size:3rem;
-  text-align:center;
-  margin-top:20px;
-  border:4px solid var(--white);
-  padding:10px 20px;
-  border-radius:12px;
-}
-#menu, #soloMenu, #multiMenu, #gameContainer, #gameOver, #gameWin{
-  margin-top:20px;
-  text-align:center;
-}
-button{
-  padding:10px 18px;
-  margin:6px;
-  border-radius:12px;
-  border:none;
-  font-weight:bold;
-  cursor:pointer;
-  font-size:1rem;
-  transition:0.2s;
-}
-button:hover{
-  transform:translateY(-3px);
-  box-shadow:0 6px 20px rgba(0,255,0,0.3);
-}
-#gameCanvas{
-  background:#111;
-  margin-top:20px;
-  display:block;
-}
-#leaderboard{
-  position:absolute;
-  top:100px;
-  right:20px;
-  width:220px;
-  background:var(--orange);
-  border:4px solid var(--blue);
-  border-radius:12px;
-  padding:10px;
-  color:black;
-}
-.inputField{
-  margin:8px;
-  padding:8px;
-  border-radius:8px;
-  border:none;
-}
-.hidden{display:none;}
+  body {
+    margin:0;
+    font-family: 'Segoe UI', sans-serif;
+    background:black;
+    color:white;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+  }
+  h1 {
+    font-size:3rem;
+    color:#00ff00;
+    text-shadow: 0 0 10px #00ff00, 0 0 20px #00ff00;
+    margin-top:20px;
+    animation: glow 1.5s infinite alternate;
+  }
+  @keyframes glow {
+    from { text-shadow: 0 0 10px #00ff00, 0 0 20px #00ff00; }
+    to { text-shadow: 0 0 20px #00ff00, 0 0 40px #00ff00; }
+  }
+  #modeSelection, #soloSetup, #duoSetup, #gameContainer, #gameOverScreen {
+    display:none;
+    margin-top:20px;
+    text-align:center;
+  }
+  .btn {
+    background:linear-gradient(90deg,#1e90ff,#4fc3f7);
+    border:none;
+    color:white;
+    padding:12px 20px;
+    margin:8px;
+    font-size:1rem;
+    font-weight:bold;
+    border-radius:12px;
+    cursor:pointer;
+    transition:0.2s;
+  }
+  .btn:hover {
+    transform:translateY(-3px);
+    box-shadow:0 8px 20px rgba(30,144,255,0.4);
+  }
+  input {
+    padding:8px;
+    margin:6px;
+    border-radius:8px;
+    border:none;
+    font-size:1rem;
+  }
+  canvas {
+    background:black;
+    border:3px solid white;
+    display:block;
+    margin:20px auto;
+  }
+  #leaderboard {
+    width:200px;
+    background:#111;
+    border:2px solid #00bfff;
+    color:white;
+    padding:10px;
+    margin-left:20px;
+    float:right;
+  }
+  .leaderboard-title { font-weight:bold; margin-bottom:8px; text-align:center; }
 </style>
 </head>
 <body>
-
 <h1>Jogo da Cobrinha 🐍</h1>
 
-<!-- Tela Inicial: Solo ou 1vs1 -->
-<div id="menu">
-  <button id="soloBtn">Solo 🟢</button>
-  <button id="multiBtn">1 vs 1 🔵</button>
-</div>
-
-<!-- Solo: Nome e Sala -->
-<div id="soloMenu" class="hidden">
-  <p>Coloque seu Nome e Sala</p>
-  <input type="text" id="soloName" class="inputField" placeholder="Seu Nome">
-  <input type="text" id="soloRoom" class="inputField" placeholder="Sala">
+<!-- Tela de seleção de modos -->
+<div id="modeSelection">
+  <button class="btn" id="soloBtn">Solo</button>
+  <button class="btn" id="duoBtn">1 vs 1</button>
   <br>
-  <button id="soloStart">JOGAR ▶️</button>
-  <button id="soloBack">Voltar ⬅️</button>
+  <button class="btn" id="backHomeBtn">🏠 Voltar para página inicial</button>
 </div>
 
-<!-- 1 vs 1: Nomes e Sala -->
-<div id="multiMenu" class="hidden">
-  <p>Coloque os Nomes e Sala</p>
-  <input type="text" id="player1Name" class="inputField" placeholder="Jogador 1">
-  <input type="text" id="player2Name" class="inputField" placeholder="Jogador 2">
-  <input type="text" id="multiRoom" class="inputField" placeholder="Sala">
+<!-- Solo setup -->
+<div id="soloSetup">
+  <p>Digite seu nome e sala:</p>
+  <input type="text" id="soloName" placeholder="Seu nome">
+  <input type="text" id="soloRoom" placeholder="Sala">
   <br>
-  <button id="multiStart">JOGAR ▶️</button>
-  <button id="multiBack">Voltar ⬅️</button>
+  <button class="btn" id="startSoloBtn">JOGAR 🎮</button>
+  <button class="btn" id="cancelSoloBtn">Cancelar ❌</button>
 </div>
 
-<!-- Canvas do Jogo -->
-<div id="gameContainer" class="hidden">
+<!-- Duo setup -->
+<div id="duoSetup">
+  <p>Jogador 1:</p>
+  <input type="text" id="duoName1" placeholder="Nome 1">
+  <p>Jogador 2:</p>
+  <input type="text" id="duoName2" placeholder="Nome 2">
+  <p>Sala:</p>
+  <input type="text" id="duoRoom" placeholder="Sala">
+  <br>
+  <button class="btn" id="startDuoBtn">JOGAR 🎮</button>
+  <button class="btn" id="cancelDuoBtn">Cancelar ❌</button>
+</div>
+
+<!-- Container do jogo -->
+<div id="gameContainer">
   <canvas id="gameCanvas" width="600" height="400"></canvas>
-  <div class="botoes">
-    <button id="restartBtn">Recomeçar 🔄</button>
-    <button id="exitBtn">Sair ❌</button>
+  <div id="leaderboard">
+    <div class="leaderboard-title">🏆 Leaderboard</div>
+    <ul id="scoresList"></ul>
   </div>
+  <br>
+  <button class="btn" id="exitGameBtn">Sair do minigame ❌</button>
 </div>
 
-<!-- Tela de Game Over -->
-<div id="gameOver" class="hidden">
-  <h2 style="color:red;">VOCÊ MORREU! 💀</h2>
-  <button id="restartOver">Recomeçar 🔄</button>
-  <button id="exitOver">Sair ❌</button>
+<!-- Tela de morte/vitória -->
+<div id="gameOverScreen">
+  <h2 id="gameOverText"></h2>
+  <button class="btn" id="restartBtn">Recomeçar 🔄</button>
+  <button class="btn" id="exitToModeBtn">Sair do minigame ❌</button>
 </div>
-
-<!-- Tela de Vitória -->
-<div id="gameWin" class="hidden">
-  <h2 style="color:lime;">VOCÊ GANHOU! 🏆</h2>
-  <button id="restartWin">Recomeçar 🔄</button>
-  <button id="exitWin">Sair ❌</button>
-</div>
-
-<!-- Leaderboard -->
-<div id="leaderboard">
-  <h3>Leaderboard 🏅</h3>
-  <ul id="scoresList"></ul>
-</div>
-
-<audio id="eatSound" src="https://www.soundjay.com/button/beep-07.wav"></audio>
-<audio id="moveSound" src="https://www.soundjay.com/button/button-3.mp3"></audio>
 
 <script>
-// ==================== Variáveis Globais =====================
+let soloMode = false;
+let duoMode = false;
+let playerName, playerRoom;
+let gameInterval;
 let canvas = document.getElementById("gameCanvas");
 let ctx = canvas.getContext("2d");
-let boardWidth = canvas.width;
-let boardHeight = canvas.height;
-let tileSize = 20;
-let snake = [];
-let food = {};
-let direction = null;
-let gameInterval = null;
-let score = 0;
-let leaderboard = JSON.parse(localStorage.getItem("leaderboard")) || [];
+let snake = [], food;
+let dx=20, dy=0, score=0;
+let moveSound = new Audio("https://www.soundjay.com/button/beep-07.wav");
+let eatSound = new Audio("https://www.soundjay.com/button/button-3.wav");
+let leaderboard = JSON.parse(localStorage.getItem("snakeLeaderboard")) || [];
 
-// Sons
-let eatSound = document.getElementById("eatSound");
-let moveSound = document.getElementById("moveSound");
+const show = (id) => {
+  ["modeSelection","soloSetup","duoSetup","gameContainer","gameOverScreen"].forEach(el=>{
+    document.getElementById(el).style.display="none";
+  });
+  document.getElementById(id).style.display="block";
+}
 
-// ==================== Funções ==============================
-function drawBoard(){
-  ctx.fillStyle="#111";
-  ctx.fillRect(0,0,boardWidth,boardHeight);
+// Inicial
+show("modeSelection");
+
+// Botões modos
+document.getElementById("soloBtn").onclick = ()=>{ soloMode=true; show("soloSetup"); }
+document.getElementById("duoBtn").onclick = ()=>{ duoMode=true; show("duoSetup"); }
+document.getElementById("backHomeBtn").onclick = ()=>{ window.location.href="index.html"; }
+
+// Cancelar
+document.getElementById("cancelSoloBtn").onclick = ()=>{ soloMode=false; show("modeSelection"); }
+document.getElementById("cancelDuoBtn").onclick = ()=>{ duoMode=false; show("modeSelection"); }
+document.getElementById("exitGameBtn").onclick = ()=>{ clearInterval(gameInterval); show("modeSelection"); }
+document.getElementById("exitToModeBtn").onclick = ()=>{ show("modeSelection"); }
+
+// Start Solo
+document.getElementById("startSoloBtn").onclick = ()=>{
+  playerName=document.getElementById("soloName").value.trim();
+  playerRoom=document.getElementById("soloRoom").value.trim();
+  if(!playerName || !playerRoom){ alert("Preencha todas as informações!"); return; }
+  startGame();
 }
-function drawSnake(){
-  ctx.fillStyle="lime";
-  snake.forEach(part => ctx.fillRect(part.x, part.y, tileSize, tileSize));
+
+// Start Duo
+document.getElementById("startDuoBtn").onclick = ()=>{
+  playerName=document.getElementById("duoName1").value.trim();
+  playerRoom=document.getElementById("duoRoom").value.trim();
+  if(!playerName || !playerRoom){ alert("Preencha todas as informações!"); return; }
+  startGame(); // Aqui implementa depois os dois jogadores
 }
-function drawFood(){
-  ctx.fillStyle="red";
-  ctx.fillRect(food.x, food.y, tileSize, tileSize);
-}
-function placeFood(){
-  food.x = Math.floor(Math.random()*(boardWidth/tileSize))*tileSize;
-  food.y = Math.floor(Math.random()*(boardHeight/tileSize))*tileSize;
-}
-function initSnake(){
-  snake = [{x:200, y:200}];
-  direction = null;
+
+// Função inicial do jogo
+function startGame(){
+  show("gameContainer");
+  snake=[{x:300,y:200}];
+  dx=20; dy=0;
   score=0;
-  placeFood();
+  spawnFood();
+  document.addEventListener("keydown",changeDirection);
+  gameInterval = setInterval(gameLoop,100);
+  updateLeaderboard();
 }
-function moveSnake(){
-  let head = {...snake[0]};
-  if(direction=="up") head.y -= tileSize;
-  if(direction=="down") head.y += tileSize;
-  if(direction=="left") head.x -= tileSize;
-  if(direction=="right") head.x += tileSize;
 
-  // Verifica colisão paredes
-  if(head.x<0 || head.x>=boardWidth || head.y<0 || head.y>=boardHeight){
-    gameOver();
+// Funções do jogo
+function spawnFood(){
+  food={x:Math.floor(Math.random()*30)*20, y:Math.floor(Math.random()*20)*20};
+}
+
+function changeDirection(e){
+  moveSound.play();
+  switch(e.key){
+    case "ArrowUp": if(dy===0){dx=0; dy=-20;} break;
+    case "ArrowDown": if(dy===0){dx=0; dy=20;} break;
+    case "ArrowLeft": if(dx===0){dx=-20; dy=0;} break;
+    case "ArrowRight": if(dx===0){dx=20; dy=0;} break;
+  }
+}
+
+function gameLoop(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  snake.forEach((seg)=>{ ctx.fillStyle="lime"; ctx.fillRect(seg.x,seg.y,20,20); ctx.strokeStyle="white"; ctx.strokeRect(seg.x,seg.y,20,20); });
+  ctx.fillStyle="red";
+  ctx.fillRect(food.x,food.y,20,20);
+  
+  let head = {x: snake[0].x + dx, y: snake[0].y + dy};
+  
+  // Colisão paredes
+  if(head.x<0||head.x>=canvas.width||head.y<0||head.y>=canvas.height||snakeCollision(head)){
+    endGame("Você MORREU! ☠️");
     return;
   }
-  // Verifica colisão com corpo
-  if(snake.some(part=>part.x===head.x && part.y===head.y)){
-    gameOver();
-    return;
-  }
-
+  
   snake.unshift(head);
-  // Verifica comida
+  
+  // Comer maçã
   if(head.x===food.x && head.y===food.y){
-    score++;
     eatSound.play();
-    placeFood();
-  }else{
+    score+=10;
+    spawnFood();
+  } else {
     snake.pop();
   }
 }
 
-// ==================== Game Loop ===========================
-function gameLoop(){
-  drawBoard();
-  drawFood();
-  drawSnake();
-}
-function startGame(){
-  initSnake();
-  clearInterval(gameInterval);
-  gameInterval = setInterval(gameLoop,150);
-}
-
-// ==================== Eventos =============================
-document.addEventListener("keydown",e=>{
-  if(["ArrowUp","ArrowDown","ArrowLeft","ArrowRight"].includes(e.key)){
-    moveSound.play();
+// Checar colisão com corpo
+function snakeCollision(head){
+  for(let i=1;i<snake.length;i++){
+    if(snake[i].x===head.x && snake[i].y===head.y) return true;
   }
-  if(e.key=="ArrowUp" && direction!="down") direction="up";
-  if(e.key=="ArrowDown" && direction!="up") direction="down";
-  if(e.key=="ArrowLeft" && direction!="right") direction="left";
-  if(e.key=="ArrowRight" && direction!="left") direction="right";
-});
+  return false;
+}
 
-// ==================== Game Over ===========================
-function gameOver(){
+// Tela fim de jogo
+function endGame(msg){
   clearInterval(gameInterval);
-  saveScore();
-  document.getElementById("gameContainer").classList.add("hidden");
-  document.getElementById("gameOver").classList.remove("hidden");
-}
-function saveScore(){
-  let name = document.getElementById("soloName")?.value || "Player";
-  leaderboard.push({name:name, score:score});
-  leaderboard.sort((a,b)=>b.score-a.score);
-  localStorage.setItem("leaderboard",JSON.stringify(leaderboard));
+  document.getElementById("gameOverText").innerText=msg+"\nPontuação: "+score+" ("+playerName+")";
+  leaderboard.push({name:playerName,score:score});
+  localStorage.setItem("snakeLeaderboard",JSON.stringify(leaderboard));
   updateLeaderboard();
+  show("gameOverScreen");
 }
+
+// Atualiza leaderboard
 function updateLeaderboard(){
-  let list = document.getElementById("scoresList");
-  list.innerHTML="";
+  let ul=document.getElementById("scoresList");
+  ul.innerHTML="";
+  leaderboard.sort((a,b)=>b.score-a.score);
   leaderboard.forEach(entry=>{
-    let li = document.createElement("li");
-    li.textContent = `${entry.name}: ${entry.score}`;
-    list.appendChild(li);
+    let li=document.createElement("li");
+    li.innerText=`${entry.name}: ${entry.score}`;
+    ul.appendChild(li);
   });
 }
 
-// ==================== Botões =============================
-document.getElementById("soloBtn").onclick = ()=>{
-  document.getElementById("menu").classList.add("hidden");
-  document.getElementById("soloMenu").classList.remove("hidden");
-};
-document.getElementById("multiBtn").onclick = ()=>{
-  document.getElementById("menu").classList.add("hidden");
-  document.getElementById("multiMenu").classList.remove("hidden");
-};
-document.getElementById("soloBack").onclick = ()=>{
-  document.getElementById("soloMenu").classList.add("hidden");
-  document.getElementById("menu").classList.remove("hidden");
-};
-document.getElementById("multiBack").onclick = ()=>{
-  document.getElementById("multiMenu").classList.add("hidden");
-  document.getElementById("menu").classList.remove("hidden");
-};
-document.getElementById("soloStart").onclick = ()=>{
-  let name=document.getElementById("soloName").value.trim();
-  let room=document.getElementById("soloRoom").value.trim();
-  if(!name || !room){alert("Preencha Nome e Sala!"); return;}
-  document.getElementById("soloMenu").classList.add("hidden");
-  document.getElementById("gameContainer").classList.remove("hidden");
-  startGame();
-};
-document.getElementById("restartBtn").onclick = startGame;
-document.getElementById("exitBtn").onclick = ()=>{
-  clearInterval(gameInterval);
-  document.getElementById("gameContainer").classList.add("hidden");
-  document.getElementById("menu").classList.remove("hidden");
-};
-document.getElementById("restartOver").onclick = ()=>{
-  document.getElementById("gameOver").classList.add("hidden");
-  document.getElementById("gameContainer").classList.remove("hidden");
-  startGame();
-};
-document.getElementById("exitOver").onclick = ()=>{
-  document.getElementById("gameOver").classList.add("hidden");
-  document.getElementById("menu").classList.remove("hidden");
-};
-updateLeaderboard();
+// Botão recomeçar
+document.getElementById("restartBtn").onclick = ()=>{ startGame(); }
 </script>
-
 </body>
 </html>
