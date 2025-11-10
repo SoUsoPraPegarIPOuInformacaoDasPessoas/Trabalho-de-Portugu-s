@@ -82,6 +82,53 @@
   }
 </style>
 </head>
+  <script>
+  const searchBar = document.getElementById("searchBar");
+
+  searchBar.addEventListener("keypress", function(event) {
+    if (event.key === "Enter") { // detecta Enter
+      const query = searchBar.value.toLowerCase();
+      let resultado = "";
+
+      // palavras-chave e respostas
+      if (query.includes("canoa") || query.includes("rayyan")) {
+        resultado = `
+          <div style="padding:20px; border:3px solid #f77f00; border-radius:12px; margin-top:16px; background:#fff7f0;">
+            <h3>📰 Resultado da Pesquisa</h3>
+            <p>Você pesquisou por "<strong>${query}</strong>".</p>
+            <p>Confira a notícia do <strong>menino da canoa Rayyan Arkan Dikha</strong> no festival Pacu Jalur!</p>
+            <iframe width="360" height="215" src="https://www.youtube.com/embed/ByRPMzmFoKU" frameborder="0" allowfullscreen></iframe>
+          </div>`;
+      } else if (query.includes("jogo") || query.includes("cobrinha") || query.includes("snake")) {
+        resultado = `
+          <div style="padding:20px; border:3px solid #06b6d4; border-radius:12px; margin-top:16px; background:#e0f7fa;">
+            <h3>🎮 Resultado da Pesquisa</h3>
+            <p>Você pesquisou por "<strong>${query}</strong>".</p>
+            <p>Quer jogar o <strong>Jogo da Cobrinha</strong>? Clique no botão abaixo!</p>
+            <a href="snake.html" style="display:inline-block;margin-top:10px;padding:10px 16px;background:#06b6d4;color:white;border-radius:10px;text-decoration:none;">🐍 Jogar</a>
+          </div>`;
+      } else {
+        resultado = `
+          <div style="padding:20px; border:3px solid #ddd; border-radius:12px; margin-top:16px; background:#f5f5f5;">
+            <h3>🔎 Resultado da Pesquisa</h3>
+            <p>Nenhum resultado específico encontrado para "<strong>${query}</strong>".</p>
+            <p>Que tal conferir as notícias do festival Pacu Jalur ou o jogo da cobrinha? 😄</p>
+          </div>`;
+      }
+
+      // remove resultado antigo
+      const old = document.getElementById("searchResult");
+      if (old) old.remove();
+
+      // cria novo resultado
+      const div = document.createElement("div");
+      div.id = "searchResult";
+      div.innerHTML = resultado;
+      searchBar.parentNode.insertBefore(div, searchBar.nextSibling);
+    }
+  });
+</script>
+
 <body>
 
 <header>
