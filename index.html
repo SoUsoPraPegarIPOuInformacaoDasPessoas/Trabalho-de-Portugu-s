@@ -51,23 +51,20 @@ article{
 .botoes{display:flex;gap:12px;justify-content:center;margin-top:18px;flex-wrap:wrap}
 .btn{background:linear-gradient(90deg,var(--red),#ff6b6b);color:white;padding:10px 18px;border-radius:10px;text-decoration:none;font-weight:700;transition:0.3s}
 .btn:hover{transform:translateY(-3px);box-shadow:0 8px 20px rgba(214,40,40,0.12)}
-footer{text-align:center;padding:14px;margin-top:26px;background:linear-gradient(90deg,var(--red),var(--orange));color:white;border-top:4px solid rgba(0,0,0,0.06)}
-#playButton {
-  display:block;
-  margin: 18px auto 0;
-  padding:10px 18px;
-  background: linear-gradient(90deg,var(--red),#ff6b6b);
+#playButton{
+  background: linear-gradient(90deg,#f77f00,#ffb703);
   color:white;
-  font-weight:700;
-  border:none;
+  padding:10px 18px;
   border-radius:10px;
+  font-weight:700;
   cursor:pointer;
   transition:0.3s;
 }
 #playButton:hover{
   transform:translateY(-3px);
-  box-shadow:0 8px 20px rgba(214,40,40,0.12);
+  box-shadow:0 8px 20px rgba(247,112,0,0.2);
 }
+footer{text-align:center;padding:14px;margin-top:26px;background:linear-gradient(90deg,var(--red),var(--orange));color:white;border-top:4px solid rgba(0,0,0,0.06)}
 @media(max-width:700px){
   header h1{font-size:1.2rem}
   #searchBar{width:78%}
@@ -97,7 +94,6 @@ footer{text-align:center;padding:14px;margin-top:26px;background:linear-gradient
 
 <p>Além do impacto na internet, o vídeo inspirou conteúdos dentro de jogos, principalmente no <strong>Steal a Brainrot (Roube um Brainrot)</strong>, onde o personagem <strong>Bambu Bambu Sahur</strong> foi destaque em mini-desafios e skins especiais. Jogadores compartilhavam screenshots, estratégias e vídeos de gameplay destacando o personagem e a dança de Rayyan, mostrando como a cultura do festival se expandiu para mundos virtuais.</p>
 
-<!-- Imagens do Bambu Bambu Sahur -->
 <section class="imagensJogo">
   <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSzC7S2XqGmWdkrORIT_hQjPJRnlzCD3vU8fA&s" alt="Imagem 1 Bambu Bambu Sahur" loading="eager">
   <img src="https://static.wikia.nocookie.net/stealabr/images/0/0b/Bambu_Bambu_Sahur.png/revision/latest/scale-to-width-down/250?cb=20251018122041" alt="Imagem 2 Bambu Bambu Sahur" loading="eager">
@@ -136,24 +132,26 @@ footer{text-align:center;padding:14px;margin-top:26px;background:linear-gradient
 <a href="pagina2.html" class="btn">Página 2 ➡️</a>
 </div>
 
-<!-- Botão Tocar Música -->
-<button id="playButton">Tocar Música 🔊</button>
+<!-- Botão de tocar música -->
+<div style="text-align:center; margin-top:12px;">
+  <button id="playButton">🎵 Tocar Música</button>
+</div>
 
 <div class="creditos">
 <p>Matheus Máximo e Marcos Guilherme - 8ºA Direitos Reservados.</p>
 </div>
 </main>
 
-<!-- Script imagens -->
+<!-- Garante carregamento das imagens -->
 <script>
-window.addEventListener('load', () => {
-  const imgs = document.querySelectorAll('img');
-  imgs.forEach(img => {
-    const src = img.getAttribute('src');
-    img.setAttribute('src', src);
-    img.style.display = 'block';
+  window.addEventListener('load', () => {
+    const imgs = document.querySelectorAll('img');
+    imgs.forEach(img => {
+      const src = img.getAttribute('src');
+      img.setAttribute('src', src);
+      img.style.display = 'block';
+    });
   });
-});
 </script>
 
 <!-- Player do YouTube -->
@@ -184,14 +182,12 @@ function onPlayerReady(event) {
 }
 
 function onPlayerStateChange(event) {
-  if(event.data === YT.PlayerState.ENDED) {
+  if (event.data === YT.PlayerState.ENDED) {
     player.seekTo(0);
     player.playVideo();
   }
 }
 </script>
-
-<!-- Div do player oculto -->
 <div id="player" style="display:none;"></div>
 
 </body>
