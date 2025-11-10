@@ -5,337 +5,99 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Jogo da Cobrinha</title>
 <style>
-  body{
-    margin:0;
-    font-family: Arial, sans-serif;
-    background-color: #000;
-    color: #0f0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-  }
-  h1{
-    color: #0f0;
-    font-size: 3rem;
-    text-align: center;
-    border: 4px solid #0ff;
-    padding: 10px 20px;
-    margin-top:20px;
-    animation: glow 1.5s infinite alternate;
-  }
-  @keyframes glow{
-    from{box-shadow: 0 0 5px #0f0;}
-    to{box-shadow: 0 0 20px #0ff;}
-  }
-  .hidden{display:none;}
-  .button{
-    padding:12px 25px;
-    margin:8px;
-    border-radius:12px;
-    border:2px solid #0ff;
-    background: linear-gradient(90deg,#0f0,#0ff);
-    color:#000;
-    font-weight:bold;
-    cursor:pointer;
-    transition:0.3s;
-  }
-  .button:hover{
-    transform: scale(1.1);
-  }
-  .input-field{
-    padding:10px;
-    margin:6px;
-    border-radius:8px;
-    border:2px solid #0ff;
-    background-color:#111;
-    color:#0f0;
-    font-size:1rem;
-  }
-  #gameContainer{
-    display:flex;
-    justify-content:center;
-    align-items:flex-start;
-    gap:20px;
-    margin-top:20px;
-  }
-  canvas{
-    background:#111;
-    border:3px solid #0ff;
-  }
-  #leaderboard{
-    width:200px;
-    height:400px;
-    background:#222;
-    border:3px solid #0ff;
-    padding:10px;
-    overflow-y:auto;
-  }
-  #deathScreen, #winScreen{
-    position:absolute;
-    top:0; left:0;
-    width:100%;
-    height:100%;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    flex-direction: column;
-    font-size:2rem;
-    font-weight:bold;
-  }
-  #deathScreen{
-    background:red;
-    color:white;
-    display:none;
-  }
-  #winScreen{
-    background:green;
-    color:white;
-    display:none;
-  }
+body{margin:0;font-family:Arial;background:#000;color:#0f0;display:flex;flex-direction:column;align-items:center;}
+h1{color:#0f0;font-size:3rem;border:4px solid #0ff;padding:10px 20px;margin-top:20px;animation:glow 1.5s infinite alternate;}
+@keyframes glow{from{box-shadow:0 0 5px #0f0;}to{box-shadow:0 0 20px #0ff;}}
+.hidden{display:none;}
+.button{padding:12px 25px;margin:8px;border-radius:12px;border:2px solid #0ff;background:linear-gradient(90deg,#0f0,#0ff);color:#000;font-weight:bold;cursor:pointer;transition:0.3s;}
+.button:hover{transform:scale(1.1);}
+.input-field{padding:10px;margin:6px;border-radius:8px;border:2px solid #0ff;background:#111;color:#0f0;font-size:1rem;}
+#gameContainer{display:flex;justify-content:center;align-items:flex-start;gap:20px;margin-top:20px;}
+canvas{background:#111;border:3px solid #0ff;}
+#leaderboard{width:200px;height:400px;background:#222;border:3px solid #0ff;padding:10px;overflow-y:auto;}
+#deathScreen{position:absolute;top:0;left:0;width:100%;height:100%;display:flex;justify-content:center;align-items:center;flex-direction:column;font-size:2rem;font-weight:bold;background:red;color:white;display:none;}
 </style>
 </head>
 <body>
 
 <h1>Jogo da Cobrinha 🐍</h1>
 
-<!-- Tela de seleção de modos -->
-<div id="modeSelection">
-  <button class="button" id="soloBtn">Solo 🟢</button>
-  <button class="button" id="versusBtn">1 vs 1 🔵</button>
-</div>
-
-<!-- Setup Solo -->
-<div id="soloSetup" class="hidden">
-  <input type="text" id="soloName" class="input-field" placeholder="Digite seu nome">
-  <input type="text" id="soloRoom" class="input-field" placeholder="Digite a sala">
-  <button class="button" id="startSolo">Jogar ▶️</button>
-  <button class="button" id="backSolo">Voltar 🔙</button>
-</div>
-
-<!-- Setup Versus -->
-<div id="versusSetup" class="hidden">
-  <input type="text" id="p1Name" class="input-field" placeholder="Nome jogador 1">
-  <input type="text" id="p2Name" class="input-field" placeholder="Nome jogador 2">
-  <input type="text" id="versusRoom" class="input-field" placeholder="Digite a sala">
-  <button class="button" id="startVersus">Jogar ▶️</button>
-  <button class="button" id="backVersus">Voltar 🔙</button>
+<!-- Tela Solo -->
+<div id="soloSetup">
+<input type="text" id="soloName" class="input-field" placeholder="Digite seu nome">
+<button class="button" id="startSolo">Jogar ▶️</button>
+<button class="button" id="backSolo">Voltar 🔙</button>
 </div>
 
 <!-- Game Area -->
 <div id="gameContainer" class="hidden">
-  <canvas id="gameCanvas" width="400" height="400"></canvas>
-  <div id="leaderboard">
-    <h3>Leaderboard</h3>
-    <ul id="scoreList"></ul>
-  </div>
-  <button class="button" id="exitGame">Sair do minigame ❌</button>
+<canvas id="gameCanvas" width="400" height="400"></canvas>
+<div id="leaderboard">
+<h3>Leaderboard</h3>
+<ul id="scoreList"></ul>
+</div>
+<button class="button" id="exitGame">Sair do minigame ❌</button>
 </div>
 
-<!-- Death / Win Screen -->
+<!-- Death Screen -->
 <div id="deathScreen">
-  VOCÊ MORREU!
-  <button class="button" id="restartDeath">Recomeçar 🔄</button>
-  <button class="button" id="exitDeath">Sair ❌</button>
-</div>
-<div id="winScreen">
-  VOCÊ GANHOU!
-  <button class="button" id="restartWin">Recomeçar 🔄</button>
-  <button class="button" id="exitWin">Sair ❌</button>
+VOCÊ MORREU!
+<button class="button" id="restartDeath">Recomeçar 🔄</button>
+<button class="button" id="exitDeath">Sair ❌</button>
 </div>
 
 <audio id="eatSound" src="https://freesound.org/data/previews/257/257600_4486188-lq.mp3"></audio>
 <audio id="moveSound" src="https://freesound.org/data/previews/221/221226_4109916-lq.mp3"></audio>
 
 <script>
-const modeSelection = document.getElementById("modeSelection");
 const soloSetup = document.getElementById("soloSetup");
-const versusSetup = document.getElementById("versusSetup");
 const gameContainer = document.getElementById("gameContainer");
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
-
 const deathScreen = document.getElementById("deathScreen");
-const winScreen = document.getElementById("winScreen");
-
 const eatSound = document.getElementById("eatSound");
 const moveSound = document.getElementById("moveSound");
-
 let leaderboard = JSON.parse(localStorage.getItem("snakeLeaderboard")) || [];
-
 const scoreList = document.getElementById("scoreList");
 
-function updateLeaderboard(name, score){
-  leaderboard.push({name, score});
-  localStorage.setItem("snakeLeaderboard", JSON.stringify(leaderboard));
-  renderLeaderboard();
-}
-function renderLeaderboard(){
-  scoreList.innerHTML = "";
-  leaderboard.forEach(entry=>{
-    const li = document.createElement("li");
-    li.textContent = `${entry.name}: ${entry.score}`;
-    scoreList.appendChild(li);
-  });
-}
+function renderLeaderboard(){scoreList.innerHTML="";leaderboard.forEach(entry=>{const li=document.createElement("li");li.textContent=`${entry.name}: ${entry.score}`;scoreList.appendChild(li);});}
 renderLeaderboard();
 
-// Botões de seleção
-document.getElementById("soloBtn").onclick = ()=>{modeSelection.style.display="none"; soloSetup.style.display="flex";}
-document.getElementById("versusBtn").onclick = ()=>{modeSelection.style.display="none"; versusSetup.style.display="flex";}
-document.getElementById("backSolo").onclick = ()=>{soloSetup.style.display="none"; modeSelection.style.display="flex";}
-document.getElementById("backVersus").onclick = ()=>{versusSetup.style.display="none"; modeSelection.style.display="flex";}
-document.getElementById("exitGame").onclick = ()=>{
-  gameContainer.style.display="none";
-  modeSelection.style.display="flex";
-}
-document.getElementById("exitDeath").onclick = ()=>{
-  deathScreen.style.display="none";
-  modeSelection.style.display="flex";
-}
-document.getElementById("exitWin").onclick = ()=>{
-  winScreen.style.display="none";
-  modeSelection.style.display="flex";
-}
-document.getElementById("restartDeath").onclick = ()=>{
-  deathScreen.style.display="none";
-  startSoloGame();
-}
-document.getElementById("restartWin").onclick = ()=>{
-  winScreen.style.display="none";
-  startVersusGame();
-}
-
-// Variáveis do jogo
-let snake = [];
-let food = {};
-let dir = "RIGHT";
-let gameInterval;
-let score = 0;
-let blockSize = 20;
-
-// Inicia Solo
-document.getElementById("startSolo").onclick = ()=>{
-  const name = document.getElementById("soloName").value.trim();
-  const room = document.getElementById("soloRoom").value.trim();
-  if(!name || !room){alert("Preencha nome e sala"); return;}
+let snake=[],food={},dir="RIGHT",gameInterval,score=0,blockSize=20;
+document.getElementById("startSolo").onclick=()=>{
+  const name=document.getElementById("soloName").value.trim();
+  if(!name){alert("Digite seu nome"); return;}
   soloSetup.style.display="none";
   gameContainer.style.display="flex";
   startSoloGame(name);
 }
+document.getElementById("backSolo").onclick=()=>{soloSetup.style.display="flex";}
+document.getElementById("exitGame").onclick=()=>{gameContainer.style.display="none";soloSetup.style.display="flex";}
+document.getElementById("exitDeath").onclick=()=>{deathScreen.style.display="none";soloSetup.style.display="flex";}
+document.getElementById("restartDeath").onclick=()=>{deathScreen.style.display="none";startSoloGame(lastPlayerName);}
 
-// Placeholder: 1vs1
-document.getElementById("startVersus").onclick = ()=>{
-  const p1 = document.getElementById("p1Name").value.trim();
-  const p2 = document.getElementById("p2Name").value.trim();
-  const room = document.getElementById("versusRoom").value.trim();
-  if(!p1 || !p2 || !room){alert("Preencha todos os campos"); return;}
-  versusSetup.style.display="none";
-  gameContainer.style.display="flex";
-  startVersusGame(p1,p2);
-}
-
-// Função solo
-function startSoloGame(playerName){
-  snake = [{x:10, y:10}];
-  dir = "RIGHT";
-  score = 0;
-  spawnFood();
-  gameContainer.style.display="flex";
-  deathScreen.style.display="none";
-  winScreen.style.display="none";
-  renderLeaderboard();
-
-  document.addEventListener("keydown", soloControl);
-
+let lastPlayerName="";
+function startSoloGame(name){
+  lastPlayerName=name;
+  snake=[{x:10,y:10}]; dir="RIGHT"; score=0; spawnFood();
+  document.addEventListener("keydown",soloControl);
   clearInterval(gameInterval);
-  gameInterval = setInterval(soloLoop,150);
-  function soloLoop(){
+  gameInterval=setInterval(()=>{
     moveSnake();
-    if(checkCollision()){
-      clearInterval(gameInterval);
-      updateLeaderboard(playerName,score);
-      deathScreen.style.display="flex";
-      return;
-    }
+    if(checkCollision()){clearInterval(gameInterval);leaderboard.push({name,score});localStorage.setItem("snakeLeaderboard",JSON.stringify(leaderboard));renderLeaderboard();deathScreen.style.display="flex";return;}
     drawGame();
-  }
+  },150);
 }
 
-// Função versus (placeholder com mesma mecânica por enquanto)
-function startVersusGame(p1,p2){
-  // Pode implementar 2 canvas ou dividir o canvas em dois
-  alert("Modo 1 vs 1 ainda não implementado. Vai iniciar modo Solo provisório.");
-  startSoloGame(p1);
-}
+function soloControl(e){moveSound.play();switch(e.key){case "ArrowUp":if(dir!=="DOWN")dir="UP";break;case "ArrowDown":if(dir!=="UP")dir="DOWN";break;case "ArrowLeft":if(dir!=="RIGHT")dir="LEFT";break;case "ArrowRight":if(dir!=="LEFT")dir="RIGHT";break;}}
 
-// Controle solo
-function soloControl(e){
-  moveSound.play();
-  switch(e.key){
-    case "ArrowUp": if(dir!=="DOWN") dir="UP"; break;
-    case "ArrowDown": if(dir!=="UP") dir="DOWN"; break;
-    case "ArrowLeft": if(dir!=="RIGHT") dir="LEFT"; break;
-    case "ArrowRight": if(dir!=="LEFT") dir="RIGHT"; break;
-  }
-}
+function moveSnake(){let head={...snake[0]};switch(dir){case "UP":head.y--;break;case "DOWN":head.y++;break;case "LEFT":head.x--;break;case "RIGHT":head.x++;break;}if(head.x===food.x && head.y===food.y){score++;eatSound.play();snake.unshift(head);spawnFood();}else{snake.pop();snake.unshift(head);}}
 
-// Funções básicas
-function moveSnake(){
-  let head = {...snake[0]};
-  switch(dir){
-    case "UP": head.y--; break;
-    case "DOWN": head.y++; break;
-    case "LEFT": head.x--; break;
-    case "RIGHT": head.x++; break;
-  }
-  // Comeu a maçã
-  if(head.x === food.x && head.y === food.y){
-    score++;
-    eatSound.play();
-    snake.unshift(head);
-    spawnFood();
-  } else {
-    snake.pop();
-    snake.unshift(head);
-  }
-}
+function checkCollision(){let head=snake[0];if(head.x<0||head.y<0||head.x>=canvas.width/blockSize||head.y>=canvas.height/blockSize)return true;for(let i=1;i<snake.length;i++){if(head.x===snake[i].x&&head.y===snake[i].y)return true;}return false;}
 
-function checkCollision(){
-  let head = snake[0];
-  // Colisão com parede
-  if(head.x<0 || head.y<0 || head.x>=canvas.width/blockSize || head.y>=canvas.height/blockSize){
-    return true;
-  }
-  // Colisão com corpo
-  for(let i=1;i<snake.length;i++){
-    if(head.x===snake[i].x && head.y===snake[i].y) return true;
-  }
-  return false;
-}
+function spawnFood(){food={x:Math.floor(Math.random()*(canvas.width/blockSize)),y:Math.floor(Math.random()*(canvas.height/blockSize));}}
 
-function spawnFood(){
-  food = {
-    x: Math.floor(Math.random()*(canvas.width/blockSize)),
-    y: Math.floor(Math.random()*(canvas.height/blockSize))
-  }
-}
-
-function drawGame(){
-  // Limpa
-  ctx.fillStyle="#000";
-  ctx.fillRect(0,0,canvas.width,canvas.height);
-
-  // Desenha comida
-  ctx.fillStyle="#f00";
-  ctx.fillRect(food.x*blockSize,food.y*blockSize,blockSize,blockSize);
-
-  // Desenha cobra
-  ctx.fillStyle="#0f0";
-  snake.forEach(seg=>{
-    ctx.fillRect(seg.x*blockSize,seg.y*blockSize,blockSize,blockSize);
-  });
-}
+function drawGame(){ctx.fillStyle="#000";ctx.fillRect(0,0,canvas.width,canvas.height);ctx.fillStyle="#f00";ctx.fillRect(food.x*blockSize,food.y*blockSize,blockSize,blockSize);ctx.fillStyle="#0f0";snake.forEach(seg=>{ctx.fillRect(seg.x*blockSize,seg.y*blockSize,blockSize,blockSize);});}
 </script>
 
 </body>
