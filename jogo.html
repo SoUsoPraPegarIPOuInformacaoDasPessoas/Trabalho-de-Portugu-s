@@ -3,196 +3,203 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Snake Game — Bacon News</title>
+<title>Jogo da Cobrinha — Bacon News</title>
 <style>
-  body { margin:0; font-family: "Segoe UI", Roboto, Arial, sans-serif; background:#f0f0f0; display:flex; justify-content:center; align-items:center; height:100vh; }
-  #container { text-align:center; position:relative; }
-  #startScreen, #gameScreen, #gameOverScreen { display:none; }
-  #gameCanvas { background:#0a1f44; display:block; margin:0 auto; border:4px solid #89cff0; border-radius:12px; }
-  input { padding:10px; margin:6px; border-radius:8px; border:2px solid #0077ff; width:180px; font-size:1rem; }
-  button { padding:10px 18px; font-size:1rem; border:none; border-radius:10px; cursor:pointer; font-weight:700; margin:5px; transition:all 0.2s; }
-  #tabelaBtn { background:linear-gradient(90deg,#ffc107,#ff6f00); color:white; }
-  #tabelaBtn:hover { transform: scale(1.2); box-shadow:0 8px 20px rgba(0,0,0,0.3);}
-  #jogar, #restart { background:linear-gradient(90deg,#28a745,#71dd8a); color:white; }
-  #jogar:hover, #restart:hover { transform: scale(1.1); box-shadow:0 8px 20px rgba(0,0,0,0.3);}
-  #tabelaFrame { position:absolute; top:0; left:50%; transform:translateX(-50%) translateY(-400px); width:300px; background:#ffa500; border:4px solid #0077ff; padding:10px; border-radius:12px; transition: transform 0.5s; }
-  #tabelaFrame.show { transform:translateX(-50%) translateY(60px); }
-  #tabelaFrame h3 { margin-top:0; text-align:center; }
-  #tabelaFrame ul { list-style:none; padding:0; margin:0; }
+  body {
+    margin:0;
+    font-family: "Segoe UI", Roboto, Arial, sans-serif;
+    background-color: #0a1d3f; /* Azul escuro */
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    min-height:100vh;
+    color:white;
+  }
+  #gameContainer {
+    position:relative;
+    margin-top:20px;
+  }
+  canvas {
+    background-color:#001a4d; /* Azul mais claro para o canvas */
+    display:block;
+    margin:auto;
+    border:4px solid #87ceeb; /* borda azul bebê */
+    border-radius:12px;
+  }
+  #leaderboardBtn {
+    margin-top:12px;
+    padding:10px 16px;
+    background:linear-gradient(90deg,#06b6d4,#0ea5e9);
+    color:white;
+    border:none;
+    border-radius:12px;
+    cursor:pointer;
+    font-weight:700;
+    font-size:1rem;
+  }
+  #leaderboardFrame {
+    position:absolute;
+    top:60px;
+    left:50%;
+    transform:translateX(-50%) scaleY(0);
+    transform-origin:top;
+    transition: transform 0.3s ease;
+    width:300px;
+    background:#ffa500; /* laranja */
+    border:3px solid #87ceeb; /* azul bebê */
+    border-radius:12px;
+    padding:12px;
+    color:#000;
+    z-index:100;
+  }
+  #leaderboardFrame h3 {
+    margin:0 0 8px 0;
+    text-align:center;
+  }
+  #leaderboardFrame ul {
+    list-style:none;
+    padding:0;
+    margin:0;
+  }
+  #leaderboardFrame li {
+    margin-bottom:4px;
+  }
 </style>
 </head>
 <body>
+<h1>🐍 Jogo da Cobrinha — Bacon News</h1>
 
-<div id="container">
-
-  <!-- Tela Inicial -->
-  <div id="startScreen">
-    <h2>🐍 Jogo da Cobrinha</h2>
-    <input type="text" id="playerName" placeholder="Seu nome (ex: Matheus123)">
-    <input type="text" id="playerRoom" placeholder="Sala (ex: 8A)">
-    <br>
-    <button id="jogar">JOGAR ▶️</button>
-  </div>
-
-  <!-- Tela do Jogo -->
-  <div id="gameScreen">
-    <canvas id="gameCanvas" width="500" height="500"></canvas>
-    <br>
-    <button id="tabelaBtn">📊 Tabela</button>
-  </div>
-
-  <!-- Tela de Morte -->
-  <div id="gameOverScreen">
-    <h2 style="color:red;">💀 VOCÊ MORREU! 💀</h2>
-    <p id="finalScore"></p>
-    <button id="restart">🔄 RECOMEÇAR</button>
-  </div>
-
-  <!-- Leaderboard -->
-  <div id="tabelaFrame">
+<div id="gameContainer">
+  <canvas id="gameCanvas" width="400" height="400"></canvas>
+  <div id="leaderboardFrame">
     <h3>🏆 Leaderboard</h3>
-    <ul id="scoreList"></ul>
+    <ul id="leaderboardList"></ul>
   </div>
-
+  <button id="leaderboardBtn">📋 Ver Pontuações</button>
 </div>
 
-<!-- Sons -->
-<audio id="appleSound"><source src="https://www.soundjay.com/button/sounds/button-10.mp3" type="audio/mpeg"></audio>
-<audio id="buttonClickSound"><source src="https://www.soundjay.com/button/sounds/button-09.mp3" type="audio/mpeg"></audio>
+<audio id="eatSound" src="https://freesound.org/data/previews/341/341695_6244162-lq.mp3"></audio>
+<audio id="moveSound" src="https://freesound.org/data/previews/256/256113_4486188-lq.mp3"></audio>
 
 <script>
-  // DOM Elements
-  const startScreen = document.getElementById('startScreen');
-  const gameScreen = document.getElementById('gameScreen');
-  const gameOverScreen = document.getElementById('gameOverScreen');
-  const jogarBtn = document.getElementById('jogar');
-  const restartBtn = document.getElementById('restart');
-  const tabelaBtn = document.getElementById('tabelaBtn');
-  const tabelaFrame = document.getElementById('tabelaFrame');
-  const scoreList = document.getElementById('scoreList');
-  const finalScore = document.getElementById('finalScore');
-  const appleSound = document.getElementById('appleSound');
-  const buttonClickSound = document.getElementById('buttonClickSound');
+  const canvas = document.getElementById("gameCanvas");
+  const ctx = canvas.getContext("2d");
+  const leaderboardBtn = document.getElementById("leaderboardBtn");
+  const leaderboardFrame = document.getElementById("leaderboardFrame");
+  const leaderboardList = document.getElementById("leaderboardList");
+  const eatSound = document.getElementById("eatSound");
+  const moveSound = document.getElementById("moveSound");
 
-  let playerName = '';
-  let playerRoom = '';
-  let canvas, ctx;
-  let snake, direction, apple, score;
-  let gameInterval;
-  let leaderboard = JSON.parse(localStorage.getItem('snakeLeaderboard') || '[]');
+  let snake = [{x:10, y:10}];
+  let food = {x:5, y:5};
+  let dx=1, dy=0;
+  let grid=20;
+  let speed=200;
+  let score=0;
+  let playerName = prompt("Digite seu nome:");
+  let room = prompt("Digite sua sala:");
+  let gameOver = false;
+  let leaderboard = JSON.parse(localStorage.getItem("leaderboard")) || [];
 
-  // Start Game
-  jogarBtn.addEventListener('click', () => {
-    buttonClickSound.play();
-    playerName = document.getElementById('playerName').value || 'Jogador';
-    playerRoom = document.getElementById('playerRoom').value || 'Sala1';
-    startScreen.style.display = 'none';
-    gameScreen.style.display = 'block';
-    initGame();
-  });
+  function draw() {
+    ctx.fillStyle = "#001a4d"; // fundo do canvas
+    ctx.fillRect(0,0,canvas.width,canvas.height);
 
-  // Restart Game
-  restartBtn.addEventListener('click', () => {
-    buttonClickSound.play();
-    gameOverScreen.style.display = 'none';
-    startScreen.style.display = 'block';
-    tabelaFrame.classList.remove('show');
-  });
+    // desenhar comida
+    ctx.fillStyle = "red";
+    ctx.fillRect(food.x*grid, food.y*grid, grid, grid);
 
-  // Toggle leaderboard com animação
-  tabelaBtn.addEventListener('click', () => {
-    buttonClickSound.play();
-    tabelaFrame.classList.toggle('show');
-    updateLeaderboard();
-  });
-
-  function initGame() {
-    canvas = document.getElementById('gameCanvas');
-    ctx = canvas.getContext('2d');
-    snake = [{x:10, y:10}];
-    direction = 'RIGHT';
-    score = 0;
-    placeApple();
-    document.addEventListener('keydown', handleKey);
-    clearInterval(gameInterval);
-    gameInterval = setInterval(gameLoop, 100);
+    // desenhar cobra
+    ctx.fillStyle = "lime";
+    snake.forEach(segment => {
+      ctx.fillRect(segment.x*grid, segment.y*grid, grid-2, grid-2);
+    });
   }
 
-  function handleKey(e) {
-    const key = e.key;
-    if(key === 'ArrowUp' && direction !== 'DOWN') direction = 'UP';
-    if(key === 'ArrowDown' && direction !== 'UP') direction = 'DOWN';
-    if(key === 'ArrowLeft' && direction !== 'RIGHT') direction = 'LEFT';
-    if(key === 'ArrowRight' && direction !== 'LEFT') direction = 'RIGHT';
-  }
+  function update() {
+    if(gameOver) return;
 
-  function gameLoop() {
-    const head = {...snake[0]};
-    if(direction === 'UP') head.y--;
-    if(direction === 'DOWN') head.y++;
-    if(direction === 'LEFT') head.x--;
-    if(direction === 'RIGHT') head.x++;
-    
-    // Check collision
-    if(head.x < 0 || head.x >= 25 || head.y < 0 || head.y >= 25 || snake.some(seg => seg.x === head.x && seg.y === head.y)) {
-      gameOver();
+    let head = {x: snake[0].x + dx, y: snake[0].y + dy};
+
+    // colisão com parede
+    if(head.x < 0 || head.x >= canvas.width/grid || head.y < 0 || head.y >= canvas.height/grid) {
+      endGame();
       return;
+    }
+
+    // colisão consigo mesmo
+    for(let segment of snake){
+      if(segment.x===head.x && segment.y===head.y){
+        endGame();
+        return;
+      }
     }
 
     snake.unshift(head);
 
-    // Eat apple
-    if(head.x === apple.x && head.y === apple.y){
+    // comer maçã
+    if(head.x===food.x && head.y===food.y){
       score++;
-      appleSound.play();
-      placeApple();
+      eatSound.play();
+      placeFood();
     } else {
       snake.pop();
     }
 
-    drawGame();
+    draw();
   }
 
-  function placeApple() {
-    apple = {x: Math.floor(Math.random()*25), y: Math.floor(Math.random()*25)};
-    if(snake.some(seg => seg.x === apple.x && seg.y === apple.y)) placeApple();
+  function placeFood() {
+    food.x = Math.floor(Math.random() * canvas.width/grid);
+    food.y = Math.floor(Math.random() * canvas.height/grid);
   }
 
-  function drawGame() {
-    ctx.fillStyle = '#0a1f44';
-    ctx.fillRect(0,0,canvas.width,canvas.height);
-
-    ctx.fillStyle = '#ff0000';
-    ctx.fillRect(apple.x*20, apple.y*20, 20, 20);
-
-    ctx.fillStyle = '#00ff00';
-    snake.forEach(seg => ctx.fillRect(seg.x*20, seg.y*20, 20, 20));
+  function endGame() {
+    gameOver = true;
+    leaderboard.push({name:playerName, room:room, score:score});
+    localStorage.setItem("leaderboard", JSON.stringify(leaderboard));
+    alert(`💀 VOCÊ MORREU!\nPontuação: ${score}`);
+    if(confirm("Quer recomeçar?")){
+      location.reload();
+    }
   }
 
-  function gameOver() {
-    clearInterval(gameInterval);
-    gameScreen.style.display = 'none';
-    gameOverScreen.style.display = 'block';
-    finalScore.innerText = `${playerName} (Sala: ${playerRoom}) - Pontos: ${score}`;
-
-    // Save to leaderboard
-    leaderboard.push({name: playerName, room: playerRoom, score});
-    leaderboard.sort((a,b) => b.score - a.score);
-    localStorage.setItem('snakeLeaderboard', JSON.stringify(leaderboard));
+  function gameLoop() {
+    update();
+    setTimeout(gameLoop, speed);
   }
+
+  document.addEventListener("keydown", (e)=>{
+    if(e.key==="ArrowUp" && dy===0){dx=0; dy=-1; moveSound.play();}
+    if(e.key==="ArrowDown" && dy===0){dx=0; dy=1; moveSound.play();}
+    if(e.key==="ArrowLeft" && dx===0){dx=-1; dy=0; moveSound.play();}
+    if(e.key==="ArrowRight" && dx===0){dx=1; dy=0; moveSound.play();}
+  });
+
+  // botão leaderboard
+  leaderboardBtn.addEventListener("click", ()=>{
+    if(leaderboardFrame.style.transform==="translateX(-50%) scaleY(1)"){
+      leaderboardFrame.style.transform="translateX(-50%) scaleY(0)";
+    } else {
+      updateLeaderboard();
+      leaderboardFrame.style.transform="translateX(-50%) scaleY(1)";
+    }
+  });
 
   function updateLeaderboard() {
-    scoreList.innerHTML = '';
-    leaderboard.forEach(entry => {
-      const li = document.createElement('li');
-      li.innerText = `${entry.name} (Sala: ${entry.room}) - ${entry.score} pts`;
-      scoreList.appendChild(li);
+    leaderboardList.innerHTML = "";
+    leaderboard.sort((a,b)=>b.score-a.score);
+    leaderboard.forEach(entry=>{
+      let li = document.createElement("li");
+      li.textContent = `${entry.name} (Sala ${entry.room}) → ${entry.score} pts`;
+      leaderboardList.appendChild(li);
     });
   }
 
-  // Show start screen initially
-  startScreen.style.display = 'block';
+  placeFood();
+  draw();
+  setTimeout(gameLoop, speed);
 </script>
-
 </body>
 </html>
