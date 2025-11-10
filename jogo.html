@@ -3,203 +3,300 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Jogo da Cobrinha — Bacon News</title>
+<title>Jogo da Cobrinha</title>
 <style>
   body {
     margin:0;
-    font-family: "Segoe UI", Roboto, Arial, sans-serif;
-    background-color: #0a1d3f; /* Azul escuro */
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:center;
-    min-height:100vh;
+    font-family: Arial, sans-serif;
+    background-color: black;
     color:white;
-  }
-  #gameContainer {
-    position:relative;
-    margin-top:20px;
-  }
-  canvas {
-    background-color:#001a4d; /* Azul mais claro para o canvas */
-    display:block;
-    margin:auto;
-    border:4px solid #87ceeb; /* borda azul bebê */
-    border-radius:12px;
-  }
-  #leaderboardBtn {
-    margin-top:12px;
-    padding:10px 16px;
-    background:linear-gradient(90deg,#06b6d4,#0ea5e9);
-    color:white;
-    border:none;
-    border-radius:12px;
-    cursor:pointer;
-    font-weight:700;
-    font-size:1rem;
-  }
-  #leaderboardFrame {
-    position:absolute;
-    top:60px;
-    left:50%;
-    transform:translateX(-50%) scaleY(0);
-    transform-origin:top;
-    transition: transform 0.3s ease;
-    width:300px;
-    background:#ffa500; /* laranja */
-    border:3px solid #87ceeb; /* azul bebê */
-    border-radius:12px;
-    padding:12px;
-    color:#000;
-    z-index:100;
-  }
-  #leaderboardFrame h3 {
-    margin:0 0 8px 0;
     text-align:center;
   }
-  #leaderboardFrame ul {
-    list-style:none;
-    padding:0;
-    margin:0;
+  h1 {
+    font-size: 3rem;
+    color: #00ff00;
+    border: 4px solid white;
+    display: inline-block;
+    padding:10px 20px;
+    margin-top:20px;
   }
-  #leaderboardFrame li {
-    margin-bottom:4px;
+  .screen {
+    display:none;
+  }
+  .active {display:block;}
+  .btn {
+    padding: 10px 20px;
+    margin:10px;
+    border-radius:12px;
+    font-weight:bold;
+    cursor:pointer;
+    font-size: 1.1rem;
+    transition:0.2s;
+  }
+  .btn:hover {transform:translateY(-3px);}
+  #solo, #versus {background:#0077ff;color:white;}
+  #startSolo, #startVersus {background:#00cc44;color:white;}
+  #back {background:#ff4444;color:white;}
+  canvas {
+    background-color: #111;
+    display:block;
+    margin:10px auto;
+    border:2px solid white;
+  }
+  .leaderboard {
+    position:absolute;
+    top:150px;
+    right:20px;
+    width:200px;
+    background:#222;
+    border:2px solid #00ccff;
+    padding:10px;
+    border-radius:8px;
+    text-align:left;
+  }
+  .input-group {
+    margin:10px;
+  }
+  input {
+    padding:6px 10px;
+    font-size:1rem;
+    border-radius:6px;
+    border:none;
+  }
+  .overlay {
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background: rgba(0,0,0,0.9);
+    display:none;
+    justify-content:center;
+    align-items:center;
+    color:white;
+    font-size:2rem;
+    flex-direction:column;
+  }
+  .overlay button {
+    margin-top:20px;
+    padding:10px 20px;
+    font-size:1.2rem;
+    border-radius:10px;
+    cursor:pointer;
   }
 </style>
 </head>
 <body>
-<h1>🐍 Jogo da Cobrinha — Bacon News</h1>
+<h1>Jogo da Cobrinha</h1>
 
-<div id="gameContainer">
-  <canvas id="gameCanvas" width="400" height="400"></canvas>
-  <div id="leaderboardFrame">
-    <h3>🏆 Leaderboard</h3>
-    <ul id="leaderboardList"></ul>
-  </div>
-  <button id="leaderboardBtn">📋 Ver Pontuações</button>
+<!-- Tela de escolha de modo -->
+<div id="modeSelect" class="screen active">
+  <button id="solo" class="btn">Solo</button>
+  <button id="versus" class="btn">1 vs 1</button>
 </div>
 
-<audio id="eatSound" src="https://freesound.org/data/previews/341/341695_6244162-lq.mp3"></audio>
-<audio id="moveSound" src="https://freesound.org/data/previews/256/256113_4486188-lq.mp3"></audio>
+<!-- Tela Solo -->
+<div id="soloScreen" class="screen">
+  <div class="input-group">
+    Nome: <input type="text" id="soloName">
+  </div>
+  <div class="input-group">
+    Sala: <input type="text" id="soloRoom">
+  </div>
+  <button id="startSolo" class="btn">JOGAR</button>
+  <button id="backSolo" class="btn" style="background:#ff4444;">Voltar</button>
+  <canvas id="soloCanvas" width="400" height="400"></canvas>
+</div>
+
+<!-- Tela 1 vs 1 -->
+<div id="versusScreen" class="screen">
+  <div class="input-group">
+    Jogador 1: <input type="text" id="player1Name">
+  </div>
+  <div class="input-group">
+    Jogador 2: <input type="text" id="player2Name">
+  </div>
+  <div class="input-group">
+    Sala: <input type="text" id="versusRoom">
+  </div>
+  <button id="startVersus" class="btn">JOGAR</button>
+  <button id="backVersus" class="btn" style="background:#ff4444;">Voltar</button>
+  <div style="display:flex; justify-content:center; gap:10px;">
+    <canvas id="p1Canvas" width="300" height="300"></canvas>
+    <canvas id="p2Canvas" width="300" height="300"></canvas>
+  </div>
+</div>
+
+<!-- Overlay de morte/vitória -->
+<div id="overlay" class="overlay">
+  <div id="overlayText"></div>
+  <button id="overlayBtn">Recomeçar</button>
+</div>
+
+<!-- Leaderboard -->
+<div class="leaderboard" id="leaderboard">
+  <h3>Leaderboard</h3>
+  <div id="scores"></div>
+</div>
 
 <script>
-  const canvas = document.getElementById("gameCanvas");
-  const ctx = canvas.getContext("2d");
-  const leaderboardBtn = document.getElementById("leaderboardBtn");
-  const leaderboardFrame = document.getElementById("leaderboardFrame");
-  const leaderboardList = document.getElementById("leaderboardList");
-  const eatSound = document.getElementById("eatSound");
-  const moveSound = document.getElementById("moveSound");
+let modeSelect = document.getElementById('modeSelect');
+let soloScreen = document.getElementById('soloScreen');
+let versusScreen = document.getElementById('versusScreen');
+let overlay = document.getElementById('overlay');
+let overlayText = document.getElementById('overlayText');
+let overlayBtn = document.getElementById('overlayBtn');
+let leaderboardDiv = document.getElementById('scores');
 
-  let snake = [{x:10, y:10}];
-  let food = {x:5, y:5};
-  let dx=1, dy=0;
-  let grid=20;
-  let speed=200;
-  let score=0;
-  let playerName = prompt("Digite seu nome:");
-  let room = prompt("Digite sua sala:");
-  let gameOver = false;
-  let leaderboard = JSON.parse(localStorage.getItem("leaderboard")) || [];
+let soloName = document.getElementById('soloName');
+let soloRoom = document.getElementById('soloRoom');
+let player1Name = document.getElementById('player1Name');
+let player2Name = document.getElementById('player2Name');
+let versusRoom = document.getElementById('versusRoom');
 
-  function draw() {
-    ctx.fillStyle = "#001a4d"; // fundo do canvas
-    ctx.fillRect(0,0,canvas.width,canvas.height);
+let soloCanvas = document.getElementById('soloCanvas');
+let soloCtx = soloCanvas.getContext('2d');
 
-    // desenhar comida
-    ctx.fillStyle = "red";
-    ctx.fillRect(food.x*grid, food.y*grid, grid, grid);
+let p1Canvas = document.getElementById('p1Canvas');
+let p1Ctx = p1Canvas.getContext('2d');
+let p2Canvas = document.getElementById('p2Canvas');
+let p2Ctx = p2Canvas.getContext('2d');
 
-    // desenhar cobra
-    ctx.fillStyle = "lime";
-    snake.forEach(segment => {
-      ctx.fillRect(segment.x*grid, segment.y*grid, grid-2, grid-2);
-    });
+let soloGame;
+let versusGame;
+
+let leaderboard = JSON.parse(localStorage.getItem('snakeLeaderboard') || '[]');
+function updateLeaderboard() {
+  leaderboardDiv.innerHTML = '';
+  leaderboard.forEach(entry => {
+    let div = document.createElement('div');
+    div.textContent = `${entry.name} (Sala ${entry.room}) → ${entry.score}`;
+    leaderboardDiv.appendChild(div);
+  });
+}
+
+// Modos
+document.getElementById('solo').onclick = ()=> {
+  modeSelect.classList.remove('active');
+  soloScreen.classList.add('active');
+}
+document.getElementById('versus').onclick = ()=> {
+  modeSelect.classList.remove('active');
+  versusScreen.classList.add('active');
+}
+document.getElementById('backSolo').onclick = ()=>{
+  soloScreen.classList.remove('active');
+  modeSelect.classList.add('active');
+}
+document.getElementById('backVersus').onclick = ()=>{
+  versusScreen.classList.remove('active');
+  modeSelect.classList.add('active');
+}
+
+// Overlay
+overlayBtn.onclick = ()=> {
+  overlay.style.display = 'none';
+  if(soloGame) soloGame.start();
+  if(versusGame) versusGame.start();
+}
+
+// Função simples de Solo
+class SoloSnake {
+  constructor(ctx, name, room){
+    this.ctx = ctx;
+    this.name = name;
+    this.room = room;
+    this.size = 20;
+    this.reset();
+    this.running=false;
+    this.snakeColor='#0f0';
   }
+  reset(){
+    this.snake = [{x:200,y:200}];
+    this.dir = 'RIGHT';
+    this.apple = this.randomApple();
+    this.score = 0;
+    this.running = true;
+  }
+  start(){
+    this.reset();
+    this.loop = setInterval(()=>this.update(),200);
+  }
+  randomApple(){
+    return {
+      x: Math.floor(Math.random()*20)*20,
+      y: Math.floor(Math.random()*20)*20
+    };
+  }
+  gameOver(){
+    clearInterval(this.loop);
+    overlayText.textContent = 'VOCÊ MORREU!';
+    overlay.style.display='flex';
+    leaderboard.push({name:this.name,room:this.room,score:this.score});
+    localStorage.setItem('snakeLeaderboard', JSON.stringify(leaderboard));
+    updateLeaderboard();
+  }
+  update(){
+    let head = {...this.snake[this.snake.length-1]};
+    if(this.dir=='UP') head.y-=this.size;
+    if(this.dir=='DOWN') head.y+=this.size;
+    if(this.dir=='LEFT') head.x-=this.size;
+    if(this.dir=='RIGHT') head.x+=this.size;
 
-  function update() {
-    if(gameOver) return;
-
-    let head = {x: snake[0].x + dx, y: snake[0].y + dy};
-
-    // colisão com parede
-    if(head.x < 0 || head.x >= canvas.width/grid || head.y < 0 || head.y >= canvas.height/grid) {
-      endGame();
+    // Limites
+    if(head.x<0 || head.x>=400 || head.y<0 || head.y>=400){
+      this.gameOver();
+      return;
+    }
+    // Colisão com corpo
+    if(this.snake.some(s=>s.x===head.x && s.y===head.y)){
+      this.gameOver();
       return;
     }
 
-    // colisão consigo mesmo
-    for(let segment of snake){
-      if(segment.x===head.x && segment.y===head.y){
-        endGame();
-        return;
-      }
+    this.snake.push(head);
+
+    // Comer maçã
+    if(head.x===this.apple.x && head.y===this.apple.y){
+      this.score++;
+      this.apple=this.randomApple();
+      // Som
+      new Audio('https://freesound.org/data/previews/341/341695_3248244-lq.mp3').play();
+    }else{
+      this.snake.shift();
     }
 
-    snake.unshift(head);
-
-    // comer maçã
-    if(head.x===food.x && head.y===food.y){
-      score++;
-      eatSound.play();
-      placeFood();
-    } else {
-      snake.pop();
-    }
-
-    draw();
+    // Desenhar
+    this.ctx.fillStyle='black';
+    this.ctx.fillRect(0,0,400,400);
+    this.ctx.fillStyle=this.snakeColor;
+    this.snake.forEach(s=> this.ctx.fillRect(s.x,s.y,this.size,this.size));
+    this.ctx.fillStyle='red';
+    this.ctx.fillRect(this.apple.x,this.apple.y,this.size,this.size);
   }
+}
 
-  function placeFood() {
-    food.x = Math.floor(Math.random() * canvas.width/grid);
-    food.y = Math.floor(Math.random() * canvas.height/grid);
+// Teclas
+document.addEventListener('keydown',e=>{
+  if(soloGame && soloGame.running){
+    if(e.key==='ArrowUp') soloGame.dir='UP';
+    if(e.key==='ArrowDown') soloGame.dir='DOWN';
+    if(e.key==='ArrowLeft') soloGame.dir='LEFT';
+    if(e.key==='ArrowRight') soloGame.dir='RIGHT';
   }
+})
 
-  function endGame() {
-    gameOver = true;
-    leaderboard.push({name:playerName, room:room, score:score});
-    localStorage.setItem("leaderboard", JSON.stringify(leaderboard));
-    alert(`💀 VOCÊ MORREU!\nPontuação: ${score}`);
-    if(confirm("Quer recomeçar?")){
-      location.reload();
-    }
+// Botão iniciar Solo
+document.getElementById('startSolo').onclick=()=>{
+  if(!soloName.value || !soloRoom.value){
+    alert('Preencha nome e sala!');
+    return;
   }
+  soloGame = new SoloSnake(soloCtx, soloName.value, soloRoom.value);
+  soloGame.start();
+}
 
-  function gameLoop() {
-    update();
-    setTimeout(gameLoop, speed);
-  }
-
-  document.addEventListener("keydown", (e)=>{
-    if(e.key==="ArrowUp" && dy===0){dx=0; dy=-1; moveSound.play();}
-    if(e.key==="ArrowDown" && dy===0){dx=0; dy=1; moveSound.play();}
-    if(e.key==="ArrowLeft" && dx===0){dx=-1; dy=0; moveSound.play();}
-    if(e.key==="ArrowRight" && dx===0){dx=1; dy=0; moveSound.play();}
-  });
-
-  // botão leaderboard
-  leaderboardBtn.addEventListener("click", ()=>{
-    if(leaderboardFrame.style.transform==="translateX(-50%) scaleY(1)"){
-      leaderboardFrame.style.transform="translateX(-50%) scaleY(0)";
-    } else {
-      updateLeaderboard();
-      leaderboardFrame.style.transform="translateX(-50%) scaleY(1)";
-    }
-  });
-
-  function updateLeaderboard() {
-    leaderboardList.innerHTML = "";
-    leaderboard.sort((a,b)=>b.score-a.score);
-    leaderboard.forEach(entry=>{
-      let li = document.createElement("li");
-      li.textContent = `${entry.name} (Sala ${entry.room}) → ${entry.score} pts`;
-      leaderboardList.appendChild(li);
-    });
-  }
-
-  placeFood();
-  draw();
-  setTimeout(gameLoop, speed);
+updateLeaderboard();
 </script>
 </body>
 </html>
