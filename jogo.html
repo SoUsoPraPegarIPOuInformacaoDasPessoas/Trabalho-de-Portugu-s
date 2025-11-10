@@ -1,118 +1,297 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Jogo da Cobrinha</title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Jogo da Cobrinha — Dupla 8ºA</title>
 <style>
-body {
-    background: #111;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    height: 100vh;
-    color: white;
-    font-family: 'Segoe UI', sans-serif;
-}
-canvas {
-    background: #000;
-    border: 4px solid #00ff99;
-    box-shadow: 0 0 15px #00ff99;
-}
-button, a {
-    background: #00ff99;
-    color: black;
-    padding: 10px 20px;
-    border-radius: 10px;
-    border: none;
-    text-decoration: none;
-    margin-top: 20px;
-    font-weight: bold;
-}
+  :root{--green:#1dd1a1;--dark:#050505;--red:#ff2d2d}
+  body{margin:0;font-family: "Segoe UI", Roboto, Arial, sans-serif;background:linear-gradient(180deg,#020206,#041016);color:#e6fff9;display:flex;flex-direction:column;align-items:center;min-height:100vh}
+  header{width:100%;padding:18px;text-align:center}
+  h1{margin:0;font-size:1.6rem;color:var(--green)}
+  .board{display:flex;gap:28px;align-items:flex-start;margin-top:18px;flex-wrap:wrap;justify-content:center}
+  .panel{background:#071017;padding:16px;border-radius:12px;border:3px solid rgba(29,209,161,0.12);box-shadow:0 15px 40px rgba(0,0,0,0.5)}
+  .game-canvas{display:block;border:4px solid var(--green);background:#000;border-radius:6px}
+  .controls{display:flex;flex-direction:column;gap:10px;padding:6px;min-width:260px}
+  label{font-size:0.95rem;color:#bdfbe0}
+  input{padding:10px;border-radius:8px;border:2px solid rgba(255,255,255,0.06);background:#061218;color:#dff;outline:none}
+  .play-btn{margin-top:6px;padding:12px;background:linear-gradient(90deg,#00c853,var(--green));color:#002; font-weight:900;border-radius:10px;border:none;cursor:pointer}
+  .play-btn[disabled]{opacity:.5;cursor:default}
+  .info{color:#bdfbe0;font-size:0.95rem;margin-top:8px}
+  .scorecard{margin-top:12px;color:#dff}
+  .back-link{display:block;text-align:center;margin-top:18px;color:#9fe8c9;text-decoration:none}
+  /* overlay death */
+  .overlay{position:fixed;left:0;top:0;right:0;bottom:0;display:flex;align-items:center;justify-content:center;z-index:999;visibility:hidden;opacity:0;transition:all .25s}
+  .overlay.show{visibility:visible;opacity:1}
+  .death{background:var(--red);padding:28px;border-radius:12px;color:white;width:90%;max-width:520px;text-align:center;box-shadow:0 20px 60px rgba(255,0,0,0.18)}
+  .death h2{font-size:2rem;margin:0 0 8px}
+  .death p{font-size:1.1rem;margin:8px 0}
+  .btn-restart{margin-top:12px;padding:12px 18px;background:#fff;color:#900;border-radius:10px;border:none;font-weight:800;cursor:pointer}
+  @media(max-width:720px){.board{flex-direction:column;align-items:center}.controls{min-width:unset;width:90%}}
 </style>
 </head>
 <body>
-<h1>🐍 Jogo da Cobrinha</h1>
-<canvas id="game" width="400" height="400"></canvas>
-<p>Pressione <strong>ESPAÇO</strong> para começar o jogo!</p>
-<a href="processo.html">⬅ Voltar</a>
+  <header>
+    <h1>🐍 Jogo da Cobrinha — Dupla 8ºA</h1>
+  </header>
+
+  <div class="board">
+    <div class="panel">
+      <canvas id="canvas" class="game-canvas" width="420" height="420"></canvas>
+    </div>
+
+    <div class="panel controls">
+      <label>Nome (apenas letras/números):</label>
+      <input id="playerName" placeholder="Ex: Matheus123" maxlength="20" />
+
+      <label>Sala:</label>
+      <input id="roomName" placeholder="Ex: 8A" maxlength="10" />
+
+      <button id="playBtn" class="play-btn" disabled>JOGAR</button>
+
+      <div class="info">
+        <p>Comece preenchendo seu <strong>nome</strong> e a <strong>sala</strong>. Ao clicar <strong>JOGAR</strong> o jogo inicia.</p>
+        <p>Comandos: setas do teclado → mover.</p>
+      </div>
+
+      <div class="scorecard">
+        <div id="displayPlayer">Jogador: —</div>
+        <div id="displayRoom">Sala: —</div>
+        <div id="displayScore">Pontuação: 0</div>
+      </div>
+
+      <a class="back-link" href="processo.html">⬅ Voltar para o processo</a>
+    </div>
+  </div>
+
+  <!-- overlay tela de morte -->
+  <div id="overlay" class="overlay">
+    <div class="death">
+      <h2>VOCÊ MORREU!</h2>
+      <p id="finalText">Pontuação: 0 — Jogador: —</p>
+      <button id="restartBtn" class="btn-restart">RECOMEÇAR</button>
+    </div>
+  </div>
 
 <script>
-const canvas = document.getElementById("game");
-const ctx = canvas.getContext("2d");
-
+/* -------------------------
+  Jogo da cobrinha personalizado
+   - precisa preencher nome + sala
+   - botão verde "JOGAR" inicia
+   - cobra um pouco maior (inicial maior)
+   - cresce ao comer maçã
+   - sons via WebAudio
+   - overlay de morte com pontuação e restart
+---------------------------*/
+const canvas = document.getElementById('canvas');
+const ctx = canvas.getContext('2d');
 const box = 20;
+const gridSize = 21; // grid 21x21 -> 420px fits (21*20 = 420)
 let snake = [];
-snake[0] = { x: 10 * box, y: 10 * box };
-let direction = "RIGHT";
-let food = {
-  x: Math.floor(Math.random() * 20) * box,
-  y: Math.floor(Math.random() * 20) * box
-};
-let game;
+let dir = null;
+let food = null;
+let gameInterval = null;
+let speed = 110;
+let score = 0;
 
-document.addEventListener("keydown", (event) => {
-  if (event.keyCode == 37 && direction != "RIGHT") direction = "LEFT";
-  if (event.keyCode == 38 && direction != "DOWN") direction = "UP";
-  if (event.keyCode == 39 && direction != "LEFT") direction = "RIGHT";
-  if (event.keyCode == 40 && direction != "UP") direction = "DOWN";
-  if (event.code === "Space" && !game) {
-    game = setInterval(draw, 100);
-  }
+const playBtn = document.getElementById('playBtn');
+const playerNameInput = document.getElementById('playerName');
+const roomInput = document.getElementById('roomName');
+const displayPlayer = document.getElementById('displayPlayer');
+const displayRoom = document.getElementById('displayRoom');
+const displayScore = document.getElementById('displayScore');
+const overlay = document.getElementById('overlay');
+const restartBtn = document.getElementById('restartBtn');
+const finalText = document.getElementById('finalText');
+
+playerNameInput.addEventListener('input', checkForm);
+roomInput.addEventListener('input', checkForm);
+
+function checkForm(){
+  const a = playerNameInput.value.trim();
+  const b = roomInput.value.trim();
+  if(a.length>0 && b.length>0){
+    playBtn.disabled = false;
+  } else playBtn.disabled = true;
+}
+
+playBtn.addEventListener('click', () => {
+  if(playBtn.disabled) return;
+  startGame();
 });
 
-function draw() {
-  ctx.fillStyle = "black";
-  ctx.fillRect(0, 0, 400, 400);
+/* ---------------- WebAudio: sons curtos ---------------- */
+const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+function playPickupSound(){
+  const o = audioCtx.createOscillator();
+  const g = audioCtx.createGain();
+  o.type = 'sine';
+  o.frequency.setValueAtTime(880, audioCtx.currentTime);
+  o.connect(g); g.connect(audioCtx.destination);
+  g.gain.setValueAtTime(0, audioCtx.currentTime);
+  g.gain.linearRampToValueAtTime(0.12, audioCtx.currentTime + 0.01);
+  o.start();
+  o.frequency.exponentialRampToValueAtTime(1320, audioCtx.currentTime + 0.12);
+  g.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.25);
+  o.stop(audioCtx.currentTime + 0.26);
+}
+function playDeathSound(){
+  const o = audioCtx.createOscillator();
+  const g = audioCtx.createGain();
+  o.type='sawtooth';
+  o.frequency.setValueAtTime(220, audioCtx.currentTime);
+  o.connect(g); g.connect(audioCtx.destination);
+  g.gain.setValueAtTime(0.001, audioCtx.currentTime);
+  g.gain.linearRampToValueAtTime(0.18, audioCtx.currentTime + 0.02);
+  o.start();
+  o.frequency.exponentialRampToValueAtTime(40, audioCtx.currentTime + 0.9);
+  g.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 1.1);
+  o.stop(audioCtx.currentTime + 1.12);
+}
 
-  for (let i = 0; i < snake.length; i++) {
-    ctx.fillStyle = i == 0 ? "#00ff99" : "#008866";
+/* ----------------- lógica do jogo ------------------ */
+function resetState(){
+  snake = [];
+  // cobra um pouco mais esticada no começo: 4 segmentos
+  snake.push({x:10*box,y:10*box});
+  snake.push({x:9*box,y:10*box});
+  snake.push({x:8*box,y:10*box});
+  snake.push({x:7*box,y:10*box});
+  dir = 'RIGHT';
+  placeFood();
+  score = 0;
+  displayScore.innerText = 'Pontuação: 0';
+}
+
+function placeFood(){
+  // garante que food não aparece em cima da cobra
+  let valid = false;
+  while(!valid){
+    const fx = Math.floor(Math.random()*gridSize)*box;
+    const fy = Math.floor(Math.random()*gridSize)*box;
+    valid = !snake.some(s=>s.x===fx && s.y===fy);
+    if(valid) food = {x:fx,y:fy};
+  }
+}
+
+function draw(){
+  // fundo
+  ctx.fillStyle = '#000';
+  ctx.fillRect(0,0,canvas.width,canvas.height);
+
+  // desenha maçã
+  ctx.fillStyle = '#c92a2a';
+  ctx.fillRect(food.x+3,food.y+3,box-6,box-6);
+  // pequeno brilho
+  ctx.fillStyle = '#ff6b6b';
+  ctx.fillRect(food.x+8,food.y+6,6,6);
+
+  // desenha cobra
+  for(let i=0;i<snake.length;i++){
+    ctx.fillStyle = i===0? '#1dd1a1' : '#0abf88';
     ctx.fillRect(snake[i].x, snake[i].y, box, box);
   }
 
-  ctx.fillStyle = "red";
-  ctx.fillRect(food.x, food.y, box, box);
+  // mover cabeça
+  let headX = snake[0].x;
+  let headY = snake[0].y;
+  if(dir==='LEFT') headX -= box;
+  if(dir==='RIGHT') headX += box;
+  if(dir==='UP') headY -= box;
+  if(dir==='DOWN') headY += box;
 
-  let snakeX = snake[0].x;
-  let snakeY = snake[0].y;
+  // colisão com parede -> morte
+  if(headX < 0 || headY < 0 || headX >= canvas.width || headY >= canvas.height){
+    gameOver();
+    return;
+  }
 
-  if (direction == "LEFT") snakeX -= box;
-  if (direction == "UP") snakeY -= box;
-  if (direction == "RIGHT") snakeX += box;
-  if (direction == "DOWN") snakeY += box;
-
-  if (snakeX == food.x && snakeY == food.y) {
-    food = {
-      x: Math.floor(Math.random() * 20) * box,
-      y: Math.floor(Math.random() * 20) * box
-    };
+  // se comeu a maçã
+  if(headX === food.x && headY === food.y){
+    // não remove a cauda -> cresce
+    playPickupSound();
+    score++;
+    displayScore.innerText = 'Pontuação: ' + score;
+    placeFood();
   } else {
+    // movimento normal: remove cauda
     snake.pop();
   }
 
-  let newHead = { x: snakeX, y: snakeY };
+  const newHead = {x: headX, y: headY};
 
-  if (
-    snakeX < 0 || snakeY < 0 ||
-    snakeX >= 400 || snakeY >= 400 ||
-    collision(newHead, snake)
-  ) {
-    clearInterval(game);
-    alert("Game Over!");
+  // colisão com o próprio corpo
+  if(snake.some(seg => seg.x === newHead.x && seg.y === newHead.y)){
+    gameOver();
+    return;
   }
 
   snake.unshift(newHead);
 }
 
-function collision(head, array) {
-  for (let i = 0; i < array.length; i++) {
-    if (head.x == array[i].x && head.y == array[i].y) {
-      return true;
-    }
-  }
-  return false;
+/* detecta teclas para mudar direção */
+document.addEventListener('keydown', (e)=>{
+  const code = e.key;
+  if(code==='ArrowLeft' && dir!=='RIGHT') dir='LEFT';
+  if(code==='ArrowRight' && dir!=='LEFT') dir='RIGHT';
+  if(code==='ArrowUp' && dir!=='DOWN') dir='UP';
+  if(code==='ArrowDown' && dir!=='UP') dir='DOWN';
+});
+
+/* iniciar e parar o loop */
+function startGame(){
+  // reseta e oculta overlay
+  resetState();
+  overlay.classList.remove('show');
+  // mostra player info
+  displayPlayer.innerText = 'Jogador: ' + playerNameInput.value.trim();
+  displayRoom.innerText = 'Sala: ' + roomInput.value.trim();
+  // start loop
+  if(gameInterval) clearInterval(gameInterval);
+  gameInterval = setInterval(draw, speed);
+  // bloquear inputs de nome/sala enquanto joga
+  playerNameInput.disabled = true;
+  roomInput.disabled = true;
+  playBtn.disabled = true;
+  // resume AudioContext on user gesture (required em alguns navegadores)
+  if(audioCtx.state === 'suspended') audioCtx.resume();
 }
+
+function gameOver(){
+  if(gameInterval) clearInterval(gameInterval);
+  playDeathSound();
+  // mostra overlay vermelho com pontuação e nome
+  finalText.innerText = 'Pontuação: ' + score + ' — Jogador: ' + (playerNameInput.value.trim() || '—');
+  overlay.classList.add('show');
+  // desbloquear para reiniciar
+  restartBtn.focus();
+}
+
+restartBtn.addEventListener('click', ()=>{
+  overlay.classList.remove('show');
+  // reset de estado e volta ao formulário
+  if(gameInterval) clearInterval(gameInterval);
+  snake = [];
+  dir = null;
+  food = null;
+  score = 0;
+  displayScore.innerText = 'Pontuação: 0';
+  // permitir alterar nome/sala novamente
+  playerNameInput.disabled = false;
+  roomInput.disabled = false;
+  playBtn.disabled = false;
+  displayPlayer.innerText = 'Jogador: —';
+  displayRoom.innerText = 'Sala: —';
+  // limpa canvas
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+});
+
+/* initialize blank canvas */
+ctx.fillStyle='#000';
+ctx.fillRect(0,0,canvas.width,canvas.height);
+ctx.fillStyle='#ffffff';
+ctx.font='14px monospace';
+ctx.fillText('Preencha o nome e a sala e clique em JOGAR', 12, 20);
 </script>
 </body>
 </html>
