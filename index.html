@@ -82,7 +82,7 @@ footer{text-align:center;padding:14px;margin-top:26px;background:linear-gradient
 <main>
 <section class="banner">
 <img src="https://upload.wikimedia.org/wikipedia/commons/3/3f/News_paper_banner.jpg" alt="Trabalho Escolar" loading="eager">
-<p><strong>ATENÇÃO TURMA:</strong> O tema do nosso trabalho é sobre o festival de Canoas chamado Pacu Jalur e o menino que encantou o público com sua dança em cima da canoa.</p>
+<p><strong>ATENÇÃO TURMA:</strong> O tema do nosso trabalho é sobre o Festival de Canoas chamado "Pacu Jalur" e o menino indonésio que encantou o público com sua dança em cima da canoa.</p>
 </section>
 
 <article>
@@ -90,9 +90,9 @@ footer{text-align:center;padding:14px;margin-top:26px;background:linear-gradient
 <h3 class="subtitulo">A dança cheia de energia de Rayyan Arkan Dikha conquistou espectadores no festival Pacu Jalur.</h3>
 
 <div class="corpo">
-<p>O tradicional Festival Pacu Jalur reúne centenas de remadores em corridas épicas de canoas ao longo dos rios da região. Este ano, <strong>Rayyan Arkan Dikha</strong> se destacou como Tukang Tari, dançando e motivando o público com energia contagiante. Um vídeo mostrando sua performance rapidamente viralizou: milhões de visualizações no TikTok, YouTube e Instagram, incluindo diversas versões em que outros usuários tentaram imitar seus movimentos.</p>
+<p>O tradicional Festival Pacu Jalur reúne centenas de remadores em corridas épicas de canoas ao longo dos rios da região. Este ano, <strong>Rayyan Arkan Dikha</strong> se destacou como Tukang Tari, dançando e motivando o público com energia contagiante.</p>
 
-<p>Além do impacto na internet, o vídeo inspirou conteúdos dentro de jogos, principalmente no <strong>Steal a Brainrot (Roube um Brainrot)</strong>, onde o personagem <strong>Bambu Bambu Sahur</strong> foi destaque em mini-desafios e skins especiais. Jogadores compartilhavam screenshots, estratégias e vídeos de gameplay destacando o personagem e a dança de Rayyan, mostrando como a cultura do festival se expandiu para mundos virtuais.</p>
+<p>Além do impacto na internet, o vídeo inspirou conteúdos dentro de jogos, principalmente no <strong>Steal a Brainrot (Roube um Brainrot)</strong>, onde o personagem <strong>Bambu Bambu Sahur</strong> foi destaque em mini-desafios e skins especiais.</p>
 
 <section class="imagensJogo">
   <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSzC7S2XqGmWdkrORIT_hQjPJRnlzCD3vU8fA&s" alt="Imagem 1 Bambu Bambu Sahur" loading="eager">
@@ -100,26 +100,17 @@ footer{text-align:center;padding:14px;margin-top:26px;background:linear-gradient
   <img src="https://techwiser.com/wp-content/uploads/2025/10/How-to-Get-Bambu-Bambu-Sahur-in-Steal-a-Brainrot.webp" alt="Imagem 3 Bambu Bambu Sahur" loading="eager">
 </section>
 
-<p>A magia de Rayyan combinada à tradição do festival fez com que escolas locais mencionassem o episódio, canais internacionais repercutissem a história e muitos visitantes buscassem conhecer o festival pessoalmente. A repercussão chegou até plataformas de streaming e canais de games, motivando jogadores e youtubers a criarem desafios relacionados à dança e à canoa.</p>
-
-<p>O fenômeno do menino da canoa exemplifica como tradição, alegria e internet podem se misturar, inspirando jovens a celebrarem suas culturas com autenticidade. O impacto cultural e digital do vídeo reforçou a importância de iniciativas que unem entretenimento e educação, criando experiências únicas tanto no mundo real quanto no virtual.</p>
-
-<p>O conteúdo viral também foi incorporado em redes sociais, fóruns e transmissões ao vivo de jogos, mostrando que a influência de pequenas ações pode ser global. Além disso, a história incentivou debates sobre preservação cultural, engajamento juvenil e criatividade nos meios digitais.</p>
-
-<p>Em resumo, Rayyan Arkan Dikha se tornou um símbolo de como momentos autênticos podem ganhar o mundo, influenciar jogos, plataformas digitais e escolas, e conectar pessoas através da tradição e diversão.</p>
 </div>
 
 <div class="videos">
   <div class="videoContainer">
     <div class="videoLabel">Versão americana</div>
-    <iframe width="300" height="170" src="https://www.youtube.com/shorts/nPQCc6l-CbM" allowfullscreen></iframe>
+    <iframe width="300" height="170" src="https://www.youtube.com/embed/R-HpiLDRfmA" allowfullscreen></iframe>
   </div>
-
   <div class="videoContainer">
     <div class="videoLabel">A História Por Trás do Meme</div>
     <iframe width="300" height="170" src="https://www.youtube.com/embed/gzmkVwwVNfg" allowfullscreen></iframe>
   </div>
-
   <div class="videoContainer">
     <div class="videoLabel">Versão brasileira</div>
     <iframe width="300" height="170" src="https://www.youtube.com/embed/JFr3Pp6N4gA" allowfullscreen></iframe>
@@ -142,19 +133,7 @@ footer{text-align:center;padding:14px;margin-top:26px;background:linear-gradient
 </div>
 </main>
 
-<!-- Garante carregamento das imagens -->
-<script>
-  window.addEventListener('load', () => {
-    const imgs = document.querySelectorAll('img');
-    imgs.forEach(img => {
-      const src = img.getAttribute('src');
-      img.setAttribute('src', src);
-      img.style.display = 'block';
-    });
-  });
-</script>
-
-<!-- Player do YouTube -->
+<!-- Script do player do YouTube -->
 <script src="https://www.youtube.com/iframe_api"></script>
 <script>
 let player;
@@ -164,19 +143,18 @@ function onYouTubeIframeAPIReady() {
   player = new YT.Player('player', {
     height: '0',
     width: '0',
-    videoId: 'PCBc4ODob5k',
-    playerVars: {'autoplay':0,'controls':0,'rel':0},
-    events: {'onReady': onPlayerReady,'onStateChange': onPlayerStateChange}
+    videoId: 'PCBc4ODob5k', // música de fundo
+    playerVars: { autoplay: 0, controls: 0, rel: 0 },
+    events: { onReady: onPlayerReady, onStateChange: onPlayerStateChange }
   });
 }
 
 function onPlayerReady(event) {
-  const button = document.getElementById('playButton');
-  button.addEventListener('click', () => {
+  document.getElementById('playButton').addEventListener('click', () => {
     if (!isPlaying) {
       player.playVideo();
       isPlaying = true;
-      button.innerText = '🔊 Música Tocando...';
+      document.getElementById('playButton').innerText = '🔊 Música Tocando...';
     }
   });
 }
@@ -192,6 +170,3 @@ function onPlayerStateChange(event) {
 
 </body>
 </html>
-
-
-
