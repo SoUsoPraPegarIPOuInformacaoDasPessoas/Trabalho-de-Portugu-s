@@ -1,108 +1,144 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Menino da Canoa — Estrela da Indonésia</title>
-<style>
-:root{
-  --red:#d62828; --orange:#f77f00; --light:#fff8f6; --card:#fff;
-}
-*{box-sizing:border-box;}
-body{
-  margin:0;
-  font-family: "Segoe UI", Roboto, Arial, sans-serif;
-  background: linear-gradient(180deg,#fff6f6,#fff);
-  color:#111;
-}
-header{
-  background: linear-gradient(90deg,var(--red),var(--orange));
-  color:white;
-  padding:22px; text-align:center;
-  border-bottom:4px solid rgba(0,0,0,0.05);
-}
-header h1{margin:0;font-size:1.7rem}
-#searchBar{margin-top:10px;padding:9px 12px;border-radius:10px;border:none; width:52%; max-width:420px;}
-main{max-width:1150px;margin:28px auto;padding:22px}
-.banner{background:#fff3e0;border:4px solid #ffb703;padding:14px;border-radius:12px;text-align:center}
-.banner img{width:100%;max-height:320px;object-fit:cover;border-radius:8px}
-article{
-  margin-top:20px;background:var(--card);padding:22px;border-radius:14px;
-  border:3px solid #ff4d4d; box-shadow:0 8px 30px rgba(255,77,77,0.08)
-}
-.manchete{color:var(--red);font-size:1.9rem;text-align:center;margin:6px 0 4px}
-.subtitulo{text-align:center;color:#444;margin-bottom:18px}
-.corpo{line-height:1.7;font-size:1.05rem;text-align:justify;color:#222}
-.videos{margin-top:22px;padding:18px;border-radius:12px;background:#fff7f0;border:3px solid #f77f00;text-align:center}
-.videoContainer {
-  display: inline-block;
-  text-align: center;
-  margin: 10px;
-}
-.videoLabel {
-  font-weight: 700;
-  color: #d62828;
-  margin-bottom: 6px;
-}
-.videos iframe{border-radius:10px;margin:6px}
-.imagensJogo{display:flex; gap:15px; justify-content:center; margin-top:20px; flex-wrap:wrap;}
-.imagensJogo img{border:3px solid #00aaff; border-radius:8px; width:200px;}
-.creditos{margin-top:18px;text-align:left;font-style:italic;background:#fff5f5;padding:10px;border-radius:8px}
-.botoes{display:flex;gap:12px;justify-content:center;margin-top:18px;flex-wrap:wrap}
-.btn{background:linear-gradient(90deg,var(--red),#ff6b6b);color:white;padding:10px 18px;border-radius:10px;text-decoration:none;font-weight:700;transition:0.3s}
-.btn:hover{transform:translateY(-3px);box-shadow:0 8px 20px rgba(214,40,40,0.12)}
-#playButton{
-  background: linear-gradient(90deg,#f77f00,#ffb703);
-  color:white;
-  padding:10px 18px;
-  border-radius:10px;
-  font-weight:700;
-  cursor:pointer;
-  transition:0.3s;
-}
-#playButton:hover{
-  transform:translateY(-3px);
-  box-shadow:0 8px 20px rgba(247,112,0,0.2);
-}
-footer{text-align:center;padding:14px;margin-top:26px;background:linear-gradient(90deg,var(--red),var(--orange));color:white;border-top:4px solid rgba(0,0,0,0.06)}
-@media(max-width:700px){
-  header h1{font-size:1.2rem}
-  #searchBar{width:78%}
-  .videos iframe{width:100% !important;height:200px !important}
-  .imagensJogo img{width:45%}
-}
-</style>
+  <meta charset="utf‑8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Menino da Canoa — Estrela da Indonésia</title>
+  <style>
+    :root{
+      --red:#d62828; 
+      --orange:#f77f00; 
+      --light:#fff8f6; 
+      --card:#fff;
+    }
+    *{box‑sizing:border-box;}
+    body{
+      margin:0;
+      font-family:"Segoe UI", Roboto, Arial, sans‑serif;
+      background: linear-gradient(180deg,#fff6f6,#fff);
+      color:#111;
+    }
+    header{
+      background: linear-gradient(90deg,var(--red),var(--orange));
+      color:white;
+      padding:22px; text-align:center;
+      border‑bottom:4px solid rgba(0,0,0,0.05);
+    }
+    header h1{margin:0;font-size:1.7rem}
+    #searchBar{
+      margin-top:10px;padding:9px 12px;border-radius:10px;border:none;
+      width:52%; max-width:420px;
+    }
+    main{max-width:1150px;margin:28px auto;padding:22px}
+    .banner{
+      background:#fff3e0;border:4px solid #ffb703;padding:14px;border-radius:12px;
+      text-align:center;
+    }
+    .banner img{width:100%;max-height:320px;object-fit:cover;border-radius:8px}
+    article{
+      margin-top:20px;background:var(--card);padding:22px;border-radius:14px;
+      border:3px solid #ff4d4d; box-shadow:0 8px 30px rgba(255,77,77,0.08)
+    }
+    .manchete{color:var(--red);font-size:1.9rem;text-align:center;margin:6px 0 4px}
+    .subtitulo{text-align:center;color:#444;margin-bottom:18px}
+    .corpo{line-height:1.7;font-size:1.05rem;text-align:justify;color:#222}
+    .videos{margin-top:22px;padding:18px;border-radius:12px;background:#fff7f0;border:3px solid #f77f00;text-align:center}
+    .videoContainer {
+      display:inline-block;
+      text-align:center;
+      margin:10px;
+    }
+    .videoLabel {
+      font-weight:700;
+      color:#d62828;
+      margin-bottom:6px;
+    }
+    .videos iframe{border-radius:10px;margin:6px}
+    .imagensJogo{
+      display:flex; gap:15px; justify-content:center;
+      margin-top:20px; flex-wrap:wrap;
+    }
+    .imagensJogo img{
+      border:3px solid #00aaff; border-radius:8px; width:200px;
+    }
+    .creditos{
+      margin-top:18px;text-align:left;font-style:italic;
+      background:#fff5f5;padding:10px;border-radius:8px;
+    }
+    .botoes{
+      display:flex;gap:12px;justify-content:center;margin-top:18px;flex-wrap:wrap
+    }
+    .btn{
+      background:linear-gradient(90deg,var(--red),#ff6b6b);
+      color:white;padding:10px 18px;border-radius:10px;
+      text-decoration:none;font-weight:700;transition:0.3s
+    }
+    .btn:hover{
+      transform:translateY(-3px);
+      box-shadow:0 8px 20px rgba(214,40,40,0.12)
+    }
+    #playButton{
+      background: linear-gradient(90deg,#f77f00,#ffb703);
+      color:white;padding:10px 18px;border-radius:10px;
+      font-weight:700;cursor:pointer;transition:0.3s;
+      display:block;margin:12px auto 0;
+    }
+    #playButton:hover{
+      transform:translateY(-3px);
+      box-shadow:0 8px 20px rgba(247,112,0,0.2);
+    }
+    footer{
+      text-align:center;padding:14px;margin-top:26px;
+      background:linear-gradient(90deg,var(--red),var(--orange));color:white;
+      border-top:4px solid rgba(0,0,0,0.06)
+    }
+    @media(max-width:700px){
+      header h1{font-size:1.2rem}
+      #searchBar{width:78%}
+      .videos iframe{width:100% !important;height:200px !important}
+      .imagensJogo img{width:45%}
+    }
+  </style>
 </head>
 <body>
 <header>
-<h1> 📰 Matheus Máximo e Marcos Guilherme — Dupla 8ºA</h1>
-<input id="searchBar" placeholder="Pesquisar no jornal..." />
+  <h1>📰 Matheus Máximo e Marcos Guilherme — Dupla 8ºA</h1>
+  <input id="searchBar" placeholder="Pesquisar no jornal..." />
 </header>
 
 <main>
 <section class="banner">
-<img src="https://upload.wikimedia.org/wikipedia/commons/3/3f/News_paper_banner.jpg" alt="Trabalho Escolar" loading="eager">
-<p><strong>ATENÇÃO TURMA:</strong> O tema do nosso trabalho é sobre o Festival de Canoas chamado "Pacu Jalur" e o menino indonésio que encantou o público com sua dança em cima da canoa.</p>
+  <img src="https://upload.wikimedia.org/wikipedia/commons/3/3f/News_paper_banner.jpg" alt="Trabalho Escolar" loading="eager">
+  <p><strong>ATENÇÃO TURMA:</strong> O tema do nosso trabalho trata do famoso festival de canoas chamado <strong>Pacu Jalur</strong> na Indonésia e do menino indonésio que virou sensação por sua dança em cima da canoa.</p>
 </section>
 
 <article>
-<h2 class="manchete">Menino da canoa viraliza e vira estrela da Indonésia</h2>
-<h3 class="subtitulo">A dança cheia de energia de Rayyan Arkan Dikha conquistou espectadores no festival Pacu Jalur.</h3>
+<h2 class="manchete">Menino da canoa viraliza e vira estrela da Indonésia 🌊</h2>
+<h3 class="subtitulo">A dança cheia de energia de <strong>Rayyan Arkan Dikha</strong> conquistou espectadores no festival Pacu Jalur.</h3>
 
 <div class="corpo">
-<p>O tradicional Festival Pacu Jalur reúne centenas de remadores em corridas épicas de canoas ao longo dos rios da região. Este ano, <strong>Rayyan Arkan Dikha</strong> se destacou como Tukang Tari, dançando e motivando o público com energia contagiante.</p>
+  <p>O tradicional festival <strong>Pacu Jalur</strong>—que ocorre em rios indígenas da Indonésia—reúne centenas de remadores em longas canoas estreitas que correm rio abaixo, sob o ritmo cadenciado e vibrante dos tambores. À frente de cada embarcação está o “Tukang Tari”, uma criança que dança e motiva a equipe. Este ano, de 20 a 24 de agosto de 2025, chamou atenção o menino Rayyan Arkan Dikha, cuja alegria e destreza impressionaram o público.</p>
+  
+  <p>Um vídeo de Rayyan dançando sobre a canoa rapidamente viralizou nas redes: TikTok, YouTube e Instagram viram milhares de pessoas gravarem suas próprias versões da dança, usando músicas, efeitos e coreografias semelhantes. A repercussão foi global e rendeu não só visibilidade ao festival, mas também à cultura local e à tradição de um povo.</p>
 
-<p>Além do impacto na internet, o vídeo inspirou conteúdos dentro de jogos, principalmente no <strong>Steal a Brainrot (Roube um Brainrot)</strong>, onde o personagem <strong>Bambu Bambu Sahur</strong> foi destaque em mini-desafios e skins especiais.</p>
+  <p>Além disso, a dança de Rayyan ganhou espaço em jogos digitais: no popular Steal a Brainrot (conhecido como “Roube um Brainrot”), o personagem Bambu Bambu Sahur tornou‑se símbolo do movimento. Criadores de conteúdo compartilharam vídeos, desafios e skins relacionadas ao momento, unindo festividade popular e universo gamer.</p>
+
+  <p>O impacto cultural se prolongou: escolas passaram a mencionar o episódio em aulas de cultura, canais internacionais repercutiram a história e muitos visitantes decidiram conhecer o festival pessoalmente. Mais que viral, Rayyan se tornou um símbolo de como tradição + internet podem se misturar para dar voz à cultura jovem e levar alegria ao mundo.</p>
+
+  <p>Também é um lembrete poderoso: simples atos de expressão, autenticidade e positividade — como a dança de uma criança numa canoa — podem repercutir muito além do local onde aconteceram e inspirar outras pessoas a celebrarem suas raízes.</p>
+</div>
 
 <section class="imagensJogo">
   <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSzC7S2XqGmWdkrORIT_hQjPJRnlzCD3vU8fA&s" alt="Imagem 1 Bambu Bambu Sahur" loading="eager">
-  <img src="https://techwiser.com/wp-content/uploads/2025/10/Bambu-Bambu-Sahur-in-Steal-a-Brainrot.webp" alt="Imagem 2 Bambu Bambu Sahur" loading="eager">
-  <img src="https://techwiser.com/wp-content/uploads/2025/10/How-to-Get-Bambu-Bambu-Sahur-in-Steal-a-Brainrot.webp" alt="Imagem 3 Bambu Bambu Sahur" loading="eager">
+  <img src="https://static.wikia.nocookie.net/stealabr/images/0/0b/Bambu_Bambu_Sahur.png/revision/latest/scale-to-width-down/250?cb=20251018122041" alt="Imagem 2 Bambu Bambu Sahur" loading="eager">
+  <img src="https://techwiser.com/wp-content/uploads/2025/10/How-to-Get-Bambu-Bambu-Sahur-in-Steal-a‑Brainrot.webp" alt="Imagem 3 Bambu Bambu Sahur" loading="eager">
 </section>
 
-</div>
-
 <div class="videos">
+  <div class="videoContainer">
+    <div class="videoLabel">Versão original / viral</div>
+    <iframe width="300" height="170" src="https://www.youtube.com/shorts/R-HpiLDRfmA" allowfullscreen></iframe>
+  </div>
   <div class="videoContainer">
     <div class="videoLabel">Versão americana</div>
     <iframe width="300" height="170" src="https://www.youtube.com/shorts/R-HpiLDRfmA" allowfullscreen></iframe>
@@ -118,54 +154,42 @@ footer{text-align:center;padding:14px;margin-top:26px;background:linear-gradient
 </div>
 
 <div class="botoes">
-<a href="snake.html" class="btn">Ir para o Jogo da Cobrinha 🐍</a>
-<a href="processo.html" class="btn">Ver Processo de Programação 💻</a>
-<a href="pagina2.html" class="btn">Página 2 ➡️</a>
+  <a href="snake.html" class="btn">Ir para o Jogo da Cobrinha 🐍</a>
+  <a href="processo.html" class="btn">Ver Processo de Programação 💻</a>
+  <a href="pagina2.html" class="btn">Página 2 ➡️</a>
 </div>
 
-<!-- Botão de tocar música -->
-<div style="text-align:center; margin-top:12px;">
-  <button id="playButton">🎵 Tocar Música</button>
-</div>
+<button id="playButton">🎵 Tocar Música</button>
 
 <div class="creditos">
-<p>Matheus Máximo e Marcos Guilherme - 8ºA Direitos Reservados.</p>
+  <p>Matheus Máximo e Marcos Guilherme ‑ 8ºA Direitos Reservados.</p>
 </div>
 </main>
 
-<!-- Player do YouTube -->
 <script src="https://www.youtube.com/iframe_api"></script>
 <script>
 let player;
-let isPlaying = false;
-
-function onYouTubeIframeAPIReady() {
-  player = new YT.Player('player', {
-    height: '0',
-    width: '0',
-    videoId: 'PCBc4ODob5k', // música de fundo
-    playerVars: { autoplay:0, controls:0, rel:0 },
-    events: { onReady: onPlayerReady, onStateChange: onPlayerStateChange }
-  });
+let isPlaying=false;
+function onYouTubeIframeAPIReady(){
+  player=new YT.Player('player',{height:'0',width:'0',videoId:'PCBc4ODob5k',playerVars:{autoplay:0,controls:0,rel:0},events:{onReady:onPlayerReady,onStateChange:onPlayerStateChange}});
 }
-
-function onPlayerReady(event) {
-  document.getElementById('playButton').addEventListener('click', () => {
+function onPlayerReady(event){
+  document.getElementById('playButton').addEventListener('click',()=>{
     if(!isPlaying){
       player.playVideo();
-      isPlaying = true;
-      document.getElementById('playButton').innerText = '🔊 Música Tocando...';
+      isPlaying=true;
+      document.getElementById('playButton').innerText='🔊 Música Tocando…';
     }
   });
 }
-
 function onPlayerStateChange(event){
-  if(event.data === YT.PlayerState.ENDED){
+  if(event.data===YT.PlayerState.ENDED){
     player.seekTo(0);
     player.playVideo();
   }
 }
 </script>
 <div id="player" style="display:none;"></div>
+
 </body>
 </html>
