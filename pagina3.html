@@ -3,12 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Letra da Música — Menino da Canoa</title>
+<title>Músicas — Menino da Canoa</title>
 <style>
 body {
   margin:0;
   font-family: Arial, sans-serif;
-  background: #fff url('https://i.imgur.com/LdTqN9E.png') repeat;
+  background: #fff url('https://i.imgur.com/FjzOXY1.png') repeat; /* notas musicais */
+  background-size: 150px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -22,12 +23,14 @@ body {
   border-radius: 15px;
   padding: 25px;
   box-shadow: 0 8px 20px rgba(247,112,0,0.3);
+  margin-bottom: 40px;
 }
-h1 {
+h1, h2 {
   text-align:center;
   color:#d62828;
   margin-bottom: 15px;
 }
+h3 { color: #f77f00; }
 .button {
   padding:12px 25px;
   margin:10px;
@@ -40,6 +43,15 @@ h1 {
   transition:0.3s;
 }
 .button:hover { transform: scale(1.05); }
+iframe {
+  display:block;
+  margin: 10px auto;
+  border-radius: 15px;
+  border: 3px solid #ffb703;
+  width: 100%;
+  max-width: 560px;
+  height: 315px;
+}
 .lyrics p {
   margin:6px 0;
   cursor:pointer;
@@ -51,6 +63,13 @@ h1 {
   color:#555;
   font-style:italic;
 }
+img {
+  display:block;
+  margin: 20px auto;
+  max-width: 80%;
+  border-radius: 10px;
+  border: 2px solid #fcbf49;
+}
 </style>
 </head>
 <body>
@@ -59,129 +78,37 @@ h1 {
 <button class="button" onclick="location.href='pagina2.html'">⬅ Voltar para a Página 2</button>
 
 <div class="container">
-<h1>Letra da música utilizada na versão americana</h1>
-<h3>Nome: Melly Mike - Young Black & Rich</h3>
+  <h1>Vídeo Original — Menino da Canoa</h1>
+  <iframe src="https://www.youtube.com/embed/R-HpiLDRfmA" title="Menino da Canoa"></iframe>
 
-<div class="lyrics">
-<p onclick="openVideo()">Yeah</p>
-<div class="translation">Sim</div>
-
-<p onclick="openVideo()">It all starts with you</p>
-<div class="translation">Tudo começa com você</div>
-
-<p onclick="openVideo()">Everything you ever wanted and everything you ever dreamed</p>
-<div class="translation">Tudo o que você sempre quis e tudo o que sempre sonhou</div>
-
-<p onclick="openVideo()">It starts now, it starts today</p>
-<div class="translation">Começa agora, começa hoje</div>
-
-<p onclick="openVideo()">There is no tomorrow</p>
-<div class="translation">Não existe amanhã</div>
-
-<p onclick="openVideo()">I'm tired of your fucking excuses, nigga, ain't nobody coming to save you, nigga</p>
-<div class="translation">Estou cansado das suas desculpas, ninguém vai salvar você</div>
-
-<p onclick="openVideo()">It's you</p>
-<div class="translation">É você</div>
-
-<p onclick="openVideo()">It's you versus you, nigga</p>
-<div class="translation">É você contra você mesmo</div>
-
-<p onclick="openVideo()">So how bad you want this shit, huh? Come on</p>
-<div class="translation">Então, o quanto você quer isso? Vamos lá</div>
-
-<p onclick="openVideo()">Yeah</p>
-<div class="translation">Sim</div>
-
-<p onclick="openVideo()">My social meter ran out so you know I'm finna dip</p>
-<div class="translation">Meu nível social acabou, então você sabe que vou sair</div>
-
-<p onclick="openVideo()">I just wanna stack this cake, stay out the way, yeah, that's it</p>
-<div class="translation">Só quero juntar dinheiro e ficar fora do caminho, é isso</div>
-
-<p onclick="openVideo()">Ain't nobody gave a damn 'bout a young nigga till he got rich</p>
-<div class="translation">Ninguém se importava com um jovem até ele ficar rico</div>
-
-<p onclick="openVideo()">I'm geeking way too hard, yeah, yeah, I'm finna glitch</p>
-<div class="translation">Estou empolgado demais, sim, vou falhar um pouco</div>
-
-<p onclick="openVideo()">I just changed my whole lifestyle, I just cut off dead weight</p>
-<div class="translation">Acabei de mudar todo meu estilo de vida, cortei pessoas inúteis</div>
-
-<p onclick="openVideo()">Now they know I'm fly as shit</p>
-<div class="translation">Agora eles sabem que eu sou incrível</div>
-
-<p onclick="openVideo()">We always have potential, I'm just cashing in my chips</p>
-<div class="translation">Sempre temos potencial, só estou aproveitando minhas oportunidades</div>
-
-<p onclick="openVideo()">Melly Mike just like Steph, yeah, yeah, 'cause he don't miss</p>
-<div class="translation">Melly Mike é como Steph, porque ele não erra</div>
-
-<p onclick="openVideo()">I don't give my energy to nobody except my clique</p>
-<div class="translation">Não dou minha energia a ninguém, exceto ao meu grupo</div>
-
-<p onclick="openVideo()">Yeah, I just spent a couple bands eating good on a dish</p>
-<div class="translation">Sim, acabei de gastar um pouco de dinheiro comendo bem</div>
-
-<p onclick="openVideo()">They don't say congratulations, but you know they watch that shit</p>
-<div class="translation">Eles não dizem parabéns, mas você sabe que assistem</div>
-
-<p onclick="openVideo()">I ain't even gon' get mad, I'm young, black and rich</p>
-<div class="translation">Nem vou ficar bravo, sou jovem, negro e rico</div>
-
-<p onclick="openVideo()">She tryna' sell me lies, bitch, I ain't buying shit</p>
-<div class="translation">Ela tenta me enganar, mas eu não caio</div>
-
-<p onclick="openVideo()">If we ain't talking money then I'ma plead the Fifth</p>
-<div class="translation">Se não estamos falando de dinheiro, eu fico em silêncio</div>
-
-<p onclick="openVideo()">I put ice in my mouth, yeah, I'm hydrated</p>
-<div class="translation">Coloco gelo na boca, estou hidratado</div>
-
-<p onclick="openVideo()">I ain't even gon' stay in your life</p>
-<div class="translation">Nem vou ficar na sua vida</div>
-
-<p onclick="openVideo()">7:45, gotta catch that flight</p>
-<div class="translation">7:45, preciso pegar o voo</div>
-
-<p onclick="openVideo()">Both my flight, my life on private</p>
-<div class="translation">Meus voos, minha vida privada</div>
-
-<p onclick="openVideo()">Gotta take a bad bitch out to a island</p>
-<div class="translation">Preciso levar uma garota para uma ilha</div>
-
-<p onclick="openVideo()">I don't say too much, nigga, I'm silent</p>
-<div class="translation">Não falo muito, estou em silêncio</div>
-
-<p onclick="openVideo()">And we fell off 'cause we ain't in an alignment</p>
-<div class="translation">E caímos porque não estávamos alinhados</div>
-
-<p onclick="openVideo()">Yeah, money come in and I get on a different timing</p>
-<div class="translation">O dinheiro entrou e eu estou em outro ritmo</div>
-
-<p onclick="openVideo()">Yeah, you niggas ain't dead 'cause you still gotta pay me homage</p>
-<div class="translation">Vocês não morreram porque ainda precisam me respeitar</div>
-
-<p onclick="openVideo()">Yeah, why you so nosey? What the fuck wrong with your sinus?</p>
-<div class="translation">Por que você é tão curioso? Qual é do seu nariz?</div>
-
-<p onclick="openVideo()">Yeah, got so much on my plate that we fine dining</p>
-<div class="translation">Tem tanta coisa na minha mesa que estamos jantando bem</div>
-
-<p onclick="openVideo()">Yeah, when you up like this, they do what you say like Simon</p>
-<div class="translation">Quando você está assim, eles fazem o que você manda como o Simon</div>
-
-<p onclick="openVideo()">I'm young, black and rich</p>
-<div class="translation">Sou jovem, negro e rico</div>
+  <img src="https://i.imgur.com/wiQKDa7.png" alt="Cena 1 do vídeo">
+  <img src="https://i.imgur.com/PMU2ev2.png" alt="Cena 2 do vídeo">
 </div>
 
-</div>
+<div class="container">
+  <h1>Versão Americana — Young Black & Rich</h1>
+  <iframe src="https://www.youtube.com/embed/F3qWBh7jZZ0" title="Young Black & Rich"></iframe>
 
-<script>
-function openVideo() {
-  window.open('https://www.youtube.com/watch?v=F3qWBh7jZZ0', '_blank');
-}
-</script>
+  <h3>Letra e Tradução</h3>
+  <div class="lyrics">
+    <p>Yeah</p><div class="translation">Sim</div>
+    <p>It all starts with you</p><div class="translation">Tudo começa com você</div>
+    <p>Everything you ever wanted and everything you ever dreamed</p><div class="translation">Tudo o que você sempre quis e tudo o que sempre sonhou</div>
+    <p>It starts now, it starts today</p><div class="translation">Começa agora, começa hoje</div>
+    <p>There is no tomorrow</p><div class="translation">Não existe amanhã</div>
+    <p>I'm tired of your excuses, nobody's coming to save you</p><div class="translation">Estou cansado das suas desculpas, ninguém vai te salvar</div>
+    <p>It's you versus you</p><div class="translation">É você contra você mesmo</div>
+    <p>So how bad you want this? Come on</p><div class="translation">Então, o quanto você quer isso? Vamos lá</div>
+    <p>I'm young, black and rich</p><div class="translation">Sou jovem, negro e rico</div>
+    <p>I just wanna stack this cake, stay out the way</p><div class="translation">Só quero juntar dinheiro e ficar de boa</div>
+    <p>Ain't nobody gave a damn 'til I got rich</p><div class="translation">Ninguém se importava até eu ficar rico</div>
+    <p>Now they know I'm fly as shit</p><div class="translation">Agora eles sabem que eu sou incrível</div>
+    <p>I'm geeking way too hard, yeah, I'm finna glitch</p><div class="translation">Tô empolgado demais, vou bugar</div>
+  </div>
+
+  <img src="https://i.imgur.com/tUeRHTy.png" alt="Cena penúltima">
+  <img src="https://i.imgur.com/ZrV8hH3.png" alt="Cena final">
+</div>
 
 </body>
 </html>
