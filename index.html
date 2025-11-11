@@ -105,7 +105,7 @@ footer{text-align:center;padding:14px;margin-top:26px;background:linear-gradient
 <div class="videos">
   <div class="videoContainer">
     <div class="videoLabel">Versão americana</div>
-    <iframe width="300" height="170" src="https://www.youtube.com/shorts/vnJs7ODTvNU" allowfullscreen></iframe>
+    <iframe width="300" height="170" src="https://www.youtube.com/shorts/R-HpiLDRfmA" allowfullscreen></iframe>
   </div>
   <div class="videoContainer">
     <div class="videoLabel">A História Por Trás do Meme</div>
@@ -133,7 +133,7 @@ footer{text-align:center;padding:14px;margin-top:26px;background:linear-gradient
 </div>
 </main>
 
-<!-- Script do player do YouTube -->
+<!-- Player do YouTube -->
 <script src="https://www.youtube.com/iframe_api"></script>
 <script>
 let player;
@@ -144,14 +144,14 @@ function onYouTubeIframeAPIReady() {
     height: '0',
     width: '0',
     videoId: 'PCBc4ODob5k', // música de fundo
-    playerVars: { autoplay: 0, controls: 0, rel: 0 },
+    playerVars: { autoplay:0, controls:0, rel:0 },
     events: { onReady: onPlayerReady, onStateChange: onPlayerStateChange }
   });
 }
 
 function onPlayerReady(event) {
   document.getElementById('playButton').addEventListener('click', () => {
-    if (!isPlaying) {
+    if(!isPlaying){
       player.playVideo();
       isPlaying = true;
       document.getElementById('playButton').innerText = '🔊 Música Tocando...';
@@ -159,14 +159,13 @@ function onPlayerReady(event) {
   });
 }
 
-function onPlayerStateChange(event) {
-  if (event.data === YT.PlayerState.ENDED) {
+function onPlayerStateChange(event){
+  if(event.data === YT.PlayerState.ENDED){
     player.seekTo(0);
     player.playVideo();
   }
 }
 </script>
 <div id="player" style="display:none;"></div>
-
 </body>
 </html>
