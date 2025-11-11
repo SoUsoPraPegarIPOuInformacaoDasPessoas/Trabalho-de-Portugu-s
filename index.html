@@ -3,124 +3,182 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>O Menino da Canoa</title>
+<title>Menino da Canoa — Fenômeno da Indonésia</title>
 <style>
 body {
   margin: 0;
-  font-family: Arial, sans-serif;
-  background: linear-gradient(180deg, #001f3f, #004080);
+  font-family: "Segoe UI", Arial, sans-serif;
+  background-color: #fff;
+  color: #111;
+}
+
+header {
+  background: linear-gradient(90deg, #d62828, #f77f00);
   color: white;
+  padding: 20px;
   text-align: center;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 2rem;
+}
+
+main {
+  max-width: 1000px;
+  margin: 30px auto;
   padding: 20px;
 }
-h1 {
-  font-size: 2.5rem;
-  color: #7FDBFF;
-  border: 3px solid #7FDBFF;
-  display: inline-block;
-  padding: 10px 20px;
-  border-radius: 12px;
-  margin-bottom: 25px;
+
+article {
+  background: #fff;
+  border: 2px solid #f77f00;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  padding: 25px;
 }
-.video-container {
-  margin: 20px auto;
-  max-width: 560px;
+
+h2.manchete {
+  font-size: 2rem;
+  color: #d62828;
+  margin-top: 0;
+  border-bottom: 3px solid #f77f00;
+  padding-bottom: 6px;
 }
+
+h3.subtitulo {
+  color: #333;
+  margin-top: 10px;
+  font-weight: 600;
+}
+
+p.lide {
+  background: #fff5e6;
+  padding: 10px 14px;
+  border-left: 4px solid #f77f00;
+  font-style: italic;
+  margin: 20px 0;
+}
+
+.corpo {
+  line-height: 1.7;
+  text-align: justify;
+}
+
+.imagens {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  margin: 20px 0;
+}
+
+.imagens img {
+  width: 300px;
+  border-radius: 8px;
+  border: 2px solid #f77f00;
+}
+
+.videos {
+  text-align: center;
+  margin: 25px 0;
+}
+
+.videos h4 {
+  color: #d62828;
+  margin-bottom: 8px;
+}
+
 iframe {
-  width: 100%;
-  height: 315px;
-  border-radius: 12px;
-  border: 3px solid #7FDBFF;
-  margin-bottom: 10px;
-}
-button {
-  padding: 12px 25px;
+  border: 2px solid #f77f00;
+  border-radius: 10px;
+  width: 320px;
+  height: 180px;
   margin: 10px;
-  border-radius: 12px;
-  border: 2px solid #7FDBFF;
-  background: linear-gradient(90deg, #0074D9, #7FDBFF);
-  color: #000;
+}
+
+.botao-area {
+  text-align: center;
+  margin-top: 30px;
+}
+
+button {
+  background: linear-gradient(90deg, #f77f00, #ffb703);
+  border: none;
+  padding: 12px 22px;
+  border-radius: 10px;
   font-weight: bold;
+  color: white;
+  font-size: 1rem;
   cursor: pointer;
   transition: 0.3s;
 }
+
 button:hover {
-  transform: scale(1.08);
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(247, 127, 0, 0.3);
 }
-img {
-  border-radius: 12px;
-  border: 3px solid #7FDBFF;
-  margin: 10px;
-  max-width: 90%;
-}
-#musicStatus {
-  font-size: 1.1rem;
-  margin-top: 10px;
+
+footer {
+  margin-top: 30px;
+  background: linear-gradient(90deg, #d62828, #f77f00);
+  color: white;
+  padding: 15px;
+  text-align: center;
+  border-top: 4px solid rgba(0,0,0,0.05);
 }
 </style>
 </head>
 <body>
 
-<h1>O Menino da Canoa</h1>
+<header>
+  <h1>📰 Matheus Máximo e Marcos Guilherme — 8ºA</h1>
+</header>
 
-<!-- Botões principais -->
-<div>
-  <button onclick="location.href='snake.html'">🐍 Jogo da Cobrinha</button>
-  <button onclick="location.href='processo.html'">📘 Processo</button>
-  <button onclick="location.href='pagina2.html'">📄 Página 2</button>
-</div>
+<main>
+  <article>
+    <h2 class="manchete">Menino da Canoa encanta o mundo e vira símbolo cultural da Indonésia</h2>
+    <h3 class="subtitulo">Vídeo de Rayyan Arkan Dikha dançando em uma canoa viraliza e inspira versões em jogos e redes sociais.</h3>
 
-<!-- Botão de música -->
-<div>
-  <button id="musicButton">🎵 Tocar Música</button>
-  <p id="musicStatus">Música parada</p>
-  <audio id="backgroundMusic" loop>
-    <source src="https://www.learningcontainer.com/wp-content/uploads/2020/02/Kalimba.mp3" type="audio/mpeg">
-  </audio>
-</div>
+    <p class="lide"><strong>O que:</strong> Vídeo de um garoto dançando em uma canoa.<br>
+    <strong>Quem:</strong> Rayyan Arkan Dikha, morador da Indonésia.<br>
+    <strong>Onde:</strong> Festival Pacu Jalur, na cidade de Kuansing, Indonésia.<br>
+    <strong>Quando:</strong> Agosto de 2024.</p>
 
-<!-- Notícias e vídeos -->
-<h2 style="margin-top:30px;">Notícia e Versões</h2>
+    <div class="corpo">
+      <p>O tradicional <strong>Festival Pacu Jalur</strong> é uma das maiores celebrações da Indonésia, onde equipes competem em corridas de canoas coloridas. Em meio a essa tradição, o menino <strong>Rayyan Arkan Dikha</strong> ganhou os holofotes após ser filmado dançando com entusiasmo sobre uma das canoas, encantando o público local e milhões de internautas.</p>
 
-<p><strong>O vídeo “Menino da Canoa”</strong> viralizou na internet após mostrar um garoto indonésio, conhecido como <strong>Rayyan</strong>, remando com um sorriso no rosto durante o Festival Pacu Jalur. O vídeo se tornou um meme mundial e inspirou versões musicais e remixes de diferentes países.</p>
+      <p>Com sua energia contagiante e carisma natural, Rayyan se tornou uma sensação nas redes sociais. O vídeo viralizou em todo o mundo e foi adaptado em diversas versões musicais, incluindo uma versão americana e uma brasileira. O “menino da canoa” se transformou em símbolo de alegria e orgulho para seu país.</p>
 
-<p>O festival acontece na cidade de <strong>Kuansing, Indonésia</strong>, e é um evento cultural importante. A canoa representa força, tradição e união entre os moradores. Rayyan se tornou símbolo de alegria e simplicidade.</p>
+      <p>Além disso, o fenômeno se expandiu para o universo dos games, com o personagem <strong>Bambu Bambu Sahur</strong> se tornando popular no jogo <strong>Steal a Brainrot (Roube um Brainrot)</strong>. Essa referência cultural trouxe o garoto para o mundo digital, sendo homenageado em desafios e eventos dentro do jogo.</p>
+    </div>
 
-<div class="video-container">
-  <h3>🎬 Versão Original</h3>
-  <iframe src="https://www.youtube.com/embed/R-HpiLDRfmA" title="Menino da Canoa Original"></iframe>
+    <div class="imagens">
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSzC7S2XqGmWdkrORIT_hQjPJRnlzCD3vU8fA&s" alt="Imagem 1 - Bambu Bambu Sahur">
+      <img src="https://techwiser.com/wp-content/uploads/2025/10/Bambu-Bambu-Sahur-in-Steal-a-Brainrot.webp" alt="Imagem 2 - Steal a Brainrot">
+      <img src="https://techwiser.com/wp-content/uploads/2025/10/How-to-Get-Bambu-Bambu-Sahur-in-Steal-a-Brainrot.webp" alt="Imagem 3 - Bambu Bambu Sahur Cena">
+    </div>
 
-  <h3>🇺🇸 Versão Americana</h3>
-  <iframe src="https://www.youtube.com/embed/gzmkVwwVNfg" title="Versão Americana"></iframe>
+    <div class="videos">
+      <h4>🎥 Versão Original</h4>
+      <iframe src="https://www.youtube.com/embed/R-HpiLDRfmA" title="Menino da Canoa Original"></iframe>
 
-  <h3>🇧🇷 Versão Brasileira</h3>
-  <iframe src="https://www.youtube.com/embed/JFr3Pp6N4gA" title="Versão Brasileira"></iframe>
-</div>
+      <h4>🇺🇸 Versão Americana</h4>
+      <iframe src="https://www.youtube.com/embed/gzmkVwwVNfg" title="Versão Americana"></iframe>
 
-<!-- Imagens ilustrativas -->
-<div>
-  <img src="https://i.imgur.com/wiQKDa7.png" alt="Imagem 1 - Rayyan">
-  <img src="https://i.imgur.com/PMU2ev2.png" alt="Imagem 2 - Canoa Festival">
-  <img src="https://i.imgur.com/ZrV8hH3.png" alt="Imagem 3 - Cena final">
-</div>
+      <h4>🇧🇷 Versão Brasileira</h4>
+      <iframe src="https://www.youtube.com/embed/JFr3Pp6N4gA" title="Versão Brasileira"></iframe>
+    </div>
 
-<script>
-const musicButton = document.getElementById('musicButton');
-const music = document.getElementById('backgroundMusic');
-const musicStatus = document.getElementById('musicStatus');
+    <div class="botao-area">
+      <button onclick="location.href='pagina2.html'">➡️ Continuar para a Página 2</button>
+    </div>
+  </article>
+</main>
 
-musicButton.addEventListener('click', () => {
-  if (music.paused) {
-    music.play();
-    musicStatus.textContent = "🎶 Música tocando...";
-    musicButton.textContent = "⏸️ Pausar Música";
-  } else {
-    music.pause();
-    musicStatus.textContent = "Música parada";
-    musicButton.textContent = "🎵 Tocar Música";
-  }
-});
-</script>
+<footer>
+  <p>Site desenvolvido por Matheus Máximo — 8ºA</p>
+</footer>
 
 </body>
 </html>
